@@ -89,7 +89,7 @@ The gap is structural, not a feature gap. Serving SMEs with performance-based pr
 | SMEs lack centralised procurement and overpay suppliers | 6 discovery interviews. All described fragmented purchasing with no spend visibility. | Moderate |
 | SpendMaster is losing SME focus since acquisition | Desk research on product updates, pricing changes, and G2/Capterra reviews mentioning SME neglect. 2 interviewees previously used SpendMaster and left. | Moderate |
 | Collective buying power is valued by SME procurement leads | 4 of 6 interviewees said they would value group purchasing. Stated interest only, no commitment to join a network. | Weak |
-| Performance-based pricing is preferred over per-seat | 3 interviewees said they preferred paying based on savings. No pricing experiments conducted. No willingness-to-pay data. | Weak |
+| Performance-based pricing is preferred over per-seat | 5 of 6 interviewees said they preferred paying based on savings. No pricing experiments conducted. No willingness-to-pay data. | Moderate |
 | ProcurePlus is overkill for SMEs | Desk research on implementation requirements and pricing. 1 interviewee had evaluated ProcurePlus and rejected it as too complex. | Weak |
 | TradeLink-style brokers cannot scale | Observation from 2 interviews with companies that use procurement consultants. Not formally validated. | Assumption |
 

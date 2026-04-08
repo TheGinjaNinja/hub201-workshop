@@ -116,6 +116,10 @@
     .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
   }
 
+  @media (max-width: 640px) {
+    .how-it-works-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -680,7 +684,7 @@
       </div>
 
       <h4 style="color: var(--primary);">How It Works</h4>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; text-align: center;">
+      <div class="how-it-works-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; text-align: center;">
         <div>
           <div style="width: 36px; height: 36px; background: var(--primary-pale); color: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 8px;">1</div>
           <p style="font-size: 0.85rem;">Connect accounting or upload invoices</p>
@@ -716,6 +720,9 @@
     <span class="eyebrow">Exercise 5</span>
     <h2>Personas</h2>
     <div class="section-divider"></div>
+    <div style="margin-bottom: 24px;">
+      <span class="badge badge-moderate">Evidence: Moderate (Karel), Weak (Elena), Assumption (Tomasz)</span>
+    </div>
 
     <div class="grid-3" style="margin-bottom: 32px;">
       <!-- Karel -->
@@ -735,7 +742,7 @@
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;"><strong>Trigger:</strong> Rising costs, board pressure to find savings</p>
         <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>Top pain:</strong> No spend visibility, no leverage with suppliers</p>
         <div class="inferred-banner" style="background: #DCFCE7; border-color: #16A34A; color: #065F46;">
-          Validated through 5/6 discovery interviews
+          Validated through 4/6 discovery interviews
         </div>
       </div>
 
@@ -796,6 +803,9 @@
     <span class="eyebrow">Exercise 6</span>
     <h2>Sales Battlecard</h2>
     <div class="section-divider"></div>
+    <div style="margin-bottom: 24px;">
+      <span class="badge badge-assumption">Evidence: Assumption-Heavy</span>
+    </div>
 
     <!-- Where We Win vs SpendMaster -->
     <h3 style="margin-bottom: 16px;">Where We Win vs SpendMaster</h3>
