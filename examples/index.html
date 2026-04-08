@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub201 Week 2: Worked Examples</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #0F172A;
+            background: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero {
+            background: #111827;
+            color: #FFFFFF;
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .hero .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #EA580D;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: #94A3B8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .cards-section {
+            padding: 80px 24px;
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 48px;
+        }
+
+        .section-intro h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .section-intro p {
+            color: #64748B;
+            line-height: 1.7;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 640px) {
+            .example-grid { grid-template-columns: 1fr; }
+        }
+
+        .example-card {
+            background: #FFFFFF;
+            border: 1px solid #E4E4E7;
+            border-radius: 12px;
+            padding: 32px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .example-card:hover {
+            border-color: rgba(234, 88, 13, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .card-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #EA580D;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .card-subtitle {
+            font-size: 0.95rem;
+            color: #64748B;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .card-details {
+            list-style: none;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .card-details li {
+            padding: 8px 0;
+            border-bottom: 1px solid #F4F4F5;
+            font-size: 0.9rem;
+            color: #0F172A;
+            line-height: 1.5;
+        }
+
+        .card-details li:last-child {
+            border-bottom: none;
+        }
+
+        .card-details li strong {
+            color: #64748B;
+            font-weight: 500;
+            display: inline;
+        }
+
+        .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #EA580D;
+        }
+
+        .card-cta .arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .example-card:hover .card-cta .arrow {
+            transform: translateX(4px);
+        }
+
+        .exercises-section {
+            background: #F4F4F5;
+            padding: 64px 24px;
+        }
+
+        .exercises-section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .exercise-list {
+            max-width: 700px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .exercise-list { grid-template-columns: 1fr; }
+        }
+
+        .exercise-item {
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .exercise-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #FFF7ED;
+            color: #EA580D;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            background: #111827;
+            color: #94A3B8;
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        .footer a {
+            color: #EA580D;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="eyebrow">Hub201 Pre-Acceleration / Week 2</div>
+        <h1>Worked Examples</h1>
+        <p>Two fictional startups taken through all 6 exercises. One in cybersecurity, one in procurement. Same frameworks, different domains. See what "done" looks like.</p>
+    </div>
+
+    <section class="cards-section">
+        <div class="section-intro">
+            <h2>Choose an example</h2>
+            <p>Each example includes a value proposition, competition matrix, differentiation statement, solution one-pager, personas, and sales battlecard. All with honest evidence ratings.</p>
+        </div>
+
+        <div class="example-grid">
+            <a href="shieldbyte/presentation.html" class="example-card">
+                <div class="card-eyebrow">Cybersecurity</div>
+                <div class="card-title">ShieldByte</div>
+                <div class="card-subtitle">Adaptive phishing simulation and security awareness training for Southeast European banks.</div>
+                <ul class="card-details">
+                    <li><strong>Domain:</strong> Cybersecurity / compliance</li>
+                    <li><strong>Target:</strong> CISOs at mid-market Serbian banks</li>
+                    <li><strong>Stage:</strong> Two pilots underway</li>
+                    <li><strong>Evidence:</strong> 8 discovery interviews</li>
+                    <li><strong>Trigger:</strong> NIS2 compliance deadline</li>
+                </ul>
+                <div class="card-cta">
+                    View presentation <span class="arrow">&rarr;</span>
+                </div>
+            </a>
+
+            <a href="procuresimple/presentation.html" class="example-card">
+                <div class="card-eyebrow">B2B Procurement</div>
+                <div class="card-title">ProcureSimple</div>
+                <div class="card-subtitle">Collective procurement for SMEs. Save 10-15% on supplier costs with zero risk.</div>
+                <ul class="card-details">
+                    <li><strong>Domain:</strong> Procurement / operations</li>
+                    <li><strong>Target:</strong> Ops Managers at manufacturing SMEs</li>
+                    <li><strong>Stage:</strong> Pre-seed discovery</li>
+                    <li><strong>Evidence:</strong> 6 discovery interviews</li>
+                    <li><strong>Trigger:</strong> Rising input costs, margin pressure</li>
+                </ul>
+                <div class="card-cta">
+                    View presentation <span class="arrow">&rarr;</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="exercises-section">
+        <h2>The 6 exercises</h2>
+        <div class="exercise-list">
+            <div class="exercise-item">
+                <div class="exercise-number">1</div>
+                <div class="exercise-name">Value Proposition</div>
+            </div>
+            <div class="exercise-item">
+                <div class="exercise-number">2</div>
+                <div class="exercise-name">Competition Matrix</div>
+            </div>
+            <div class="exercise-item">
+                <div class="exercise-number">3</div>
+                <div class="exercise-name">Differentiation Statement</div>
+            </div>
+            <div class="exercise-item">
+                <div class="exercise-number">4</div>
+                <div class="exercise-name">Solution One-Pager</div>
+            </div>
+            <div class="exercise-item">
+                <div class="exercise-number">5</div>
+                <div class="exercise-name">Personas</div>
+            </div>
+            <div class="exercise-item">
+                <div class="exercise-number">6</div>
+                <div class="exercise-name">Sales Battlecard</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p>Hub201 Pre-Acceleration Programme, Belgrade. Week 2: UVP, Differentiation, and Problem-Solution Fit.</p>
+        <p style="margin-top: 8px;"><a href="https://github.com/TheGinjaNinja/hub201-workshop">View on GitHub</a></p>
+    </div>
+
+</body>
+</html>

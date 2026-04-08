@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShieldByte - HUB201 Worked Example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #0F172A;
+            background: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 3vw, 2rem);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        p {
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 64px 0;
+        }
+
+        .section-dark {
+            background: #111827;
+            color: #FFFFFF;
+        }
+
+        .section-pale {
+            background: #FFF7ED;
+        }
+
+        .section-surface {
+            background: #F4F4F5;
+        }
+
+        .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #EA580D;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .eyebrow-light {
+            color: #EA580D;
+        }
+
+        .text-muted {
+            color: #64748B;
+        }
+
+        .text-placeholder {
+            color: #94A3B8;
+        }
+
+        .card {
+            background: #FFFFFF;
+            border: 1px solid rgba(234, 88, 13, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            border-color: rgba(234, 88, 13, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-accent {
+            border-left: 4px solid #EA580D;
+        }
+
+        .card-dark {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-dark:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .highlight-card {
+            background: #FFF7ED;
+            border: 2px solid #EA580D;
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-moderate {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-emerging {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .badge-strong {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .badge-assumption {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .grid-3 {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        /* Title section */
+        .title-section {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+
+        .title-section h1 {
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        .title-section .subtitle {
+            color: #94A3B8;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            max-width: 680px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* Table styles */
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 24px;
+        }
+
+        .score-table th {
+            background: #F4F4F5;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748B;
+            border-bottom: 2px solid #E4E4E7;
+        }
+
+        .score-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #E4E4E7;
+        }
+
+        .score-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .score-table td:first-child {
+            font-weight: 500;
+        }
+
+        .score-cell {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .score-high {
+            color: #059669;
+            background: #D1FAE5;
+            border-radius: 6px;
+            padding: 4px 10px;
+            display: inline-block;
+            min-width: 28px;
+        }
+
+        .score-mid {
+            color: #D97706;
+            background: #FEF3C7;
+            border-radius: 6px;
+            padding: 4px 10px;
+            display: inline-block;
+            min-width: 28px;
+        }
+
+        .score-low {
+            color: #DC2626;
+            background: #FEE2E2;
+            border-radius: 6px;
+            padding: 4px 10px;
+            display: inline-block;
+            min-width: 28px;
+        }
+
+        .score-zero {
+            color: #94A3B8;
+            background: #F4F4F5;
+            border-radius: 6px;
+            padding: 4px 10px;
+            display: inline-block;
+            min-width: 28px;
+        }
+
+        /* ROI Ladder */
+        .roi-ladder {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 24px;
+        }
+
+        .roi-step {
+            display: flex;
+            align-items: stretch;
+            gap: 16px;
+        }
+
+        .roi-track {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .roi-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #EA580D;
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .roi-line {
+            width: 2px;
+            flex: 1;
+            background: rgba(234, 88, 13, 0.2);
+        }
+
+        .roi-content {
+            padding-bottom: 20px;
+        }
+
+        .roi-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #EA580D;
+            margin-bottom: 2px;
+        }
+
+        .roi-text {
+            font-size: 0.95rem;
+            color: #0F172A;
+            line-height: 1.5;
+        }
+
+        /* Persona cards */
+        .persona-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .persona-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #EA580D;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .persona-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .persona-role {
+            font-size: 0.85rem;
+            color: #64748B;
+        }
+
+        .persona-detail {
+            margin-bottom: 10px;
+        }
+
+        .persona-detail-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #EA580D;
+            margin-bottom: 2px;
+        }
+
+        .persona-detail-value {
+            font-size: 0.9rem;
+            color: #0F172A;
+            line-height: 1.5;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .check-icon {
+            color: #059669;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .cross-icon {
+            color: #DC2626;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Battlecard table */
+        .battle-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .battle-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748B;
+            background: #F4F4F5;
+            border-bottom: 2px solid #E4E4E7;
+        }
+
+        .battle-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #E4E4E7;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .battle-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .win-tag {
+            display: inline-block;
+            background: #D1FAE5;
+            color: #065F46;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 9999px;
+        }
+
+        /* Killer question */
+        .killer-q {
+            background: #FFF7ED;
+            border-left: 4px solid #EA580D;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 12px;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #0F172A;
+            line-height: 1.6;
+        }
+
+        /* One-pager styles */
+        .onepager {
+            background: #FFFFFF;
+            border: 2px solid #E4E4E7;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 700px;
+            margin: 24px auto 0;
+        }
+
+        .onepager h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .onepager .onepager-tagline {
+            text-align: center;
+            color: #64748B;
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #E4E4E7;
+        }
+
+        .onepager-section {
+            margin-bottom: 24px;
+        }
+
+        .onepager-section h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #EA580D;
+            margin-bottom: 8px;
+        }
+
+        .onepager-section p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #0F172A;
+            margin-bottom: 0;
+        }
+
+        .onepager-before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .onepager-before {
+            background: #FEE2E2;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .onepager-after {
+            background: #D1FAE5;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .onepager-before h5, .onepager-after h5 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+
+        .onepager-before h5 {
+            color: #991B1B;
+        }
+
+        .onepager-after h5 {
+            color: #065F46;
+        }
+
+        .onepager-before p, .onepager-after p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .onepager-cta {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #E4E4E7;
+        }
+
+        .onepager-cta-btn {
+            display: inline-block;
+            background: #EA580D;
+            color: #FFFFFF;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+        }
+
+        /* Section divider */
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: #EA580D;
+            color: #FFFFFF;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .section-number-dark {
+            background: rgba(234, 88, 13, 0.2);
+            color: #EA580D;
+        }
+
+        /* Evidence summary items */
+        .evidence-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .evidence-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .evidence-strong {
+            background: rgba(5, 150, 105, 0.2);
+            color: #059669;
+        }
+
+        .evidence-weak {
+            background: rgba(220, 38, 38, 0.2);
+            color: #DC2626;
+        }
+
+        .evidence-next {
+            background: rgba(234, 88, 13, 0.2);
+            color: #EA580D;
+        }
+
+        /* Responsive table scroll */
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #E4E4E7;
+        }
+
+        /* Positioning statement */
+        .positioning-card {
+            background: #F4F4F5;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        /* Nav dots / section indicator */
+        .section-header {
+            margin-bottom: 32px;
+        }
+
+        .spacer {
+            height: 8px;
+        }
+
+        /* Columns */
+        .col-2-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .col-2-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Cost callout */
+        .cost-callout {
+            background: #FEF3C7;
+            border: 1px solid #F59E0B;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 16px;
+        }
+
+        .cost-callout .cost-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #92400E;
+        }
+        .cross-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .cross-nav a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .cross-nav a:hover {
+            color: #EA580D;
+        }
+
+        .cross-nav .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cross-nav .nav-brand {
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .cross-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cross-nav .switch-link {
+            color: #EA580D;
+            font-weight: 500;
+        }
+
+        body { padding-top: 44px; }
+    </style>
+</head>
+<body>
+
+<nav class="cross-nav">
+    <div class="nav-left">
+        <a href="../index.html" class="nav-brand">&larr; All Examples</a>
+        <a href="#value-proposition">Value Prop</a>
+        <a href="#competition">Competition</a>
+        <a href="#differentiation">Differentiation</a>
+        <a href="#one-pager">One-Pager</a>
+        <a href="#personas">Personas</a>
+        <a href="#battlecard">Battlecard</a>
+    </div>
+    <div class="nav-right">
+        <a href="../procuresimple/presentation.html" class="switch-link">View ProcureSimple &rarr;</a>
+    </div>
+</nav>
+
+<!-- 1. TITLE SECTION -->
+<section class="section-dark title-section">
+    <div class="container">
+        <span class="eyebrow eyebrow-light">HUB201 Pre-Acceleration / Week 2 Worked Example</span>
+        <h1>ShieldByte</h1>
+        <p class="subtitle">NIS2-compliant phishing simulation and security awareness training for Southeast European banks</p>
+    </div>
+</section>
+
+<!-- 2. VALUE PROPOSITION -->
+<section class="section" id="value-proposition">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-number">1</span>
+            <span class="eyebrow">Value Proposition</span>
+            <h2>Who we serve and why it matters</h2>
+        </div>
+
+        <!-- Persona -->
+        <div class="card card-accent" style="margin-bottom: 24px;">
+            <div class="persona-card-header">
+                <div class="persona-avatar">D</div>
+                <div>
+                    <div class="persona-name">Compliance-First Dragan</div>
+                    <div class="persona-role">CISO at a mid-market Serbian bank</div>
+                </div>
+            </div>
+            <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 8px;">CISO or IT Security Manager at a Serbian bank with 200-1,000 employees, regulated under NIS2. Triggered by the NIS2 Directive compliance deadline.</p>
+        </div>
+
+        <!-- Ad Lib Statement -->
+        <div class="highlight-card" style="margin-bottom: 32px;">
+            <h3 style="margin-bottom: 12px; font-size: 1rem; color: #EA580D; text-transform: uppercase; letter-spacing: 0.08em;">Ad Lib Value Proposition</h3>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">Our <strong>adaptive phishing simulation platform</strong> helps <strong>CISOs at mid-market Southeast European banks</strong> who need to build NIS2-compliant security awareness programmes by eliminating the manual effort of running phishing tests and providing measurable evidence of employee behaviour change, unlike <strong>KnowBe4</strong> which prices for enterprise and delivers generic English-language content with no regional regulatory mapping.</p>
+        </div>
+
+        <!-- ROI Ladder -->
+        <h3 style="margin-bottom: 4px;">ROI Ladder</h3>
+        <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 16px;">Feature to financial outcome in five steps</p>
+
+        <div class="roi-ladder">
+            <div class="roi-step">
+                <div class="roi-track">
+                    <div class="roi-dot"></div>
+                    <div class="roi-line"></div>
+                </div>
+                <div class="roi-content">
+                    <div class="roi-label">Feature</div>
+                    <div class="roi-text">Adaptive phishing simulations</div>
+                </div>
+            </div>
+            <div class="roi-step">
+                <div class="roi-track">
+                    <div class="roi-dot"></div>
+                    <div class="roi-line"></div>
+                </div>
+                <div class="roi-content">
+                    <div class="roi-label">Capability</div>
+                    <div class="roi-text">Run continuous tests without manual setup</div>
+                </div>
+            </div>
+            <div class="roi-step">
+                <div class="roi-track">
+                    <div class="roi-dot"></div>
+                    <div class="roi-line"></div>
+                </div>
+                <div class="roi-content">
+                    <div class="roi-label">Benefit</div>
+                    <div class="roi-text">Real behaviour change</div>
+                </div>
+            </div>
+            <div class="roi-step">
+                <div class="roi-track">
+                    <div class="roi-dot"></div>
+                    <div class="roi-line"></div>
+                </div>
+                <div class="roi-content">
+                    <div class="roi-label">Outcome</div>
+                    <div class="roi-text">Click rates drop measurably</div>
+                </div>
+            </div>
+            <div class="roi-step">
+                <div class="roi-track">
+                    <div class="roi-dot" style="background: #059669;"></div>
+                </div>
+                <div class="roi-content">
+                    <div class="roi-label" style="color: #059669;">ROI</div>
+                    <div class="roi-text"><strong>EUR 15-30K/year avoided costs</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <span class="badge badge-moderate">Evidence: Moderate</span>
+        </div>
+    </div>
+</section>
+
+<!-- 3. COMPETITION MATRIX -->
+<section class="section section-surface" id="competition">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-number">2</span>
+            <span class="eyebrow">Competition Matrix</span>
+            <h2>Where we stack up</h2>
+        </div>
+
+        <div class="table-wrap">
+            <table class="score-table">
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th style="text-align:center;">ShieldByte</th>
+                        <th style="text-align:center;">KnowBe4</th>
+                        <th style="text-align:center;">Cofense</th>
+                        <th style="text-align:center;">Hoxhunt</th>
+                        <th style="text-align:center;">Local Consult.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Phishing templates</td>
+                        <td class="score-cell"><span class="score-mid">2</span></td>
+                        <td class="score-cell"><span class="score-high">5</span></td>
+                        <td class="score-cell"><span class="score-high">4</span></td>
+                        <td class="score-cell"><span class="score-mid">3</span></td>
+                        <td class="score-cell"><span class="score-low">1</span></td>
+                    </tr>
+                    <tr>
+                        <td>Adaptive difficulty</td>
+                        <td class="score-cell"><span class="score-high">4</span></td>
+                        <td class="score-cell"><span class="score-low">1</span></td>
+                        <td class="score-cell"><span class="score-low">1</span></td>
+                        <td class="score-cell"><span class="score-high">4</span></td>
+                        <td class="score-cell"><span class="score-zero">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Serbian/Balkan language</td>
+                        <td class="score-cell"><span class="score-high">5</span></td>
+                        <td class="score-cell"><span class="score-low">1</span></td>
+                        <td class="score-cell"><span class="score-zero">0</span></td>
+                        <td class="score-cell"><span class="score-zero">0</span></td>
+                        <td class="score-cell"><span class="score-high">4</span></td>
+                    </tr>
+                    <tr>
+                        <td>NIS2 compliance reporting</td>
+                        <td class="score-cell"><span class="score-mid">3</span></td>
+                        <td class="score-cell"><span class="score-mid">2</span></td>
+                        <td class="score-cell"><span class="score-low">1</span></td>
+                        <td class="score-cell"><span class="score-mid">2</span></td>
+                        <td class="score-cell"><span class="score-low">1</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pricing for mid-market</td>
+                        <td class="score-cell"><span class="score-high">4</span></td>
+                        <td class="score-cell"><span class="score-mid">2</span></td>
+                        <td class="score-cell"><span class="score-low">1</span></td>
+                        <td class="score-cell"><span class="score-mid">2</span></td>
+                        <td class="score-cell"><span class="score-mid">3</span></td>
+                    </tr>
+                    <tr>
+                        <td>Behaviour change measurement</td>
+                        <td class="score-cell"><span class="score-mid">3</span></td>
+                        <td class="score-cell"><span class="score-mid">2</span></td>
+                        <td class="score-cell"><span class="score-mid">2</span></td>
+                        <td class="score-cell"><span class="score-high">4</span></td>
+                        <td class="score-cell"><span class="score-low">1</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Differentiators vs Qualifiers -->
+        <div class="col-2-layout" style="margin-top: 32px;">
+            <div class="card">
+                <h3 style="color: #EA580D;">Differentiators</h3>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 12px;">Where we pull ahead</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 6px 0; display: flex; gap: 8px; align-items: flex-start;">
+                        <span style="color: #EA580D; font-weight: 700;">&#9679;</span> Serbian/Balkan language content
+                    </li>
+                    <li style="padding: 6px 0; display: flex; gap: 8px; align-items: flex-start;">
+                        <span style="color: #EA580D; font-weight: 700;">&#9679;</span> NIS2 compliance reporting
+                    </li>
+                    <li style="padding: 6px 0; display: flex; gap: 8px; align-items: flex-start;">
+                        <span style="color: #EA580D; font-weight: 700;">&#9679;</span> SME pricing
+                    </li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3 style="color: #64748B;">Qualifiers</h3>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 12px;">Table stakes to compete</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 6px 0; display: flex; gap: 8px; align-items: flex-start;">
+                        <span style="color: #64748B; font-weight: 700;">&#9679;</span> Phishing templates
+                    </li>
+                    <li style="padding: 6px 0; display: flex; gap: 8px; align-items: flex-start;">
+                        <span style="color: #64748B; font-weight: 700;">&#9679;</span> Micro-training
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Positioning opportunity -->
+        <div class="positioning-card" style="margin-top: 24px;">
+            <h3 style="margin-bottom: 8px;">Positioning Opportunity</h3>
+            <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0;">ShieldByte can own the intersection of <strong>regional language + regulatory compliance + mid-market pricing</strong>. No global player covers all three. Local consultancies cover language but lack a platform. The gap is clear and defensible.</p>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <span class="badge badge-moderate">Evidence: Moderate with Assumption pockets</span>
+        </div>
+    </div>
+</section>
+
+<!-- 4. DIFFERENTIATION STATEMENT -->
+<section class="section" id="differentiation">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-number">3</span>
+            <span class="eyebrow">Differentiation Statement</span>
+            <h2>How we stand apart</h2>
+        </div>
+
+        <div class="highlight-card" style="margin-bottom: 32px;">
+            <h3 style="margin-bottom: 12px; font-size: 1rem; color: #EA580D; text-transform: uppercase; letter-spacing: 0.08em;">MVP Differentiation Statement</h3>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">For <strong>CISOs and IT Security Managers</strong> at mid-market Serbian banks (200-1,000 employees) who need to implement NIS2-compliant security awareness programmes, <strong>ShieldByte</strong> is an adaptive phishing simulation platform that reduces phishing susceptibility with measurable, auditable results. Unlike <strong>KnowBe4</strong>, we deliver Serbian-language simulations with locally relevant phishing scenarios, NIS2-mapped compliance reporting, and pricing built for mid-market banks rather than global enterprise.</p>
+        </div>
+
+        <div class="col-2-layout" style="margin-bottom: 32px;">
+            <div class="card">
+                <h3>Path to Differentiation</h3>
+                <div style="margin-top: 8px;">
+                    <span class="badge" style="background: #EDE9FE; color: #5B21B6;">Adjacency</span>
+                </div>
+                <p style="margin-top: 12px; font-size: 0.9rem; line-height: 1.7;">Geography + customer segment. Taking an established category (phishing simulation) and adapting it for an underserved region and market tier.</p>
+            </div>
+            <div class="card">
+                <h3>Defensibility</h3>
+                <p style="margin-top: 8px; font-size: 0.9rem; line-height: 1.7;">Building toward <strong>proprietary data</strong> (regional phishing patterns, click-rate benchmarks across Balkan banks) and <strong>regulatory advantage</strong> (deep NIS2 mapping that global players won't prioritise for this market).</p>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 24px;">
+            <h3 style="margin-bottom: 16px;">Evidence Checklist</h3>
+            <ul class="checklist">
+                <li><span class="check-icon">&#10003;</span> NIS2 trigger confirmed through 8 customer interviews</li>
+                <li><span class="check-icon">&#10003;</span> Language gap validated (no Serbian-language platform exists)</li>
+                <li><span class="check-icon">&#10003;</span> Two pilot commitments from Serbian banks</li>
+                <li><span class="check-icon">&#10003;</span> KnowBe4 pricing confirmed as prohibitive for mid-market</li>
+                <li><span class="cross-icon">&#10007;</span> Adaptive difficulty outcomes not yet tested</li>
+                <li><span class="cross-icon">&#10007;</span> Pricing sensitivity unvalidated</li>
+                <li><span class="cross-icon">&#10007;</span> Compliance reporting requirements not confirmed with auditors</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- 5. SOLUTION ONE-PAGER -->
+<section class="section section-surface" id="one-pager">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-number">4</span>
+            <span class="eyebrow">Solution One-Pager</span>
+            <h2>The customer-facing pitch</h2>
+        </div>
+
+        <p class="text-muted" style="margin-bottom: 8px;">This is how the one-pager would look when sent to a prospect.</p>
+        <div style="margin-bottom: 16px;">
+            <span class="badge badge-emerging">Evidence: Emerging</span>
+        </div>
+
+        <div class="onepager">
+            <div style="text-align: center; margin-bottom: 8px;">
+                <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #EA580D;">ShieldByte</span>
+            </div>
+            <h3>NIS2-Ready Phishing Simulation for Serbian Banks</h3>
+            <p class="onepager-tagline">Automated, adaptive, and in your language.</p>
+
+            <div class="onepager-section">
+                <h4>The Problem</h4>
+                <p>Mid-market banks in Serbia face NIS2 requirements but lack the teams and tools to comply. Existing global platforms are priced for enterprise and delivered in English. Local consultancies run manual tests with no tracking or audit trail.</p>
+            </div>
+
+            <div class="onepager-section">
+                <h4>Who This Is For</h4>
+                <p>CISOs and IT Security Managers at Serbian banks with 200-1,000 employees facing NIS2 compliance deadlines.</p>
+            </div>
+
+            <div class="onepager-section">
+                <h4>What Changes</h4>
+                <div class="onepager-before-after">
+                    <div class="onepager-before">
+                        <h5>Before</h5>
+                        <p>Manual phishing tests. No tracking. No audit trail. No way to measure improvement.</p>
+                    </div>
+                    <div class="onepager-after">
+                        <h5>After</h5>
+                        <p>Automated simulations in Serbian. Adaptive difficulty. Micro-training. Compliance reports ready for auditors.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="onepager-section">
+                <h4>How It Works</h4>
+                <p>Serbian-language phishing simulations that adapt to each employee's behaviour. Built-in micro-training for those who click. A compliance dashboard that maps directly to NIS2 requirements.</p>
+            </div>
+
+            <div class="onepager-section">
+                <h4>Proof</h4>
+                <p>Two 90-day pilots underway with Serbian banks. Results expected Q3 2026.</p>
+            </div>
+
+            <div class="onepager-cta">
+                <span class="onepager-cta-btn">Book a 30-minute walkthrough</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6. PERSONAS -->
+<section class="section" id="personas">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-number">5</span>
+            <span class="eyebrow">Personas</span>
+            <h2>The people in the deal</h2>
+        </div>
+
+        <div class="grid-3">
+            <!-- Dragan -->
+            <div class="card">
+                <div class="persona-card-header">
+                    <div class="persona-avatar">D</div>
+                    <div>
+                        <div class="persona-name">Compliance-First Dragan</div>
+                        <div class="persona-role">CISO</div>
+                    </div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Buying Role</div>
+                    <div class="persona-detail-value">Champion + Decision Maker</div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Stage</div>
+                    <div class="persona-detail-value">Early Customer</div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Trigger Event</div>
+                    <div class="persona-detail-value">NIS2 compliance deadline</div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Top Pain</div>
+                    <div class="persona-detail-value">No formal awareness programme in place</div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <span class="badge badge-strong">Validated</span>
+                </div>
+            </div>
+
+            <!-- Milica -->
+            <div class="card">
+                <div class="persona-card-header">
+                    <div class="persona-avatar" style="background: #7C3AED;">M</div>
+                    <div>
+                        <div class="persona-name">Overloaded Milica</div>
+                        <div class="persona-role">IT Security Manager</div>
+                    </div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Buying Role</div>
+                    <div class="persona-detail-value">End User + Influencer</div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Stage</div>
+                    <div class="persona-detail-value">Early Customer</div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Trigger Event</div>
+                    <div class="persona-detail-value">Delegated task from CISO</div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Top Pain</div>
+                    <div class="persona-detail-value">Already overloaded, now must run training too</div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <span class="badge badge-strong">Validated</span>
+                </div>
+            </div>
+
+            <!-- Jovan -->
+            <div class="card">
+                <div class="persona-card-header">
+                    <div class="persona-avatar" style="background: #DC2626;">J</div>
+                    <div>
+                        <div class="persona-name">Budget-Gate Jovan</div>
+                        <div class="persona-role">Procurement Officer</div>
+                    </div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Buying Role</div>
+                    <div class="persona-detail-value">Saboteur</div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Trigger Event</div>
+                    <div class="persona-detail-value">Purchase request from an unknown startup</div>
+                </div>
+                <div class="persona-detail">
+                    <div class="persona-detail-label">Top Pain</div>
+                    <div class="persona-detail-value">No process for buying from startups</div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <span class="badge badge-assumption">Entirely Assumption-Based</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beachhead -->
+        <div class="card card-accent" style="margin-top: 32px;">
+            <h3>Beachhead Market</h3>
+            <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 8px;"><strong>Serbian banks, 200-1,000 employees, no formal security awareness programme.</strong> Approximately 40-60 banks fit this profile.</p>
+            <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 0;"><strong>Adjacent expansion:</strong> Croatia, Bosnia, insurance companies.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 7. SALES BATTLECARD -->
+<section class="section section-surface" id="battlecard">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-number">6</span>
+            <span class="eyebrow">Sales Battlecard</span>
+            <h2>How to win the deal</h2>
+        </div>
+
+        <h3 style="margin-bottom: 4px;">Where We Win vs KnowBe4</h3>
+        <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0;">Head-to-head on the dimensions that matter to our target customer.</p>
+
+        <div class="table-wrap" style="margin-top: 16px; margin-bottom: 32px;">
+            <table class="battle-table">
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>ShieldByte</th>
+                        <th>KnowBe4</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Serbian language</strong></td>
+                        <td>Full Serbian-language simulations and training</td>
+                        <td>No Serbian content</td>
+                        <td><span class="win-tag">We win</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>NIS2 mapping</strong></td>
+                        <td>Reports mapped to NIS2 requirements</td>
+                        <td>Generic compliance reports</td>
+                        <td><span class="win-tag">We win</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>SME pricing</strong></td>
+                        <td>Built for 200-1,000 employee banks</td>
+                        <td>Enterprise pricing model</td>
+                        <td><span class="win-tag">We win</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Adaptive difficulty</strong></td>
+                        <td>Simulations adapt to each user</td>
+                        <td>Static campaign difficulty</td>
+                        <td><span class="win-tag">We win</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="margin-bottom: 16px;">Killer Questions</h3>
+        <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 16px;">Ask these to expose gaps in competing solutions or the status quo.</p>
+
+        <div class="killer-q">"Do your employees receive phishing simulation and training in Serbian, or in English?"</div>
+        <div class="killer-q">"How does the difficulty of your phishing tests adapt based on individual employee performance?"</div>
+        <div class="killer-q">"When your auditor asks for NIS2 compliance evidence on security awareness, what do you show them?"</div>
+
+        <h3 style="margin-top: 32px; margin-bottom: 8px;">The "Do Nothing" Competitor</h3>
+        <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 16px;">The biggest competitor is inaction. Here is what it actually costs.</p>
+
+        <div class="cost-callout">
+            <p style="margin-bottom: 8px;"><strong>Manual testing costs:</strong></p>
+            <p class="cost-value" style="margin-bottom: 12px;">EUR 3,800 - 12,800 / year in staff time</p>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: #92400E; margin-bottom: 0;">No measurement of improvement. No follow-up training. No audit trail. Full NIS2 regulatory exposure remains.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 8. EVIDENCE SUMMARY -->
+<section class="section-dark section" id="evidence">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-number section-number-dark">7</span>
+            <span class="eyebrow eyebrow-light">Evidence Summary</span>
+            <h2 style="color: #FFFFFF;">What we know and what we need to prove</h2>
+        </div>
+
+        <div class="col-2-layout" style="margin-bottom: 32px;">
+            <div>
+                <h3 style="color: #FFFFFF; margin-bottom: 16px;">Strongest Evidence</h3>
+                <div class="evidence-item">
+                    <div class="evidence-icon evidence-strong">&#10003;</div>
+                    <div>
+                        <p style="color: #E2E8F0; margin-bottom: 0;">NIS2 trigger confirmed through 8 customer interviews</p>
+                    </div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon evidence-strong">&#10003;</div>
+                    <div>
+                        <p style="color: #E2E8F0; margin-bottom: 0;">Two pilot commitments from Serbian banks</p>
+                    </div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon evidence-strong">&#10003;</div>
+                    <div>
+                        <p style="color: #E2E8F0; margin-bottom: 0;">Confirmed language gap. No Serbian-language platform exists.</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 style="color: #FFFFFF; margin-bottom: 16px;">Weakest / Gaps</h3>
+                <div class="evidence-item">
+                    <div class="evidence-icon evidence-weak">!</div>
+                    <div>
+                        <p style="color: #E2E8F0; margin-bottom: 0;">Adaptive difficulty outcomes are untested</p>
+                    </div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon evidence-weak">!</div>
+                    <div>
+                        <p style="color: #E2E8F0; margin-bottom: 0;">Procurement saboteur persona is entirely assumption-based</p>
+                    </div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon evidence-weak">!</div>
+                    <div>
+                        <p style="color: #E2E8F0; margin-bottom: 0;">Pricing sensitivity is unvalidated</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-dark card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+            <h3 style="color: #FFFFFF; margin-bottom: 16px;">What Needs Validating Next</h3>
+            <div class="evidence-item">
+                <div class="evidence-icon evidence-next">1</div>
+                <div>
+                    <p style="color: #E2E8F0; margin-bottom: 0;"><strong>Complete the two 90-day pilots</strong> and measure actual click-rate reduction and behaviour change.</p>
+                </div>
+            </div>
+            <div class="evidence-item">
+                <div class="evidence-icon evidence-next">2</div>
+                <div>
+                    <p style="color: #E2E8F0; margin-bottom: 0;"><strong>Validate compliance reporting with auditors</strong> to confirm the NIS2-mapped reports meet their requirements.</p>
+                </div>
+            </div>
+            <div class="evidence-item">
+                <div class="evidence-icon evidence-next">3</div>
+                <div>
+                    <p style="color: #E2E8F0; margin-bottom: 0;"><strong>Build the target list</strong> of 40-60 qualifying Serbian banks and begin outbound.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="color: #94A3B8; font-size: 0.85rem; margin-bottom: 4px;">HUB201 Pre-Acceleration Programme</p>
+            <p style="color: #64748B; font-size: 0.8rem; margin-bottom: 0;">ShieldByte is a fictional startup created as a worked example for workshop participants.</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
