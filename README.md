@@ -15,6 +15,10 @@
 
 ## Technical Track Setup
 
+**New to coding tools?** Read the [full setup guide (SETUP.md)](SETUP.md) first. It walks you through everything from scratch, including installing Node.js, getting an API key, and using the terminal for the first time.
+
+**Already comfortable with the terminal?** Quick start:
+
 1. Clone this repo:
    ```bash
    git clone https://github.com/TheGinjaNinja/hub201-workshop.git
