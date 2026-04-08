@@ -55,7 +55,10 @@
 
 ## Examples
 
-See `examples/shieldbyte/` for completed examples of all 6 exercises. ShieldByte is a fictional cybersecurity startup used to show what "done" looks like.
+Two worked examples show what "done" looks like for each exercise:
+
+- **`examples/shieldbyte/`** - A cybersecurity startup building phishing simulation software for Southeast European banks. Shows a domain-specific example with regulatory compliance as a trigger.
+- **`examples/procuresimple/`** - A B2B procurement platform for manufacturing SMEs. Shows a non-cybersecurity example to demonstrate that the frameworks work across any domain.
 
 ---
 

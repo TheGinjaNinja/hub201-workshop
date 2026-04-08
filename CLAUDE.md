@@ -145,7 +145,7 @@ All outputs go in the `/outputs/` directory as markdown files.
 - **Evidence Assessment:** A summary of evidence quality for each major claim (Strong / Moderate / Weak / Assumption)
 - **Next Steps:** What the founder should validate, test, or gather evidence on before this output is considered reliable
 
-**Reference examples:** Point founders to `/examples/shieldbyte/` for reference examples of completed exercises.
+**Reference examples:** Point founders to `/examples/shieldbyte/` (cybersecurity domain) or `/examples/procuresimple/` (B2B procurement domain) for reference examples of completed exercises. Use whichever is closer to the founder's domain.
 
 ## 6. Knowledge File References
 

@@ -122,9 +122,9 @@ When a founder describes their target market, apply the specificity test: "Can y
 
 Ask: "Why this segment first? What makes them more likely to buy than any other segment?" The answer should reference urgency, access, or a specific advantage the founder has in reaching these companies.
 
-## Persona Card Template
+## Persona Card Template (Customer Clarity Canvas)
 
-Each persona card should contain the following fields. For every field, the founder must identify the evidence source and rate its strength.
+Each persona card follows the Customer Clarity Canvas structure. This ensures founders think through the full picture of their customer, not just demographics. For every field, the founder must identify the evidence source and rate its strength.
 
 ```
 ### [Persona Nickname] (e.g., "Viktor the SOC Lead")
@@ -132,36 +132,59 @@ Each persona card should contain the following fields. For every field, the foun
 **Buying Role:** [Champion / Influencer / Decision Maker / Budget Holder / End User]
 **Early or Ideal Customer:** [Early Customer / Ideal Customer]
 
-**Role/Title:** [Specific job title]
-**Company Profile:**
-- Size: [Employee count range]
-- Industry: [Specific vertical]
-- Geography: [Country or region]
-- Other qualifying characteristics: [Compliance requirements, recent incidents, growth stage, etc.]
+#### Define the Customer
 
-**Trigger Event:** [What causes this person to look for a solution NOW]
+- **Role/Title:** [Specific job title]
+- **Firmographics:** [Industry, company size (employees), revenue range, geography, funding stage]
+- **Role in Purchase:** [Champion / User / Buyer / Decision-maker, or multiple]
+- **Trigger Event:** [What causes this person to look for a solution NOW]
+- **Where They Hang Out:** [LinkedIn groups, conferences, publications, communities, Slack groups, podcasts, events]
+- **Who Influences Them:** [Brands, people, analysts, publications they trust]
 
-**Jobs to Be Done:**
-1. [Primary functional job]
-2. [Secondary job]
-3. [Social or emotional job, if relevant]
+#### Define the Use Case
 
-**Pain Points (ranked):**
-1. [Critical pain] - would pay to solve today
-2. [Major pain]
-3. [Minor pain]
+- **Situation Before Your Product:** [What is their world like today without you?]
+- **Current Solution:** [What tools, processes, or workarounds do they use today? Include "do nothing" if applicable.]
+- **Frustrations with Current Approach:** [What specifically is broken, slow, painful, or missing?]
+- **Consequences:** [What does this cost them in money, time, reputation, or stress?]
+- **Past Spend:** [Have they spent money on solutions before? What is their budget range?]
 
-**Current Solution:** [What they do today, including "do nothing" or manual workarounds]
+#### Define the Problem
 
-**Channels:** [Where to find and reach this person: LinkedIn groups, conferences, publications, communities, Slack groups, etc.]
+- **Jobs to Be Done:**
+  1. [Primary functional job]
+  2. [Secondary job]
+  3. [Social or emotional job, if relevant]
+- **Pain Points (ranked by severity):**
+  1. [Critical] - would pay to solve today
+  2. [Major]
+  3. [Minor]
+- **How Often They Feel This Pain:** [Daily / Weekly / Monthly / Quarterly]
+- **Problem Awareness:** [High (actively seeking) / Medium (aware but not seeking) / Low (needs education)]
+- **Why They Would Say No:** [Price, risk, switching costs, timing, inertia, competing priorities]
 
-**Evidence Assessment:**
+#### Define the Buyers (B2B)
+
+- **Champion:** [Who advocates internally for finding a solution?]
+- **Influencer:** [Who shapes the decision but does not make it?]
+- **Decision Maker:** [Who has final authority to approve?]
+- **Budget Holder:** [Who controls the budget?]
+- **Saboteur:** [Who might block or slow down the purchase? Why?]
+- **End User:** [Who actually uses the product day-to-day?]
+
+#### Channels
+
+- [How and where to reach 50 of this persona in the next two weeks]
+
+#### Evidence Assessment
+
 | Field | Evidence Source | Strength |
 |-------|---------------|----------|
-| Role/Title | [e.g., 5 interviews with SOC leads] | [Strong/Moderate/Weak/Assumption] |
+| Customer Profile | [e.g., 5 interviews with SOC leads] | [Strong/Moderate/Weak/Assumption] |
+| Use Case | [e.g., Observed in 2 demos] | [Strong/Moderate/Weak/Assumption] |
+| Problem / Pains | [e.g., 3 interviews confirmed this ranking] | [Strong/Moderate/Weak/Assumption] |
 | Trigger Event | [e.g., Assumption based on market research] | [Strong/Moderate/Weak/Assumption] |
-| Pain Points | [e.g., 3 interviews confirmed this ranking] | [Strong/Moderate/Weak/Assumption] |
-| Current Solution | [e.g., Observed in 2 demos] | [Strong/Moderate/Weak/Assumption] |
+| Buyer Roles | [e.g., Assumption, no procurement interviews] | [Strong/Moderate/Weak/Assumption] |
 ```
 
 ### Coaching Notes on the Template
@@ -170,7 +193,13 @@ Each persona card should contain the following fields. For every field, the foun
 
 **Trigger event:** This is the most important field. No trigger means no urgency. No urgency means no sale. A trigger is a specific event or change in circumstances that causes the person to actively seek a solution. Examples: a phishing breach last quarter, a compliance audit deadline in 90 days, a new regulation taking effect, a board mandate to reduce risk. "They need better security" is not a trigger. "Their cyber insurance premium doubled after a ransomware incident" is a trigger.
 
-**Current solution:** Always include this. "Do nothing" is a valid current solution and is often the biggest competitor. If the founder does not know what their customer does today, they have not done enough discovery.
+**Current solution and use case:** Always fill these in. "Do nothing" is a valid current solution and is often the biggest competitor. The use case section forces founders to think about the customer's world before and after the product. If they cannot describe the frustrations and consequences of the current approach, they have not done enough discovery.
+
+**Consequences and past spend:** These fields reveal willingness to pay. If the consequences are low or the customer has never spent money on this problem, the pain may not be severe enough to build a business around.
+
+**Problem awareness:** This determines go-to-market approach. High awareness means inbound and search marketing can work. Low awareness means you need education-first sales, which is expensive and slow.
+
+**Why they would say no:** Founders hate this question. But the reasons for rejection are often more useful than the reasons for interest. Objections reveal switching costs, risk tolerance, and competitive dynamics.
 
 **Evidence per field:** Different fields will have different evidence strengths. A founder might have strong evidence for pain points (from interviews) but weak evidence for the trigger event (assumption). This is fine. The point is to be honest about what is validated and what is not.
 
@@ -229,7 +258,7 @@ Generate the completed personas as `/outputs/personas.md` using this structure:
 # Personas: [Company Name]
 
 **Date:** [Today's date]
-**Exercise:** Buyer and User Personas
+**Exercise:** Buyer and User Personas (Customer Clarity Canvas)
 
 ## Beachhead Definition
 
@@ -245,33 +274,59 @@ Generate the completed personas as `/outputs/personas.md` using this structure:
 **Buying Role:** [Role]
 **Early or Ideal Customer:** [Early/Ideal]
 
-**Role/Title:** [Title]
-**Company Profile:**
-- Size: [Range]
-- Industry: [Vertical]
-- Geography: [Region]
-- Qualifying characteristics: [Details]
+#### Define the Customer
 
-**Trigger Event:** [Specific trigger]
+- **Role/Title:** [Title]
+- **Firmographics:** [Industry, company size, revenue range, geography, funding stage]
+- **Role in Purchase:** [Champion / User / Buyer / Decision-maker]
+- **Trigger Event:** [Specific trigger]
+- **Where They Hang Out:** [Channels, communities, events]
+- **Who Influences Them:** [Trusted brands, people, publications]
 
-**Jobs to Be Done:**
-1. [Job 1]
-2. [Job 2]
-3. [Job 3]
+#### Define the Use Case
 
-**Pain Points (ranked):**
-1. [Pain 1]
-2. [Pain 2]
-3. [Pain 3]
+- **Situation Before Your Product:** [Their world without you]
+- **Current Solution:** [What they do today]
+- **Frustrations with Current Approach:** [What is broken]
+- **Consequences:** [Cost in money, time, reputation, stress]
+- **Past Spend:** [Have they paid for solutions before? Budget range?]
 
-**Current Solution:** [What they do today]
+#### Define the Problem
 
-**Channels:** [Where to find them]
+- **Jobs to Be Done:**
+  1. [Job 1]
+  2. [Job 2]
+  3. [Job 3]
+- **Pain Points (ranked by severity):**
+  1. [Critical pain]
+  2. [Major pain]
+  3. [Minor pain]
+- **How Often They Feel This Pain:** [Daily/Weekly/Monthly]
+- **Problem Awareness:** [High/Medium/Low]
+- **Why They Would Say No:** [Objections, blockers, inertia]
 
-**Evidence Assessment:**
+#### Define the Buyers (B2B)
+
+- **Champion:** [Who]
+- **Influencer:** [Who]
+- **Decision Maker:** [Who]
+- **Budget Holder:** [Who]
+- **Saboteur:** [Who and why]
+- **End User:** [Who]
+
+#### Channels
+
+- [How to reach 50 of this persona in the next two weeks]
+
+#### Evidence Assessment
+
 | Field | Evidence Source | Strength |
 |-------|---------------|----------|
-| [Field] | [Source] | [Rating] |
+| Customer Profile | [Source] | [Rating] |
+| Use Case | [Source] | [Rating] |
+| Problem / Pains | [Source] | [Rating] |
+| Trigger Event | [Source] | [Rating] |
+| Buyer Roles | [Source] | [Rating] |
 
 ---
 
@@ -280,16 +335,6 @@ Generate the completed personas as `/outputs/personas.md` using this structure:
 [Same structure as above]
 
 ---
-
-## Buyer Map (B2B)
-
-| Role | Person/Title | Motivation | Potential Objection |
-|------|-------------|------------|-------------------|
-| Champion | [Who] | [Why they fight for you] | [What could stop them] |
-| Influencer | [Who] | [What they evaluate] | [Technical concerns] |
-| Decision Maker | [Who] | [What they care about] | [Risk or budget concerns] |
-| Budget Holder | [Who] | [Budget context] | [Competing priorities] |
-| Saboteur | [Who] | [Why they block] | [How to neutralise] |
 
 ## Evidence Assessment
 
