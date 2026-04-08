@@ -15,21 +15,16 @@
 
 ## Technical Track Setup
 
-1. Install [Node.js](https://nodejs.org/) 18+ if you don't have it
-2. Install Claude Code:
+1. Clone this repo:
    ```bash
-   npm install -g @anthropic-ai/claude-code
-   ```
-3. Clone this repo:
-   ```bash
-   git clone [repo-url]
+   git clone https://github.com/TheGinjaNinja/hub201-workshop.git
    cd hub201-workshop
    ```
-4. Run:
-   ```bash
-   claude
-   ```
-5. The AI coach will introduce itself and guide you through the exercises
+2. Open the repo in your AI coding tool of choice. The `CLAUDE.md` file contains all the coaching instructions. Most AI coding tools will read this automatically.
+   - **Claude Code:** Install [Node.js](https://nodejs.org/) 18+ and run `npm install -g @anthropic-ai/claude-code`. Then run `claude` in the repo directory. You will need an [Anthropic API key](https://console.anthropic.com/) set as `ANTHROPIC_API_KEY` in your environment.
+   - **Cursor, Windsurf, GitHub Copilot, or other AI IDEs:** Open the repo folder. The AI assistant should pick up the `CLAUDE.md` file as project context. If it does not, paste the contents of `CLAUDE.md` into your chat as a system prompt.
+   - **ChatGPT or Claude.ai (web):** Copy the contents of `CLAUDE.md` and paste it at the start of your conversation. Then follow the coach's instructions.
+3. The AI coach will introduce itself and guide you through the exercises
 
 ---
 
