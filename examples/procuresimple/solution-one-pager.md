@@ -2,7 +2,7 @@
 **Stop overpaying suppliers. Save 10-15% with zero risk.**
 
 ## The Problem
-SMEs with 50-500 employees spend 40-60% of revenue on procurement but manage it through spreadsheets and email. Operations managers negotiate alone with no visibility into total spend and no leverage. Rising input costs are squeezing margins and the board wants savings yesterday.
+SMEs with 50-500 employees can spend up to 30% of revenue on suppliers and materials but manage it through spreadsheets and email. Operations managers negotiate alone with no visibility into total spend and no leverage. Rising input costs are squeezing margins and the board wants savings yesterday.
 
 ## Who This Is For
 Operations Managers and Finance Directors at European manufacturing SMEs (50-500 employees) facing margin pressure from rising supplier costs.
