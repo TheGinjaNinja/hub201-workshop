@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UVP, Differentiation, and Problem-Solution Fit / HUB201</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #0F172A;
+    line-height: 1.6;
+  }
+
+  /* Slide base */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 48px;
+    position: relative;
+  }
+  .slide-inner {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Backgrounds */
+  .bg-dark { background: #111827; color: #FFFFFF; }
+  .bg-light { background: #FFFFFF; color: #0F172A; }
+  .bg-light-accent { background: #FFF7ED; color: #0F172A; }
+
+  /* Typography */
+  .eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #EA580D;
+    margin-bottom: 20px;
+  }
+  .bg-dark .eyebrow { color: #EA580D; }
+
+  h1 { font-size: 3.5rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 24px; }
+  h2 { font-size: 3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 24px; }
+  h3 { font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 16px; }
+
+  .subtitle { font-size: 1.5rem; font-weight: 300; line-height: 1.5; }
+  .bg-dark .subtitle { color: #94A3B8; }
+  .bg-light .subtitle, .bg-light-accent .subtitle { color: #64748B; }
+
+  .muted { color: #64748B; }
+  .bg-dark .muted { color: #94A3B8; }
+
+  .body-lg { font-size: 1.35rem; line-height: 1.7; }
+  .primary { color: #EA580D; }
+
+  /* Stat blocks */
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #EA580D;
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #64748B;
+    margin-top: 4px;
+  }
+  .bg-dark .stat-label { color: #94A3B8; }
+
+  /* Grids */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+
+  /* Cards */
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .bg-light .card, .bg-light-accent .card {
+    background: #FFFFFF;
+    border: 1px solid #E4E4E7;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card-dark {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .card-highlight {
+    border: 2px solid #EA580D;
+    background: rgba(234,88,13,0.05);
+  }
+
+  /* Evidence scale rows */
+  .evidence-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    background: #F4F4F5;
+  }
+  .evidence-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 6px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge-green { background: #DCFCE7; color: #166534; }
+  .badge-blue { background: #DBEAFE; color: #1E40AF; }
+  .badge-amber { background: #FEF3C7; color: #92400E; }
+  .badge-red { background: #FEE2E2; color: #991B1B; }
+  .evidence-border-green { border-left: 4px solid #22C55E; }
+  .evidence-border-blue { border-left: 4px solid #3B82F6; }
+  .evidence-border-amber { border-left: 4px solid #F59E0B; }
+  .evidence-border-red { border-left: 4px solid #EF4444; }
+
+  /* Big number emphasis */
+  .big-number {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  /* Comparison columns */
+  .compare-col {
+    padding: 32px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .compare-muted {
+    background: #F4F4F5;
+    border: 1px solid #E4E4E7;
+  }
+  .compare-highlight {
+    background: #FFF7ED;
+    border: 2px solid #EA580D;
+  }
+
+  /* Arc columns */
+  .arc-col {
+    padding: 32px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .arc-red { border-top: 4px solid #EF4444; }
+  .arc-amber { border-top: 4px solid #F59E0B; }
+  .arc-green { border-top: 4px solid #22C55E; }
+
+  /* Exercise list */
+  .exercise-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 32px 0;
+  }
+  .exercise-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: #FFFFFF;
+    border: 1px solid #E4E4E7;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+  .exercise-num {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #EA580D;
+    background: #FFF7ED;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Option cards for final slide */
+  .option-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 28px 32px;
+    text-align: center;
+  }
+  .option-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+  .option-card p { font-size: 1.05rem; color: #94A3B8; }
+
+  /* Stat row for venture slides */
+  .stat-row {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin: 32px 0;
+  }
+  .stat-block { text-align: center; }
+  .stat-block .stat-number { font-size: 2rem; }
+  .stat-block .stat-label { font-size: 0.85rem; }
+
+  /* Fit cards */
+  .fit-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+  }
+  .fit-num {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #EA580D;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .fit-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .fit-desc {
+    font-size: 1.05rem;
+    color: #94A3B8;
+    line-height: 1.5;
+  }
+
+  /* Repo link */
+  .repo-link {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #EA580D;
+    margin: 24px 0;
+    word-break: break-all;
+  }
+
+  /* Quote style */
+  .big-quote {
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  /* Compare stat list */
+  .compare-stat {
+    font-size: 1.15rem;
+    margin: 8px 0;
+    line-height: 1.5;
+  }
+  .compare-stat strong { font-weight: 600; }
+
+  /* Revenue zero emphasis */
+  .zero-revenue {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #EF4444;
+    margin: 24px 0 8px;
+  }
+  .liquidated {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #EF4444;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .slide { padding: 60px 24px; }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2.2rem; }
+    .big-quote { font-size: 2rem; }
+    .grid-2, .grid-3, .grid-4, .grid-2x2, .exercise-grid { grid-template-columns: 1fr; }
+    .stat-row { gap: 24px; }
+    .big-number { font-size: 3rem; }
+    .zero-revenue { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<section class="slide bg-dark">
+  <div class="slide-inner" style="text-align: center;">
+    <div class="eyebrow">HUB201 Pre-Acceleration / Week 2</div>
+    <h1 style="font-size: 3.5rem; margin-bottom: 20px;">UVP, Differentiation,<br>and Problem-Solution Fit</h1>
+    <p class="subtitle" style="font-size: 1.4rem; margin-bottom: 8px;">Jamie Reynolds, Ginger Ninja Ventures</p>
+    <p style="font-size: 1.1rem; color: #94A3B8;">Operating Partner for Early-Stage VC Funds</p>
+  </div>
+</section>
+
+<!-- SLIDE 2: Who I Am -->
+<section class="slide bg-light">
+  <div class="slide-inner">
+    <div class="grid-2">
+      <div>
+        <div class="grid-2x2">
+          <div>
+            <div class="stat-number">1,000+</div>
+            <div class="stat-label">Founders Mentored</div>
+          </div>
+          <div>
+            <div class="stat-number">3x</div>
+            <div class="stat-label">Venture-Backed Founder</div>
+          </div>
+          <div>
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Programmes Delivered</div>
+          </div>
+          <div>
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Countries</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="body-lg" style="font-size: 1.4rem; line-height: 1.6;">I help startups find product-market fit and build repeatable revenue.</p>
+        <p class="body-lg muted" style="margin-top: 16px; font-size: 1.2rem;">Embedded inside VC funds and accelerator programmes as their operating partner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: Three Ventures Intro -->
+<section class="slide bg-dark">
+  <div class="slide-inner" style="text-align: center;">
+    <h2 style="font-size: 3.5rem;">Three startups. Three lessons.</h2>
+    <p class="subtitle" style="font-size: 1.5rem; margin-top: 16px;">Expensive ignorance. Disciplined experimentation. Radical simplicity.</p>
+  </div>
+</section>
+
+<!-- SLIDE 4: Bondcube -->
+<section class="slide bg-light">
+  <div class="slide-inner">
+    <div class="eyebrow">2012 / B2B Fintech</div>
+    <h2 style="border-left: 5px solid #EA580D; padding-left: 24px;">Bondcube</h2>
+    <div class="stat-row" style="margin-top: 40px;">
+      <div class="stat-block">
+        <div class="stat-number">EUR 5M</div>
+        <div class="stat-label">Raised</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">30</div>
+        <div class="stat-label">People</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">13</div>
+        <div class="stat-label">Months Building</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">250</div>
+        <div class="stat-label">LOIs</div>
+      </div>
+    </div>
+    <div class="zero-revenue">EUR 0 revenue</div>
+    <div class="liquidated">Liquidated.</div>
+  </div>
+</section>
+
+<!-- SLIDE 5: Bondcube Lesson -->
+<section class="slide bg-dark">
+  <div class="slide-inner" style="text-align: center; max-width: 900px;">
+    <p class="big-quote">"I confused interest with evidence."</p>
+    <p class="subtitle" style="font-size: 1.4rem; margin-top: 32px;">250 organisations said they wanted it.<br>Not one of them paid.</p>
+  </div>
+</section>
+
+<!-- SLIDE 6: Evidence Strength Scale -->
+<section class="slide bg-light">
+  <div class="slide-inner" style="max-width: 900px;">
+    <h2 style="margin-bottom: 40px;">The Evidence Scale</h2>
+
+    <div class="evidence-row evidence-border-green">
+      <span class="evidence-badge badge-green">Strong</span>
+      <span class="body-lg" style="font-size: 1.15rem;">Someone paid, signed, or changed their behaviour</span>
+    </div>
+
+    <div class="evidence-row evidence-border-blue">
+      <span class="evidence-badge badge-blue">Moderate</span>
+      <span class="body-lg" style="font-size: 1.15rem;">Someone committed time or reputation</span>
+    </div>
+
+    <div class="evidence-row evidence-border-amber">
+      <span class="evidence-badge badge-amber">Weak</span>
+      <span class="body-lg" style="font-size: 1.15rem;">Someone said they liked it</span>
+    </div>
+
+    <div class="evidence-row evidence-border-red">
+      <span class="evidence-badge badge-red">Assumption</span>
+      <span class="body-lg" style="font-size: 1.15rem;">You believe it but haven't tested it</span>
+    </div>
+
+    <p class="muted" style="margin-top: 32px; font-size: 1.2rem; text-align: center;">250 LOIs = Weak. I treated it as Strong.</p>
+  </div>
+</section>
+
+<!-- SLIDE 7: NPL Markets -->
+<section class="slide bg-light" style="background: #FAFAFA;">
+  <div class="slide-inner">
+    <div class="eyebrow">2018 / B2B Fintech</div>
+    <h2>NPL Markets</h2>
+    <div class="grid-2" style="margin-top: 40px;">
+      <div class="compare-col compare-muted">
+        <h3 style="color: #64748B; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em;">Bondcube</h3>
+        <div class="compare-stat"><strong>EUR 5M</strong> cost</div>
+        <div class="compare-stat"><strong>30</strong> people</div>
+        <div class="compare-stat"><strong>13</strong> months</div>
+        <div class="compare-stat"><strong style="color: #EF4444;">EUR 0</strong> revenue</div>
+      </div>
+      <div class="compare-col compare-highlight">
+        <h3 style="color: #EA580D; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em;">NPL Markets</h3>
+        <div class="compare-stat"><strong>GBP 500K</strong> cost</div>
+        <div class="compare-stat"><strong>10</strong> people</div>
+        <div class="compare-stat"><strong>3</strong> months</div>
+        <div class="compare-stat"><strong style="color: #22C55E;">GBP 2M</strong> Series A</div>
+      </div>
+    </div>
+    <p class="muted" style="text-align: center; margin-top: 40px; font-size: 1.3rem;">Same founder. Different approach. I talked to customers first.</p>
+  </div>
+</section>
+
+<!-- SLIDE 8: Three Pre-Seed Fits -->
+<section class="slide bg-dark">
+  <div class="slide-inner">
+    <h2 style="text-align: center; margin-bottom: 48px;">Three fits to prove before you build</h2>
+    <div class="grid-3">
+      <div class="fit-card">
+        <div class="fit-num">1</div>
+        <div class="fit-title">Customer / Problem Fit</div>
+        <div class="fit-desc">Does this customer have this problem badly enough to pay?</div>
+      </div>
+      <div class="fit-card">
+        <div class="fit-num">2</div>
+        <div class="fit-title">Problem / Solution Fit</div>
+        <div class="fit-desc">Does your solution actually solve it?</div>
+      </div>
+      <div class="fit-card">
+        <div class="fit-num">3</div>
+        <div class="fit-title">Revenue Model Fit</div>
+        <div class="fit-desc">Can you charge for it sustainably?</div>
+      </div>
+    </div>
+    <p class="muted" style="text-align: center; margin-top: 40px; font-size: 1.2rem;">Most technical founders skip straight to #2.</p>
+  </div>
+</section>
+
+<!-- SLIDE 9: P.S. Bridal -->
+<section class="slide bg-light">
+  <div class="slide-inner">
+    <div class="eyebrow">2022 / B2C Tech</div>
+    <h2 style="border-left: 5px solid #EA580D; padding-left: 24px;">P.S. Bridal</h2>
+    <div class="stat-row" style="margin-top: 40px;">
+      <div class="stat-block">
+        <div class="stat-number">GBP 5K</div>
+        <div class="stat-label">Tech Cost</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Month to Market</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">3</div>
+        <div class="stat-label">People</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">8,500</div>
+        <div class="stat-label">Customers</div>
+      </div>
+    </div>
+    <p style="font-size: 2rem; font-weight: 700; color: #22C55E; margin-top: 24px;">GBP 5M Series A</p>
+    <p class="muted" style="margin-top: 16px; font-size: 1.3rem;">I didn't build a platform. I rented dresses out of storage.</p>
+  </div>
+</section>
+
+<!-- SLIDE 10: The Arc -->
+<section class="slide bg-dark">
+  <div class="slide-inner">
+    <h2 style="text-align: center; margin-bottom: 48px;">The Arc</h2>
+    <div class="grid-3">
+      <div class="arc-col arc-red">
+        <h3 style="margin-bottom: 8px;">Bondcube</h3>
+        <p style="color: #94A3B8; font-size: 1.05rem; margin-bottom: 20px;">Expensive ignorance</p>
+        <p style="font-size: 1.8rem; font-weight: 700; color: #EF4444;">EUR 5M spent</p>
+        <p style="font-size: 1.4rem; font-weight: 600; color: #EF4444; margin-top: 4px;">EUR 0 revenue</p>
+      </div>
+      <div class="arc-col arc-amber">
+        <h3 style="margin-bottom: 8px;">NPL Markets</h3>
+        <p style="color: #94A3B8; font-size: 1.05rem; margin-bottom: 20px;">Disciplined experimentation</p>
+        <p style="font-size: 1.8rem; font-weight: 700; color: #F59E0B;">GBP 500K cost</p>
+        <p style="font-size: 1.4rem; font-weight: 600; color: #F59E0B; margin-top: 4px;">GBP 2M Series A</p>
+      </div>
+      <div class="arc-col arc-green">
+        <h3 style="margin-bottom: 8px;">P.S. Bridal</h3>
+        <p style="color: #94A3B8; font-size: 1.05rem; margin-bottom: 20px;">Radical simplicity</p>
+        <p style="font-size: 1.8rem; font-weight: 700; color: #22C55E;">GBP 5K cost</p>
+        <p style="font-size: 1.4rem; font-weight: 600; color: #22C55E; margin-top: 4px;">GBP 5M Series A</p>
+      </div>
+    </div>
+    <p style="text-align: center; margin-top: 48px; font-size: 1.5rem; font-weight: 500;">Start at the end of this arc, not the beginning.</p>
+  </div>
+</section>
+
+<!-- SLIDE 11: Your Turn -->
+<section class="slide bg-light-accent">
+  <div class="slide-inner" style="max-width: 1000px;">
+    <h2 style="font-size: 3.2rem;">Your turn.</h2>
+    <p class="body-lg" style="font-size: 1.35rem; margin-top: 16px; margin-bottom: 8px; max-width: 700px;">The AI coach will walk you through 6 exercises. It will challenge every claim you make. It will rate your evidence.</p>
+    <div class="exercise-grid">
+      <div class="exercise-item">
+        <span class="exercise-num">1</span>
+        Value Proposition
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-num">2</span>
+        Competition Matrix
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-num">3</span>
+        Differentiation Statement
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-num">4</span>
+        Solution One-Pager
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-num">5</span>
+        Personas
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-num">6</span>
+        Sales Battlecard
+      </div>
+    </div>
+    <p class="muted" style="font-size: 1.2rem;">Be honest. If you don't have evidence, say so.</p>
+  </div>
+</section>
+
+<!-- SLIDE 12: Get Started -->
+<section class="slide bg-dark">
+  <div class="slide-inner" style="text-align: center;">
+    <h2 style="font-size: 3.2rem; margin-bottom: 16px;">Get started</h2>
+    <p class="repo-link">github.com/TheGinjaNinja/hub201-workshop</p>
+    <div class="grid-2" style="max-width: 800px; margin: 40px auto 0; gap: 24px;">
+      <div class="option-card">
+        <h3>Terminal</h3>
+        <p>Clone the repo, run Claude Code</p>
+      </div>
+      <div class="option-card">
+        <h3>Web</h3>
+        <p>Go to claude.ai, paste the CLAUDE.md</p>
+      </div>
+    </div>
+    <p style="margin-top: 48px; font-size: 1.3rem; color: #94A3B8;">Start with Value Proposition.</p>
+  </div>
+</section>
+
+</body>
+</html>
