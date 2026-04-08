@@ -2,7 +2,7 @@
 
 ## Target Customer
 - **Persona:** "Spreadsheet-Drowning Karel" (Operations Manager at a mid-market European manufacturing SME)
-- **Profile:** Operations Manager or Head of Procurement at a manufacturing SME with 50-500 employees, based in Europe, managing EUR 2-20M in annual supplier spend across fragmented categories
+- **Profile:** Operations Manager or Head of Procurement at a manufacturing SME with 50-500 employees (beachhead: 50-200), based in Europe, managing EUR 5-20M in annual supplier spend across fragmented categories
 - **Trigger event:** Rising input costs squeezing margins, with board pressure to find measurable cost savings without hiring a full procurement team
 - **Evidence source:** 6 discovery interviews with operations managers at manufacturing and retail SMEs in Europe. All 6 described procurement as manual, fragmented, and lacking visibility. (Moderate)
 
