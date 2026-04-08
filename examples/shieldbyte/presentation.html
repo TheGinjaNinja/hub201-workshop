@@ -679,7 +679,7 @@
             font-weight: 700;
             color: #92400E;
         }
-        .cross-nav {
+        .nav {
             position: fixed;
             top: 0;
             left: 0;
@@ -688,62 +688,59 @@
             background: rgba(17, 24, 39, 0.95);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.85rem;
+            padding: 0 24px;
         }
 
-        .cross-nav a {
+        .nav-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            height: 52px;
+            overflow-x: auto;
+        }
+
+        .nav a {
             color: #94A3B8;
             text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
             transition: color 0.2s;
         }
 
-        .cross-nav a:hover {
-            color: #EA580D;
-        }
-
-        .cross-nav .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .cross-nav .nav-brand {
+        .nav a:hover {
             color: #FFFFFF;
-            font-weight: 600;
         }
 
-        .cross-nav .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        .nav .brand {
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-right: 8px;
+            text-decoration: none;
         }
 
-        .cross-nav .switch-link {
+        .nav .brand:hover {
             color: #EA580D;
-            font-weight: 500;
         }
 
-        body { padding-top: 44px; }
+        body { padding-top: 52px; }
     </style>
 </head>
 <body>
 
-<nav class="cross-nav">
-    <div class="nav-left">
-        <a href="../index.html" class="nav-brand">&larr; All Examples</a>
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="../index.html" class="brand">&larr; All Examples</a>
         <a href="#value-proposition">Value Prop</a>
         <a href="#competition">Competition</a>
         <a href="#differentiation">Differentiation</a>
         <a href="#one-pager">One-Pager</a>
         <a href="#personas">Personas</a>
         <a href="#battlecard">Battlecard</a>
-    </div>
-    <div class="nav-right">
-        <a href="../procuresimple/presentation.html" class="switch-link">View ProcureSimple &rarr;</a>
+        <a href="../procuresimple/presentation.html" style="color: #EA580D; margin-left: auto;">View ProcureSimple &rarr;</a>
     </div>
 </nav>
 
