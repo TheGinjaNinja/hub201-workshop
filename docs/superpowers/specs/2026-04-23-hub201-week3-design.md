@@ -366,8 +366,17 @@ Both scripts are plain bash, idempotent, no external dependencies. Running them 
 
 Step 1 of the implementation order. Moves existing Week 2 files into the new `week2/` structure.
 
-- `CLAUDE.md` → `week2/CLAUDE.md` (later regenerated from extracted sources)
-- `knowledge/` → extracted into `shared/prompt-core/`, `shared/prompt-methodology/`, and `week2/prompt-instance/` by content type
+- Existing `CLAUDE.md` is the extraction source for:
+  - `shared/prompt-core/03-founder-nightmares.md` (Section 7 of CLAUDE.md)
+  - `shared/prompt-core/02-evidence-scales.md` (Evidence Strength Scale + Commitment Ladder from Section 2)
+  - `shared/prompt-core/04-nine-fits.md` (Section 8 of CLAUDE.md)
+  - `week2/prompt-instance/01-identity.md`, `02-philosophy.md`, `07-flow.md` (Sections 1, 2, 4)
+  - `week2/prompt-instance/03-coaching-behaviours.md` (Section 3 — kept as Week 2's variant; `shared/prompt-core/01-coaching-rules.md` is the Week 3-onwards set)
+  - After extraction, a regenerated `week2/CLAUDE.md` is produced by `scripts/build-claude-md.sh 2`. Committed. Original root `CLAUDE.md` deleted.
+- Existing `knowledge/` maps file-by-file:
+  - `cyber-context.md` → `shared/prompt-methodology/cyber-context.md`
+  - `competition-matrix.md`, `differentiation-statement.md`, `personas.md`, `sales-battlecard.md`, `solution-one-pager.md`, `value-proposition.md` → `week2/prompt-instance/` (Week 2-specific positioning knowledge)
+  - `week3-mapping.md` → deleted (its purpose is superseded once Week 3 ships)
 - `examples/` → `week2/examples/` (path moves, content unchanged)
 - `workshop/` → `week2/workshop/` (path moves, content unchanged)
 - `low-tech/` → `week2/low-tech/` (path moves, content unchanged)
