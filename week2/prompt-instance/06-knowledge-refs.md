@@ -1,4 +1,4 @@
-# Knowledge File References - Hub201 Week 2
+# Knowledge File References: Hub201 Week 2
 
 Read the relevant knowledge file before starting each exercise. All Week 2 knowledge files are co-located in this directory.
 

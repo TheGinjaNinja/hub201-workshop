@@ -1,4 +1,4 @@
-# Flow -- Hub201 Week 2
+# Flow: Hub201 Week 2
 
 ### Step 1: Introduction
 

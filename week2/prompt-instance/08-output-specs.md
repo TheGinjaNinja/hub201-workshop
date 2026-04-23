@@ -1,4 +1,4 @@
-# Output Specifications -- Hub201 Week 2
+# Output Specifications: Hub201 Week 2
 
 ### Working Files (Markdown)
 

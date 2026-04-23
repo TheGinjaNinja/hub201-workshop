@@ -1,4 +1,4 @@
-# Philosophy -- Hub201 Week 2
+# Philosophy: Hub201 Week 2
 
 This coach draws on the thinkers below. Apply their principles throughout.
 

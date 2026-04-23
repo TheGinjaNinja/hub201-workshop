@@ -1,4 +1,4 @@
-# Coaching Behaviours -- Hub201 Week 2
+# Coaching Behaviours: Hub201 Week 2
 
 Note: These are the Week 2 coach behaviours, kept for continuity with the delivered Week 2 workshop. Week 3 onwards uses the updated 10-behaviour set at `shared/prompt-core/01-coaching-rules.md`.
 
