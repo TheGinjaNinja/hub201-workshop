@@ -49,15 +49,15 @@ Each question is tagged with [Hx] for the hypothesis tested (from hypotheses.md)
 ### Industry (2-3 questions)
 
 5. "What are you hearing about phishing threats in your industry right now? Where did you hear it?"
-   [-- | awareness level]
+   [signal: awareness level]
    *Note: surfaces market maturity and where they get information. Useful for channel decisions.*
 
 6. "How do the threat patterns you're seeing now compare to 12-18 months ago?"
-   [-- | recency and frequency]
+   [signal: recency and frequency]
    *Note: reveals whether the problem is getting worse (urgency signal) or stable (lower urgency).*
 
 7. "What's the biggest security operations challenge across fintechs your size right now, from your perspective?"
-   [-- | problem-area match]
+   [signal: problem-area match]
    *Note: open industry question. Do not steer. Let them name the problem category unprompted.*
 
 ---
@@ -93,7 +93,7 @@ Each question is tagged with [Hx] for the hypothesis tested (from hypotheses.md)
     *Note: surfaces the full procurement journey: who initiated it, who approved it, how long it took. If they have not bought anything recently, ask "what was the last security tool purchase you went through?"*
 
 15. "Is automated phishing triage something you have actively looked at, or is it not on your radar yet?"
-    [-- | awareness level]
+    [signal: awareness level]
     *Note: market maturity signal. Do not be disappointed by "not on the radar." That is useful data about where the category sits.*
 
 16. "What's the last tool your team adopted that actually stuck? Why that one?"
@@ -117,7 +117,7 @@ Each question is tagged with [Hx] for the hypothesis tested (from hypotheses.md)
     *Note: push for a rough percentage or hours per week. "I'm not sure" is acceptable. "Maybe 20-30% of their week" is a data point you can work with.*
 
 20. "If you could change one thing about your current phishing workflow, what would it be?"
-    [-- | awareness level]
+    [signal: awareness level]
     *Note: open invitation to name the pain in their own words. The answer tells you what framing resonates. Do not suggest options.*
 
 21. "When did your team last go through a compliance audit related to security tooling? What was the worst part?"
@@ -137,15 +137,15 @@ Each question is tagged with [Hx] for the hypothesis tested (from hypotheses.md)
 ### Outro (2-3 questions)
 
 24. "If you had a magic wand for your SOC on Monday morning, what one thing would you fix?"
-    [-- | awareness level]
+    [signal: awareness level]
     *Note: the most unguarded question in the script. Ask it last, after 30-40 minutes of conversation. The answer at this point is less filtered than anything they said earlier.*
 
 25. "Is there anyone else in your network I should be talking to about this? Someone who deals with this problem differently, or at a different type of firm?"
-    [-- | referral signal]
+    [signal: referral]
     *Note: referral ask at the end of every interview. A warm intro from a peer is the fastest way to the next interview. Ask for a specific name, not a vague "yes, probably."*
 
 26. "What's the one question I should have asked you that I didn't?"
-    [-- | awareness level]
+    [signal: awareness level]
     *Note: the closing meta-question. Surfaces blind spots in the script. Update the script before interview 2 if the same gap appears twice.*
 
 ---
@@ -200,7 +200,7 @@ Complete within 30 minutes of ending the interview. Do not batch. Memories merge
 What was the overall signal from this conversation? Was the person inside the target segment? Did they fit the ICP or were they adjacent?
 
 **Strongest evidence from this interview**
-The single most concrete, specific thing this person said. Quote if possible, with hypothesis linked. Example: "She said their team spends about three hours per alert on anything that comes in from the email gateway [H1 -- if confirmed, strong signal]."
+The single most concrete, specific thing this person said. Quote if possible, with hypothesis linked. Example: "She said their team spends about three hours per alert on anything that comes in from the email gateway [H1. If confirmed, strong signal]."
 
 **Did the hypothesis change?**
 For each of H1-H5, note whether this interview strengthened, weakened, or did not touch the hypothesis.

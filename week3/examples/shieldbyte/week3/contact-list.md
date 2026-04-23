@@ -64,11 +64,11 @@ All templates are illustrative starting points [illustrative]. Personalise every
 
 ### Personalised cold email
 
-Subject: SOC phishing triage at [Company name] -- quick question
+Subject: SOC phishing triage at [Company name]: quick question
 
 > Hi [First name],
 >
-> I noticed [Company name] recently hired a SOC analyst [or: "recently expanded your security team"] -- which suggests phishing triage is a growing focus for the team.
+> I noticed [Company name] recently hired a SOC analyst [or: "recently expanded your security team"]. That suggests phishing triage is a growing focus for the team.
 >
 > I am researching how Heads of Security at regulated fintechs in the [DACH / CEE / UK] market are handling phishing response operationally. Specifically whether triage time and false-positive rates are real pain points or manageable today.
 >
@@ -83,7 +83,7 @@ Subject: SOC phishing triage at [Company name] -- quick question
 
 ### LinkedIn opener (2 sentences)
 
-> Hi [First name], I came across your profile while researching how security leads at [sector] fintechs handle phishing triage operationally. I am doing 20-minute research interviews this month -- would you be open to a brief chat?
+> Hi [First name], I came across your profile while researching how security leads at [sector] fintechs handle phishing triage operationally. I am doing 20-minute research interviews this month. Would you be open to a brief chat?
 
 **Note:** Do not mention the product. Do not say "I want to show you something." Ask only for a research conversation.
 
@@ -135,7 +135,7 @@ Adjust channel proportions after week 2 based on actual response rates. If Linke
 | ICP is specific enough for consistent targeting | Defined by title, size, region, and hiring trigger | Moderate |
 | Named contacts in table are realistic targets | All fictional [illustrative], reflect real-world roles and triggers | Assumption (illustrative) |
 | Channel mix proportions are realistic | Based on general outreach experience, not tested in this segment | Assumption |
-| Event names are real channels for this segment | FS-ISAC Europe and CyberSec Europe are labelled [illustrative] -- team to verify real events in their calendar [team to verify with primary source] | Assumption |
+| Event names are real channels for this segment | FS-ISAC Europe and CyberSec Europe are labelled [illustrative]. Team to verify real events in their calendar [team to verify with primary source] | Assumption |
 | Outreach templates will produce 20%+ response rates | Assumption, unvalidated | Assumption |
 
 **Overall rating: Assumption-Heavy.** The contact list is a starting framework, not a validated outreach system. Response rates, channel performance, and ICP accuracy all need to be tested. The value of this document is in making the targeting explicit before the team sends a single message.
