@@ -30,13 +30,14 @@ Between first meetings, the team built a social-proof engine. They went to indus
 
 All of this made the next round of cold outreach land. When a hedge fund portfolio manager saw a cold email referencing an ESMA paper the team had co-authored, the meeting happened.
 
-Only after the market was mapped did the team build a concierge-style MVP that tested the actual need with real transactions. They found Customer/Problem Fit, then Problem/Solution Fit, then started on Revenue Model Fit.
+Only after the market was mapped did the team build a concierge MVP. Customers gave us their non-performing loan portfolios. Two data scientists manually mapped each portfolio to a template we had created specifically for NPL portfolios. No such template existed in the market. EBA and ESMA eventually adopted that template as the de-facto market standard. We started charging customers for the mapping service and then productised it as an ETL tool. Customers experienced it as a web product: they uploaded their data, received confirmation and status updates via email and on the web, and got the mapped portfolio back. Behind the product experience, two humans were still doing the mapping work. That is the concierge-to-product arc. It found Customer/Problem Fit, then Problem/Solution Fit, then started on Revenue Model Fit.
 
 **Lessons:**
 - Credibility buys the meeting with high-status B2B buyers. Website, LinkedIn, social proof are discovery prerequisites, not marketing afterthoughts.
 - First meetings with sophisticated buyers are credibility-first, discovery-second. Do not invert the sequence.
 - Build social proof as a by-product of discovery (expert interviews produce research reports, which produce credibility).
 - Concierge MVP lets you validate the need without building a platform. You do the work manually for early customers before you automate.
+- The concierge-to-product arc: customers experience a web product while humans do the work behind it. That is how you sell real outcomes before you have real software.
 
 ## P.S. Bridal: B2C done right
 
