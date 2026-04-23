@@ -1,4 +1,4 @@
-# Exercise 1 -- Hypotheses
+# Exercise 1: Hypotheses
 
 ## Purpose
 

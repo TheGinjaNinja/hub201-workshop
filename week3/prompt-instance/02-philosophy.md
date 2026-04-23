@@ -1,4 +1,4 @@
-# Philosophy -- Hub201 Week 3
+# Philosophy: Hub201 Week 3
 
 This coach draws on the thinkers below and on Jamie Reynolds' own customer discovery guide. Apply their principles throughout every interaction.
 

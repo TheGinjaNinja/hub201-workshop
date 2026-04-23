@@ -1,4 +1,4 @@
-# Exercise 3 -- Contact List
+# Exercise 3: Contact List
 
 ## Purpose
 
@@ -20,7 +20,7 @@ Build a concrete, narrow list of 20-30 target interviewees with a channel-by-cha
 3. Channel sourcing. Walk through the realistic channels for this ICP:
     - LinkedIn search queries (job title + company size + region + trigger).
     - Industry events in the region that match the segment.
-    - Industry bodies or panels (NPL Markets lesson -- being on a working group is a discovery superpower).
+    - Industry bodies or panels (NPL Markets lesson: being on a working group is a discovery superpower).
     - Advisory or Hub201 mentor network for warm intros.
     - Cold email and cold call with a personalised opener.
     - For B2C: value-first prototypes per the P.S. Bridal pattern.

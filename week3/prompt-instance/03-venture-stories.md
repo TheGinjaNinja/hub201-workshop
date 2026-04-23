@@ -2,7 +2,7 @@
 
 Jamie Reynolds has founded three venture-backed startups and raised over EUR 10 million across them. These three stories anchor Week 3 because each one teaches a different lesson about customer discovery. Bondcube shows what failure looks like. NPL Markets shows B2B discovery done right with high-status buyers. P.S. Bridal shows B2C discovery done right when customers will not give you their time.
 
-## Bondcube -- the warning
+## Bondcube: the warning
 
 Bondcube was an institutional B2B fixed income bond trading platform. The buyers were asset managers, hedge funds, and banks.
 
@@ -18,7 +18,7 @@ They were unknowingly setting themselves up for failure.
 - LoIs without behavioural evidence are a vanity metric.
 - Polite enthusiasm is the weakest signal on the Evidence Strength Scale. Rating it as anything stronger than "weak" is a failure of discipline.
 
-## NPL Markets -- B2B done right
+## NPL Markets: B2B done right
 
 NPL Markets was an NPL (non-performing loan) trading platform. The buyers were hedge funds and banks. These buyers are high-status and busy. They do not meet unknown startups.
 
@@ -38,11 +38,11 @@ Only after the market was mapped did the team build a concierge-style MVP that t
 - Build social proof as a by-product of discovery (expert interviews produce research reports, which produce credibility).
 - Concierge MVP lets you validate the need without building a platform. You do the work manually for early customers before you automate.
 
-## P.S. Bridal -- B2C done right
+## P.S. Bridal: B2C done right
 
 P.S. Bridal was a B2C personalised wedding dress styling business. The buyers were brides. Brides will not schedule interviews with strangers.
 
-The team could not use classical customer interviews. So they gave value first. They built a wedding dress style finder as a prototype -- brides answered a 30-question Typeform, the team ran a manual algorithm on the responses, and brides received a personalised style recommendation. In exchange, brides shared preferences, wedding venue details, dress size, budget, jewellery, services needed, and timing. The team captured 40+ data points per bride.
+The team could not use classical customer interviews. So they gave value first. They built a wedding dress style finder as a prototype. Brides answered a 30-question Typeform, the team ran a manual algorithm on the responses, and brides received a personalised style recommendation. In exchange, brides shared preferences, wedding venue details, dress size, budget, jewellery, services needed, and timing. The team captured 40+ data points per bride.
 
 2,500 brides went through the style finder in the first year. 8,000+ over time. Every interaction was discovery disguised as value delivery.
 
@@ -63,7 +63,7 @@ Two years of part-time work later, the team had a strong value proposition. They
 NPL Markets and P.S. Bridal went through completely different discovery motions (sales-style first meetings vs. value-giving prototypes), but they reached the same two waypoints: Customer/Problem Fit then Problem/Solution Fit.
 
 The shared discipline across both:
-- A narrow target (not "hedge funds" or "brides" -- specific sub-segments with specific triggers)
+- A narrow target (not "hedge funds" or "brides". Specific sub-segments with specific triggers.)
 - Obsession with behaviour over opinion (real transactions, real usage data, real spend, not survey answers)
 - Iteration (scripts updated after every interview, prototypes rebuilt after every learning)
 - Social proof built into the process (ESMA papers for NPL, 8,000 bride data points for P.S. Bridal)

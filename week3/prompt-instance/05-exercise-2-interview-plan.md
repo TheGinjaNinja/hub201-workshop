@@ -1,4 +1,4 @@
-# Exercise 2 -- Interview Plan
+# Exercise 2: Interview Plan
 
 ## Purpose
 
@@ -13,7 +13,7 @@ Design a discovery script that tests the hypotheses from Exercise 1 without lead
 
 1. Walk the team through the script skeleton: Intro, Industry, Business, Personal, Outro. See `shared/prompt-methodology/discovery/04-interview-methodology.md` for the full framework.
 2. Enforce the open question rule. Every proposed question must use why, what, or how to surface real experience. Never do, would, could, or should. When the team drafts a closed or leading question, show them the rewrite and explain why the behavioural version is stronger. See `shared/prompt-methodology/discovery/03-open-question-rule.md`.
-3. Tag each question with (a) the hypothesis it tests and (b) which of the Five Signals it elicits -- recency, concrete behaviour, time/money spent, problem-area match, awareness level. See `shared/prompt-methodology/discovery/02-five-signals.md`.
+3. Tag each question with (a) the hypothesis it tests and (b) which of the Five Signals it elicits: recency, concrete behaviour, time/money spent, problem-area match, awareness level. See `shared/prompt-methodology/discovery/02-five-signals.md`.
 4. Add the consent-to-record script. Always verbal consent before recording.
 5. Add the magic wand closing question: "If you had a magic wand and could fix one problem in your work, what would it be?"
 6. Define cadence. Aim for 5 interviews per week. Review and iterate the script after interview 1. Run an Affinity Mapping exercise after interview 10 to cluster themes before continuing. Target 10-20 interviews per segment.

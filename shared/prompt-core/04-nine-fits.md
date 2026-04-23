@@ -32,6 +32,6 @@ Nine distinct fits that a startup must validate in sequence. Get them in the wro
 
 Each workshop targets one fit explicitly. Teams should know which fit they are working on and what evidence would move them from assumption to validated.
 
-Each workshop instance file must declare which fit it addresses and what evidence would move teams from assumption to validated for that fit. Teams who lack evidence for the target fit are not sent back -- the workshop is how they start collecting it.
+Each workshop instance file must declare which fit it addresses and what evidence would move teams from assumption to validated for that fit. Teams who lack evidence for the target fit are not sent back. The workshop is how they start collecting it.
 
 If a team does not yet have evidence of the fit this workshop addresses, help them design the next steps that will get them the evidence they need, and produce outputs that show their current best understanding with gaps clearly labelled.
