@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShieldByte Week 3: Customer Discovery and ICP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* =====================================================
+       ShieldByte brand tokens
+       Primary: #0F4C81 (deep blue)
+       Accent:  #1E7FC2 (mid blue)
+       Pale:    #EBF4FD (tinted backgrounds)
+       ===================================================== */
+    :root {
+      --primary: #0F4C81;
+      --primary-hover: #0A3C6A;
+      --primary-pale: #EBF4FD;
+      --accent: #1E7FC2;
+      --bg: #FFFFFF;
+      --surface: #F6F8FB;
+      --border: #D8E6F5;
+      --text: #0F172A;
+      --text2: #475569;
+      --text3: #94A3B8;
+      --dark-section: #0A1929;
+      --success: #16A34A;
+      --warning: #D97706;
+      --danger: #DC2626;
+      --radius-card: 12px;
+      --radius-btn: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- Nav ---- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-brand {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-right: 16px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      background: var(--primary-pale);
+      color: var(--primary);
+    }
+
+    /* ---- Layout ---- */
+    main { padding-top: 56px; }
+
+    section {
+      padding: 72px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    section:nth-child(even) {
+      background: var(--surface);
+    }
+
+    /* Override: make even-section backgrounds full-width */
+    .section-alt {
+      background: var(--surface);
+      width: 100%;
+    }
+    .section-alt > .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 72px 24px;
+    }
+
+    /* ---- Hero ---- */
+    .hero {
+      background: var(--dark-section);
+      color: white;
+      text-align: center;
+      padding: 96px 24px 80px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta span {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .hero-meta span strong {
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+    }
+
+    /* ---- Headings ---- */
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--text2);
+      margin-bottom: 40px;
+      max-width: 680px;
+    }
+
+    /* ---- Cards ---- */
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .card:hover {
+      border-color: rgba(15,76,129,0.25);
+      box-shadow: 0 4px 12px rgba(15,76,129,0.08);
+    }
+
+    .card-accent {
+      border-left: 4px solid var(--primary);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* ---- Hypothesis cards ---- */
+    .hyp-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+
+    .hyp-header {
+      background: var(--primary);
+      color: white;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hyp-badge {
+      background: rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .hyp-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .hyp-body {
+      padding: 20px;
+    }
+
+    .pull-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .pull-item {
+      background: var(--primary-pale);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .pull-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .pull-text {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .criteria-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .criteria-item {
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .criteria-kill {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #991B1B;
+    }
+
+    .criteria-validate {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      color: #166534;
+    }
+
+    .criteria-label {
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    /* ---- Evidence badges ---- */
+    .badge {
+      display: inline-block;
+      border-radius: 99px;
+      padding: 3px 10px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .badge-assumption { background: #FEF3C7; color: #92400E; }
+    .badge-weak { background: #FEE2E2; color: #991B1B; }
+    .badge-moderate { background: #DBEAFE; color: #1E40AF; }
+    .badge-strong { background: #DCFCE7; color: #166534; }
+    .badge-risk { background: #DC2626; color: white; }
+    .badge-done { background: #DCFCE7; color: #166534; }
+    .badge-progress { background: #FEF3C7; color: #92400E; }
+    .badge-missing { background: #FEE2E2; color: #991B1B; }
+
+    /* ---- Big risk callout ---- */
+    .risk-callout {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-left: 4px solid var(--danger);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      margin-top: 32px;
+    }
+
+    .risk-callout-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--danger);
+      margin-bottom: 6px;
+    }
+
+    .risk-callout p {
+      color: #7F1D1D;
+      font-size: 0.95rem;
+    }
+
+    /* ---- Callout ---- */
+    .callout {
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+    }
+
+    .callout-blue {
+      background: var(--primary-pale);
+      border: 1px solid rgba(15,76,129,0.15);
+    }
+
+    .callout-dark {
+      background: var(--dark-section);
+      color: white;
+    }
+
+    .callout-dark p { color: rgba(255,255,255,0.8); }
+
+    /* ---- Tables ---- */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead tr {
+      background: var(--primary);
+      color: white;
+    }
+
+    thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) { background: var(--primary-pale); }
+
+    tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ---- Question table ---- */
+    .q-theme {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .q-text { font-weight: 500; }
+
+    .q-note {
+      font-size: 0.78rem;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+
+    .q-tag {
+      display: inline-block;
+      background: var(--primary-pale);
+      color: var(--primary);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin: 2px 2px 2px 0;
+    }
+
+    /* ---- Timeline / Cadence ---- */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-row:last-child { border-bottom: none; }
+
+    .timeline-week {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--primary);
+      padding-top: 2px;
+    }
+
+    .timeline-activity { font-size: 0.9rem; }
+
+    /* ---- Credibility checklist ---- */
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .checklist-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .checklist-text { flex: 1; }
+    .checklist-text strong { display: block; margin-bottom: 2px; font-size: 0.9rem; }
+    .checklist-text span { font-size: 0.83rem; color: var(--text2); }
+
+    /* ---- Template boxes ---- */
+    .template-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+
+    .template-box h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .template-box blockquote {
+      border-left: 3px solid var(--primary);
+      padding-left: 16px;
+      color: var(--text2);
+      font-style: italic;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .template-note {
+      font-size: 0.78rem;
+      color: var(--text3);
+      margin-top: 8px;
+    }
+
+    /* ---- Consent box ---- */
+    .consent-box {
+      background: #FFF7ED;
+      border: 1px solid #FED7AA;
+      border-left: 4px solid #F97316;
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+
+    .consent-box .consent-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #C2410C;
+      margin-bottom: 8px;
+    }
+
+    .consent-box blockquote {
+      font-style: italic;
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Channel mix ---- */
+    .channel-bar-wrap { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
+    .channel-row { display: flex; align-items: center; gap: 12px; }
+
+    .channel-label { width: 200px; font-size: 0.85rem; color: var(--text2); flex-shrink: 0; }
+
+    .channel-bar-outer {
+      flex: 1;
+      background: var(--border);
+      border-radius: 99px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .channel-bar-inner {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .channel-pct { font-size: 0.82rem; font-weight: 600; color: var(--primary); width: 36px; text-align: right; flex-shrink: 0; }
+
+    /* ---- Commitments ---- */
+    .commit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .commit-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .commit-num {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .commit-label {
+      font-size: 0.85rem;
+      color: var(--text2);
+    }
+
+    /* ---- Evidence summary ---- */
+    .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    @media (max-width: 640px) {
+      .evidence-grid { grid-template-columns: 1fr; }
+      .pull-grid { grid-template-columns: 1fr; }
+      .criteria-row { grid-template-columns: 1fr; }
+      .hyp-header { flex-direction: column; align-items: flex-start; }
+      nav a { font-size: 0.75rem; padding: 5px 7px; }
+    }
+
+    /* ---- Steps list ---- */
+    .steps { list-style: none; counter-reset: steps; display: flex; flex-direction: column; gap: 12px; }
+
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      background: var(--primary);
+      color: white;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .steps li span { font-size: 0.9rem; line-height: 1.55; }
+
+    /* ---- Illustrative note ---- */
+    .illustrative-note {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: #92400E;
+      margin-bottom: 20px;
+    }
+
+    .illustrative-note strong { font-weight: 700; }
+
+    /* ---- Divider ---- */
+    hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+    /* ---- Misc ---- */
+    p { margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+
+    ul.plain { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    ul.plain li { font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<!-- ======================================================
+     NAV
+     ====================================================== -->
+<nav>
+  <span class="nav-brand">ShieldByte</span>
+  <div class="nav-links">
+    <a href="#hypotheses">Hypotheses</a>
+    <a href="#interview-plan">Interview Plan</a>
+    <a href="#contact-list">Contact List</a>
+    <a href="#commitments">Commitments</a>
+    <a href="#evidence-summary">Summary</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ======================================================
+     HERO
+     ====================================================== -->
+<div class="hero">
+  <p class="hero-eyebrow">Hub201 Pre-Acceleration Programme</p>
+  <h1>ShieldByte: Week 3</h1>
+  <p>Customer Discovery and ICP. Phishing response automation for security teams at 200-500 person regulated European fintechs.</p>
+  <div class="hero-meta">
+    <span><strong>Date:</strong> 2026-04-23</span>
+    <span><strong>Stage:</strong> Pre-discovery (entering Week 3)</span>
+    <span><strong>Evidence rating:</strong> Assumption-Heavy</span>
+  </div>
+</div>
+
+<!-- ======================================================
+     HYPOTHESES
+     ====================================================== -->
+<section id="hypotheses">
+  <p class="section-eyebrow">Exercise 1</p>
+  <h2>Hypotheses</h2>
+  <p class="section-lead">ShieldByte enters Week 3 with five prioritised, testable hypotheses. All are rated Assumption at this stage. That is expected and honest. The value of this document is in making the assumptions explicit before the team starts interviews.</p>
+
+  <div class="illustrative-note">
+    <strong>Illustrative data notice:</strong> Every number, price point, company name, event name, industry body, and contact name in this document is labelled [illustrative]. These are coaching examples, not market facts. The team must verify all data with primary sources.
+  </div>
+
+  <div class="callout callout-blue" style="margin-bottom: 32px;">
+    <h3 style="margin-bottom: 8px; color: var(--primary);">Current problem statement</h3>
+    <p style="margin-bottom: 0;">ShieldByte believes that Heads of Security at 200-500 person regulated European fintechs spend several hours per phishing triage cycle and would pay for automation that materially cuts triage time and reduces false positives. This is an assumption. No interviews have been run yet.</p>
+  </div>
+
+  <!-- H1 -->
+  <div class="hyp-card" style="margin-bottom: 20px;">
+    <div class="hyp-header">
+      <span class="hyp-badge">H1</span>
+      <span class="hyp-title">Analyst triage time</span>
+      <span class="badge badge-assumption" style="margin-left: auto;">Assumption</span>
+    </div>
+    <div class="hyp-body">
+      <p style="font-size:0.9rem; color:var(--text2); margin-bottom:16px;">SOC analysts spend 3-5 hours per phishing triage cycle [illustrative]. This is the core ROI premise. If triage time is under 30 minutes, the business case collapses.</p>
+      <div class="pull-grid">
+        <div class="pull-item">
+          <div class="pull-label">Population</div>
+          <div class="pull-text">SOC analysts and Heads of Security at 200-500 person regulated fintechs in DACH, CEE, or UK who responded to at least one phishing incident in the last three months.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Understanding</div>
+          <div class="pull-text">We believe analysts spend 3-5 hours [illustrative] per triage cycle: detection, investigation, escalation, and closure.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Learning</div>
+          <div class="pull-text">Ask interviewees to walk through the most recent phishing incident in detail. Cross-reference triage steps with time estimates from the interviewee directly.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Limit</div>
+          <div class="pull-text">If 7 of 10 describe triage of under 60 minutes, the ROI story needs rebuilding. If 7 of 10 describe 2+ hours, H1 is directionally validated.</div>
+        </div>
+      </div>
+      <div class="criteria-row">
+        <div class="criteria-item criteria-kill">
+          <div class="criteria-label">Kill if</div>
+          Fewer than 3 of 10 interviewees describe triage taking more than 60 minutes.
+        </div>
+        <div class="criteria-item criteria-validate">
+          <div class="criteria-label">Validate if</div>
+          7 or more of 10 describe cycles of 2 hours or more and connect it to missed alerts or delayed response.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H2 -->
+  <div class="hyp-card" style="margin-bottom: 20px;">
+    <div class="hyp-header">
+      <span class="hyp-badge">H2</span>
+      <span class="hyp-title">Buyer title: Head of Security is the budget holder</span>
+      <span class="badge badge-assumption" style="margin-left: auto;">Assumption</span>
+    </div>
+    <div class="hyp-body">
+      <p style="font-size:0.9rem; color:var(--text2); margin-bottom:16px;">At 200-500 person fintechs, the Head of Security (not CISO, not IT Director) holds the budget for tooling purchases. If wrong, every GTM message is aimed at the wrong person.</p>
+      <div class="pull-grid">
+        <div class="pull-item">
+          <div class="pull-label">Population</div>
+          <div class="pull-text">200-500 person regulated fintechs in DACH, CEE, or UK with at least one dedicated SOC analyst on staff.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Understanding</div>
+          <div class="pull-text">The Head of Security holds independent signing authority for tooling purchases at this company size. CISO exists at larger firms; IT Director focuses on infrastructure.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Learning</div>
+          <div class="pull-text">Ask "who signs off your security tool budget?" and "walk me through the last security tool your team bought" in every interview.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Limit</div>
+          <div class="pull-text">7 of 10 confirm Head of Security signs off independently. If they route through CISO or CFO, the GTM motion must change.</div>
+        </div>
+      </div>
+      <div class="criteria-row">
+        <div class="criteria-item criteria-kill">
+          <div class="criteria-label">Kill if</div>
+          Fewer than 3 of 10 say Head of Security signs off independently.
+        </div>
+        <div class="criteria-item criteria-validate">
+          <div class="criteria-label">Validate if</div>
+          7 or more confirm independent signing authority for tools under a threshold [team to verify].
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H3 -->
+  <div class="hyp-card" style="margin-bottom: 20px;">
+    <div class="hyp-header">
+      <span class="hyp-badge">H3</span>
+      <span class="hyp-title">Price point: GBP 1,000-2,500 per seat per month [illustrative]</span>
+      <span class="badge badge-assumption" style="margin-left: auto;">Assumption</span>
+    </div>
+    <div class="hyp-body">
+      <p style="font-size:0.9rem; color:var(--text2); margin-bottom:16px;">Buyers will pay GBP 1,000-2,500 per seat per month [illustrative]. This is a pricing assumption with zero research behind it. Test by asking about existing spend, not by asking "would you pay X."</p>
+      <div class="pull-grid">
+        <div class="pull-item">
+          <div class="pull-label">Population</div>
+          <div class="pull-text">Heads of Security at 200-500 person regulated fintechs with existing security tooling budget.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Understanding</div>
+          <div class="pull-text">Buyers in this segment have budget envelopes in the GBP 1,000-2,500/seat/month range for security tooling [illustrative].</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Learning</div>
+          <div class="pull-text">"What did you spend on security tooling in the last 12 months? Where did it go?" Surfaces existing budget without triggering negotiation mode.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Limit</div>
+          <div class="pull-text">5 of 10 describe existing spend in the right ballpark and frame the value of triage automation in monetary terms without prompting.</div>
+        </div>
+      </div>
+      <div class="criteria-row">
+        <div class="criteria-item criteria-kill">
+          <div class="criteria-label">Kill if</div>
+          More than half describe security tool spend well below GBP 500/seat/month [illustrative] or exclude phishing triage from their budget category.
+        </div>
+        <div class="criteria-item criteria-validate">
+          <div class="criteria-label">Validate if</div>
+          5 or more describe spend in the right ballpark and discuss automation value in monetary terms unprompted.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H4 -->
+  <div class="hyp-card" style="margin-bottom: 20px;">
+    <div class="hyp-header">
+      <span class="hyp-badge">H4</span>
+      <span class="hyp-title">Analysts would switch for materially lower false-positive rates</span>
+      <span class="badge badge-assumption" style="margin-left: auto;">Assumption</span>
+    </div>
+    <div class="hyp-body">
+      <p style="font-size:0.9rem; color:var(--text2); margin-bottom:16px;">Switching costs in enterprise security tooling are high. A clear measurable improvement is needed to justify replacing an embedded stack. This assumption has not been tested at all.</p>
+      <div class="pull-grid">
+        <div class="pull-item">
+          <div class="pull-label">Population</div>
+          <div class="pull-text">SOC analysts at regulated fintechs currently using phishing detection tools, standalone or embedded in broader security platforms.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Understanding</div>
+          <div class="pull-text">False-positive rates are high enough to be a real pain. Analysts would actively switch for a tool that reduced them materially [team to verify what "material" means].</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Learning</div>
+          <div class="pull-text">"What's the false-positive rate on your current tooling?" and "what was the last tool your team adopted that actually stuck? Why?" and "what got kicked out? Why?"</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Limit</div>
+          <div class="pull-text">6 of 10 describe false positives as a significant time drain and describe at least one prior tool switch driven by technical performance.</div>
+        </div>
+      </div>
+      <div class="criteria-row">
+        <div class="criteria-item criteria-kill">
+          <div class="criteria-label">Kill if</div>
+          Interviewees describe current tools as good enough, or describe switching costs as prohibitive regardless of performance gain.
+        </div>
+        <div class="criteria-item criteria-validate">
+          <div class="criteria-label">Validate if</div>
+          6 or more describe false positives as a significant time drain and at least one prior switch driven by technical performance.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H5 -->
+  <div class="hyp-card" style="margin-bottom: 20px;">
+    <div class="hyp-header">
+      <span class="hyp-badge">H5</span>
+      <span class="hyp-title">Onboarding under 60 days at a regulated fintech</span>
+      <span class="badge badge-assumption" style="margin-left: auto;">Assumption</span>
+    </div>
+    <div class="hyp-body">
+      <p style="font-size:0.9rem; color:var(--text2); margin-bottom:16px;">Compliance review, vendor risk assessment, DPIA, and IT approval at a regulated fintech can run to 3-6 months [illustrative]. If the assumption is wrong, cash flow and early revenue models need rethinking.</p>
+      <div class="pull-grid">
+        <div class="pull-item">
+          <div class="pull-label">Population</div>
+          <div class="pull-text">IT Security and Procurement teams at 200-500 person regulated fintechs in DACH, CEE, or UK.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Understanding</div>
+          <div class="pull-text">A new security tool can complete vendor approval, compliance sign-off, IT integration, and analyst training in under 60 days at this company size.</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Learning</div>
+          <div class="pull-text">"What's the typical timeline from picking a tool to full deployment?" and "walk me through the last compliance audit your team went through."</div>
+        </div>
+        <div class="pull-item">
+          <div class="pull-label">Limit</div>
+          <div class="pull-text">7 of 10 describe prior tool purchases completing within 90 days from selection to live deployment, with compliance sign-off included.</div>
+        </div>
+      </div>
+      <div class="criteria-row">
+        <div class="criteria-item criteria-kill">
+          <div class="criteria-label">Kill if</div>
+          More than half describe vendor approval and IT integration alone taking longer than 90 days at a regulated fintech.
+        </div>
+        <div class="criteria-item criteria-validate">
+          <div class="criteria-label">Validate if</div>
+          7 or more describe prior security tool purchases completing within 90 days from selection to live deployment.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Biggest risk -->
+  <div class="risk-callout">
+    <div class="risk-callout-label">Single Biggest Risk</div>
+    <p><strong>H1 is the single biggest risk.</strong> The entire ROI story depends on analyst triage time being long enough that automation creates meaningful value. If the real number is under 30 minutes per cycle, there is no compelling business case and the product category needs rethinking. Every other assumption can be adjusted. If H1 is wrong, the problem framing is wrong.</p>
+  </div>
+</section>
+
+<!-- ======================================================
+     INTERVIEW PLAN
+     ====================================================== -->
+<div class="section-alt" id="interview-plan">
+<div class="section-inner">
+  <p class="section-eyebrow">Exercise 2</p>
+  <h2>Interview Plan</h2>
+  <p class="section-lead">A 24-question behavioural discovery script designed to test H1 through H5. Every question probes past behaviour, not hypothetical opinion. Do not use any of the red-flag patterns listed at the end of this section.</p>
+
+  <!-- Consent -->
+  <div class="consent-box">
+    <div class="consent-label">Consent script. Use verbatim before any substantive questions</div>
+    <blockquote>"Thanks for taking the time to participate in our study. Just so you know, the information shared will only be used for internal research purposes. With that, do you mind if I record this session?"</blockquote>
+    <p style="font-size:0.8rem; color:#9A3412; margin-top:8px;">If they decline recording, take notes manually. Do not push back.</p>
+  </div>
+
+  <!-- Script table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Theme</th>
+          <th>Question</th>
+          <th>Hyp.</th>
+          <th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="q-theme">Intro</td>
+          <td>
+            <div class="q-text">What's your job title, and how long have you been in this role?</div>
+          </td>
+          <td><span class="q-tag">context</span></td>
+          <td><span class="q-tag">context</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Intro</td>
+          <td>
+            <div class="q-text">What's your background before this role?</div>
+          </td>
+          <td><span class="q-tag">context</span></td>
+          <td><span class="q-tag">context</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Intro</td>
+          <td>
+            <div class="q-text">How big is your security team, and how is it structured?</div>
+          </td>
+          <td><span class="q-tag">H2</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Intro</td>
+          <td>
+            <div class="q-text">Walk me through what a typical week looks like for you.</div>
+          </td>
+          <td><span class="q-tag">H1</span></td>
+          <td><span class="q-tag">time and money spent</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Industry</td>
+          <td>
+            <div class="q-text">What are you hearing about phishing threats in your industry right now? Where did you hear it?</div>
+          </td>
+          <td><span class="q-tag">--</span></td>
+          <td><span class="q-tag">awareness level</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Industry</td>
+          <td>
+            <div class="q-text">How do the threat patterns you're seeing now compare to 12-18 months ago?</div>
+          </td>
+          <td><span class="q-tag">--</span></td>
+          <td><span class="q-tag">recency and frequency</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Industry</td>
+          <td>
+            <div class="q-text">What's the biggest security operations challenge across fintechs your size right now, from your perspective?</div>
+          </td>
+          <td><span class="q-tag">--</span></td>
+          <td><span class="q-tag">problem-area match</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">When was the last phishing incident your team triaged? Walk me through exactly what happened.</div>
+            <div class="q-note">Most important question in the script. Push for specifics: "Who handled it? What tools? How long did each step take?"</div>
+          </td>
+          <td><span class="q-tag">H1</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">Show me how you handle these today. What tools, what process, who does what?</div>
+          </td>
+          <td><span class="q-tag">H1</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">How many phishing alerts does your team triage per week, roughly?</div>
+          </td>
+          <td><span class="q-tag">H1</span></td>
+          <td><span class="q-tag">recency and frequency</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">What's the false-positive rate on your current phishing tooling?</div>
+          </td>
+          <td><span class="q-tag">H4</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">What did you spend on security tooling in the last 12 months? Where did it go?</div>
+            <div class="q-note">Do not ask "would you pay X." Ask what they have already paid and on what.</div>
+          </td>
+          <td><span class="q-tag">H3</span></td>
+          <td><span class="q-tag">time and money spent</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">Who signs off the security tool budget at your firm?</div>
+          </td>
+          <td><span class="q-tag">H2</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">Have you bought a new security tool in the last 12 months? Walk me through that process.</div>
+          </td>
+          <td><span class="q-tag">H2</span><span class="q-tag">H5</span></td>
+          <td><span class="q-tag">recency and frequency</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">Is automated phishing triage something you have actively looked at, or is it not on your radar yet?</div>
+          </td>
+          <td><span class="q-tag">--</span></td>
+          <td><span class="q-tag">awareness level</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">What's the last tool your team adopted that actually stuck? Why that one?</div>
+          </td>
+          <td><span class="q-tag">H4</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Business</td>
+          <td>
+            <div class="q-text">What's the last tool you tried that got kicked out? Why?</div>
+          </td>
+          <td><span class="q-tag">H4</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Personal</td>
+          <td>
+            <div class="q-text">What's taking up most of your team's time this quarter?</div>
+          </td>
+          <td><span class="q-tag">H1</span></td>
+          <td><span class="q-tag">time and money spent</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Personal</td>
+          <td>
+            <div class="q-text">How many analysts do you have, and how much of their time is on phishing specifically?</div>
+          </td>
+          <td><span class="q-tag">H1</span></td>
+          <td><span class="q-tag">time and money spent</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Personal</td>
+          <td>
+            <div class="q-text">If you could change one thing about your current phishing workflow, what would it be?</div>
+          </td>
+          <td><span class="q-tag">--</span></td>
+          <td><span class="q-tag">awareness level</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Personal</td>
+          <td>
+            <div class="q-text">When did your team last go through a compliance audit related to security tooling? What was the worst part?</div>
+          </td>
+          <td><span class="q-tag">H5</span></td>
+          <td><span class="q-tag">recency and frequency</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Personal</td>
+          <td>
+            <div class="q-text">What's the typical timeline from picking a new tool to full deployment for your team?</div>
+          </td>
+          <td><span class="q-tag">H5</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Personal</td>
+          <td>
+            <div class="q-text">What data or metrics does your team track about phishing response? What do you share upward?</div>
+          </td>
+          <td><span class="q-tag">H1</span></td>
+          <td><span class="q-tag">concrete behaviour</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Outro</td>
+          <td>
+            <div class="q-text">If you had a magic wand for your SOC on Monday morning, what one thing would you fix?</div>
+            <div class="q-note">Most unguarded question. Ask last, after 30-40 minutes of conversation. The answer at this point is less filtered than anything said earlier.</div>
+          </td>
+          <td><span class="q-tag">--</span></td>
+          <td><span class="q-tag">awareness level</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Outro</td>
+          <td>
+            <div class="q-text">Is there anyone else in your network I should be talking to about this? Someone who deals with this problem differently, or at a different type of firm?</div>
+          </td>
+          <td><span class="q-tag">referral</span></td>
+          <td><span class="q-tag">referral signal</span></td>
+        </tr>
+        <tr>
+          <td class="q-theme">Outro</td>
+          <td>
+            <div class="q-text">What's the one question I should have asked you that I didn't?</div>
+          </td>
+          <td><span class="q-tag">--</span></td>
+          <td><span class="q-tag">awareness level</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr />
+
+  <!-- Red-flag patterns -->
+  <h3 style="margin-bottom: 16px;">Red-Flag Question Patterns. Never Use These</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Banned pattern</th>
+          <th>Why it fails</th>
+          <th>Rewrite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"Would you use a tool like this?"</td>
+          <td>Invites hypothetical approval. People say yes to be polite.</td>
+          <td>"How do you handle this today?"</td>
+        </tr>
+        <tr>
+          <td>"Don't you find phishing triage really time-consuming?"</td>
+          <td>Leading question. You have answered it for them.</td>
+          <td>"Walk me through the last phishing triage your team handled."</td>
+        </tr>
+        <tr>
+          <td>"How important is it to reduce false positives?"</td>
+          <td>Importance question gets an importance answer. No useful data.</td>
+          <td>"What does your team do when an alert turns out to be a false positive?"</td>
+        </tr>
+        <tr>
+          <td>"Would you pay for this if it existed?"</td>
+          <td>Pure hypothetical. Means nothing about actual buying behaviour.</td>
+          <td>"What did you spend on security tooling in the last 12 months?"</td>
+        </tr>
+        <tr>
+          <td>"Is phishing a big problem at your firm?"</td>
+          <td>Yes/no question, almost always answered yes. No actionable data.</td>
+          <td>"When was the last phishing incident your team triaged? Walk me through it."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr />
+
+  <!-- Cadence -->
+  <h3 style="margin-bottom: 16px;">Cadence Plan</h3>
+  <div class="timeline">
+    <div class="timeline-row">
+      <div class="timeline-week">Week 1</div>
+      <div class="timeline-activity">Run interviews 1-5. Update script after interview 1 before continuing.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">Week 2</div>
+      <div class="timeline-activity">Run interviews 6-10. Note emerging patterns. Flag any question not producing useful data.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">After interview 10</div>
+      <div class="timeline-activity">Affinity mapping session. Block 3 hours. Cluster insights by theme. Decide whether to continue the same segment or adjust before interview 11.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">Week 3</div>
+      <div class="timeline-activity">Run interviews 11-15 with adjusted script.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">Week 4</div>
+      <div class="timeline-activity">Run interviews 16-20. Begin synthesis. Arrive at Week 4 with updated hypotheses and 3 named buyers.</div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- Post-interview template -->
+  <h3 style="margin-bottom: 16px;">Post-Interview Write-Up Template</h3>
+  <p style="color:var(--text2); font-size:0.9rem; margin-bottom: 20px;">Complete within 30 minutes of ending the interview. Do not batch. Memories merge fast.</p>
+
+  <div class="card card-accent">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+      <div>
+        <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text3); margin-bottom:4px;">Date</div>
+        <div style="font-size:0.9rem;">_______________</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text3); margin-bottom:4px;">Duration</div>
+        <div style="font-size:0.9rem;">_______________</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text3); margin-bottom:4px;">Role</div>
+        <div style="font-size:0.9rem;">_______________</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--text3); margin-bottom:4px;">Recorded</div>
+        <div style="font-size:0.9rem;">Y / N</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 14px;">
+      <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--primary); margin-bottom:6px;">Main impressions</div>
+      <div style="background:var(--surface); border-radius:8px; padding:12px; font-size:0.85rem; color:var(--text2); min-height:52px;">[2-3 sentences: overall signal, ICP fit, one thing they said that stood out]</div>
+    </div>
+
+    <div style="margin-bottom: 14px;">
+      <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--primary); margin-bottom:6px;">Strongest evidence from this interview</div>
+      <div style="background:var(--surface); border-radius:8px; padding:12px; font-size:0.85rem; color:var(--text2); min-height:40px;">[Best quote, hypothesis linked, evidence rating]</div>
+    </div>
+
+    <div style="margin-bottom: 14px;">
+      <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--primary); margin-bottom:8px;">Hypothesis tracking</div>
+      <div class="table-wrap" style="border-radius:8px;">
+        <table>
+          <thead><tr><th>Hypothesis</th><th>Direction</th><th>Key observation</th></tr></thead>
+          <tbody>
+            <tr><td>H1: triage time</td><td>stronger / weaker / no data</td><td></td></tr>
+            <tr><td>H2: buyer title</td><td>stronger / weaker / no data</td><td></td></tr>
+            <tr><td>H3: price point</td><td>stronger / weaker / no data</td><td></td></tr>
+            <tr><td>H4: switching behaviour</td><td>stronger / weaker / no data</td><td></td></tr>
+            <tr><td>H5: onboarding speed</td><td>stronger / weaker / no data</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--primary); margin-bottom:6px;">Biggest surprise</div>
+        <div style="background:var(--surface); border-radius:8px; padding:12px; font-size:0.85rem; color:var(--text2); min-height:40px;">[One thing you did not expect]</div>
+      </div>
+      <div>
+        <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--primary); margin-bottom:6px;">Next action from this interview</div>
+        <div style="background:var(--surface); border-radius:8px; padding:12px; font-size:0.85rem; color:var(--text2); min-height:40px;">[One specific thing to do before the next interview]</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ======================================================
+     CONTACT LIST
+     ====================================================== -->
+<section id="contact-list">
+  <p class="section-eyebrow">Exercise 3</p>
+  <h2>Contact List</h2>
+  <p class="section-lead">25 illustrative target contacts [illustrative], a credibility checklist, channel mix recommendation, and outreach templates. Replace every [illustrative] name with a real person before sending any message.</p>
+
+  <!-- ICP -->
+  <div class="callout callout-blue" style="margin-bottom: 32px;">
+    <h3 style="color:var(--primary); margin-bottom:6px;">Narrow ICP</h3>
+    <p style="font-size:1rem; font-weight:500; margin-bottom:0;">Head of Security (or Head of Information Security, Head of IT Security, Security Lead) at a 200-500 person regulated fintech in DACH, CEE, or UK that has hired at least one SOC analyst in the last 12 months.</p>
+  </div>
+
+  <!-- Credibility checklist -->
+  <h3 style="margin-bottom: 16px;">Credibility Checklist</h3>
+  <ul class="checklist" style="margin-bottom:32px;">
+    <li>
+      <span class="checklist-icon">&#x2705;</span>
+      <div class="checklist-text">
+        <strong>Website <span class="badge badge-progress">In progress</span></strong>
+        <span>ShieldByte one-pager at shieldbyte.example [illustrative]. Build this week: what you do, who it is for, one proof point, contact form. Nothing more.</span>
+      </div>
+    </li>
+    <li>
+      <span class="checklist-icon">&#x23F3;</span>
+      <div class="checklist-text">
+        <strong>Founder LinkedIn profiles <span class="badge badge-progress">In progress [illustrative]</span></strong>
+        <span>Update headline to include ShieldByte and current role. Add 2-sentence company description. Use a real photo. Takes 20 minutes per founder.</span>
+      </div>
+    </li>
+    <li>
+      <span class="checklist-icon">&#x23F3;</span>
+      <div class="checklist-text">
+        <strong>Social proof <span class="badge badge-progress">In progress [illustrative]</span></strong>
+        <span>Letter of Intent from Hub201 advisor announced on LinkedIn [illustrative]. Ask the advisor network this week for a named endorsement or one-line quote.</span>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Contact table -->
+  <h3 style="margin-bottom: 12px;">Target Contact Table <span class="badge badge-assumption" style="vertical-align:middle;">All rows [illustrative]</span></h3>
+  <p style="font-size:0.85rem; color:var(--text2); margin-bottom:16px;">All names, company names, and details are fictional placeholders [illustrative]. Replace each row with a real named person before sending outreach.</p>
+
+  <div class="table-wrap" style="margin-bottom:32px;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name [ill.]</th>
+          <th>Role</th>
+          <th>Company [ill.]</th>
+          <th>Why them</th>
+          <th>Channel</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>A. Schmidt</td><td>Head of Security</td><td>FinBridge GmbH</td><td>DACH payments fintech 300 ppl, posted SOC analyst job Feb 2026 [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>2</td><td>M. Kowalski</td><td>Head of IT Security</td><td>Kreditly</td><td>CEE lending, recent regulatory registration [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>3</td><td>J. Patel</td><td>Security Lead</td><td>VaultPay UK</td><td>400-ppl UK e-money, 2 open SOC roles on jobs page [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>4</td><td>S. Horvat</td><td>Head of InfoSec</td><td>FlowCard</td><td>CEE prepaid card, NIS2 jurisdiction, no CISO listed [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>5</td><td>R. Bauer</td><td>VP Security</td><td>SwiftLend AG</td><td>Swiss lending, FINMA regulated, 480 ppl [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>6</td><td>T. Novak</td><td>Head of Security</td><td>ClearWire Payments</td><td>CEE payment processor, recent LinkedIn post about phishing incident [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>7</td><td>K. Mayer</td><td>Head of IT Security</td><td>Bancroft Digital</td><td>UK challenger bank, recently posted SOC analyst role [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>8</td><td>P. Dubois</td><td>Security Lead</td><td>MoneyRoute SA</td><td>CEE FX platform, DORA scope [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>9</td><td>A. Weber</td><td>Head of InfoSec</td><td>Cardex GmbH</td><td>DACH card issuer, appeared on cybersecurity podcast [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>10</td><td>O. Blackwood</td><td>Head of Security</td><td>Sprout Finance</td><td>UK consumer lending, FCA authorised [ill.]</td><td>LinkedIn cold</td><td>Not contacted</td></tr>
+        <tr><td>11</td><td>N. Fischer</td><td>Head of Security</td><td>WireFast</td><td>Met at FS-ISAC Europe event [ill.], payments space</td><td>FS-ISAC Europe [ill.]</td><td>Met at event</td></tr>
+        <tr><td>12</td><td>L. Sommer</td><td>CISO</td><td>TrustNet Bank</td><td>Speaker at FS-ISAC Europe event [ill.], runs SOC team</td><td>FS-ISAC Europe [ill.]</td><td>Not approached</td></tr>
+        <tr><td>13</td><td>V. Gruber</td><td>Head of IT Security</td><td>CapFlow</td><td>Attended FS-ISAC Europe session on phishing trends [ill.]</td><td>FS-ISAC Europe [ill.]</td><td>Not approached</td></tr>
+        <tr><td>14</td><td>D. Lang</td><td>Security Lead</td><td>Kredito</td><td>CEE digital bank, met via FS-ISAC Europe networking dinner [ill.]</td><td>FS-ISAC Europe [ill.]</td><td>Met at event</td></tr>
+        <tr><td>15</td><td>B. Roth</td><td>Head of Security</td><td>Payform</td><td>DACH fintech 380 ppl, attended FS-ISAC Europe [ill.]</td><td>FS-ISAC Europe [ill.]</td><td>Not approached</td></tr>
+        <tr><td>16</td><td>C. van den Berg</td><td>Head of InfoSec</td><td>DataLedge</td><td>Netherlands lending, appeared in CyberSec Europe agenda [ill.]</td><td>CyberSec Europe [ill.]</td><td>Not contacted</td></tr>
+        <tr><td>17</td><td>H. Zimmermann</td><td>Head of Security</td><td>MintoPay</td><td>DACH issuer, panellist at CyberSec Europe [ill.]</td><td>CyberSec Europe [ill.]</td><td>Not contacted</td></tr>
+        <tr><td>18</td><td>I. Kovacs</td><td>Security Lead</td><td>Remitly CEE</td><td>CEE remittance, listed as CyberSec Europe attendee [ill.]</td><td>CyberSec Europe [ill.]</td><td>Not contacted</td></tr>
+        <tr><td>19</td><td>E. Fontaine</td><td>Head of IT Security</td><td>LoanSpark</td><td>UK SME lending, CyberSec Europe sponsor [ill.]</td><td>CyberSec Europe [ill.]</td><td>Not contacted</td></tr>
+        <tr><td>20</td><td>A. Nkrumah</td><td>Head of Security</td><td>Fintrust UK</td><td>Hub201 advisor intro via [advisor name] [ill.], UK regulated platform</td><td>Warm intro (Hub201)</td><td>Intro pending</td></tr>
+        <tr><td>21</td><td>F. Reiter</td><td>Head of InfoSec</td><td>AlphaCard AG</td><td>Hub201 advisor contact, Swiss card issuer [ill.]</td><td>Warm intro (Hub201)</td><td>Not yet asked</td></tr>
+        <tr><td>22</td><td>G. Park</td><td>Security Lead</td><td>Lendex</td><td>Hub201 mentor's former colleague [ill.], CEE platform</td><td>Warm intro (mentor)</td><td>Not yet asked</td></tr>
+        <tr><td>23</td><td>R. Hoffmann</td><td>Head of Security</td><td>QuickPay GmbH</td><td>Member of FS-ISAC working group on phishing [ill.], DACH payments</td><td>Industry body [ill.]</td><td>Not contacted</td></tr>
+        <tr><td>24</td><td>M. Svensson</td><td>Head of InfoSec</td><td>Krona Digital</td><td>ENISA fintech security guidance contributor [ill.], Nordic platform</td><td>Industry body [ill.]</td><td>Not contacted</td></tr>
+        <tr><td>25</td><td>T. Luca</td><td>Head of IT Security</td><td>PayNow EU</td><td>EBA operational resilience guidelines contributor [ill.], CEE platform</td><td>Industry body [ill.]</td><td>Not contacted</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Channel mix -->
+  <h3 style="margin-bottom: 16px;">Channel Mix</h3>
+  <div class="channel-bar-wrap" style="margin-bottom:32px;">
+    <div class="channel-row">
+      <div class="channel-label">LinkedIn cold outreach</div>
+      <div class="channel-bar-outer"><div class="channel-bar-inner" style="width:40%;"></div></div>
+      <div class="channel-pct">40%</div>
+    </div>
+    <div class="channel-row">
+      <div class="channel-label">Industry events [ill.]</div>
+      <div class="channel-bar-outer"><div class="channel-bar-inner" style="width:30%;"></div></div>
+      <div class="channel-pct">30%</div>
+    </div>
+    <div class="channel-row">
+      <div class="channel-label">Warm intros (Hub201)</div>
+      <div class="channel-bar-outer"><div class="channel-bar-inner" style="width:20%;"></div></div>
+      <div class="channel-pct">20%</div>
+    </div>
+    <div class="channel-row">
+      <div class="channel-label">Industry bodies [ill.]</div>
+      <div class="channel-bar-outer"><div class="channel-bar-inner" style="width:10%;"></div></div>
+      <div class="channel-pct">10%</div>
+    </div>
+  </div>
+
+  <!-- Outreach templates -->
+  <h3 style="margin-bottom: 16px;">Outreach Templates</h3>
+
+  <div class="template-box">
+    <h4>Personalised cold email [illustrative]</h4>
+    <p style="font-size:0.8rem; color:var(--text3); margin-bottom:10px;">Subject: SOC phishing triage at [Company]: quick question</p>
+    <blockquote>
+      Hi [First name],<br/><br/>
+      I noticed [Company] recently hired a SOC analyst. That suggests phishing triage is a growing focus for the team.<br/><br/>
+      I am researching how Heads of Security at regulated fintechs in [DACH / CEE / UK] handle phishing response operationally. Specifically whether triage time and false-positive rates are real pain points or manageable today.<br/><br/>
+      Would you be willing to spend 20 minutes sharing how your team handles this? No pitch, just research. Happy to share what I am hearing from others in the space in return.<br/><br/>
+      [Your name], ShieldByte
+    </blockquote>
+    <p class="template-note">4 sentences maximum. Longer emails get lower response rates. Personalise the opening hook with a specific trigger.</p>
+  </div>
+
+  <div class="template-box">
+    <h4>LinkedIn opener (2 sentences) [illustrative]</h4>
+    <blockquote>
+      Hi [First name], I came across your profile while researching how security leads at [sector] fintechs handle phishing triage operationally. I am doing 20-minute research interviews this month. Would you be open to a brief chat?
+    </blockquote>
+    <p class="template-note">Do not mention the product. Do not say "I want to show you something." Ask only for a research conversation.</p>
+  </div>
+
+  <div class="template-box">
+    <h4>Cold call script [illustrative]</h4>
+    <blockquote>
+      Opening: "Hi, could I speak to [Name]? My name is [Your name] from ShieldByte."<br/><br/>
+      Reason: "I am doing research into how security leads at fintechs your size handle phishing triage operationally. Specifically the time burden on SOC teams and how false positives are managed. I am not pitching anything."<br/><br/>
+      Ask: "Would you be willing to spend 20 minutes on a call this week? I would be happy to share what I am hearing from others in the space."<br/><br/>
+      If busy: "Completely understood. Could I send you a one-line email to follow up?"
+    </blockquote>
+  </div>
+
+  <div class="template-box">
+    <h4>Referral ask (after a good interview) [illustrative]</h4>
+    <blockquote>
+      "This has been really helpful, thank you. I am doing 20 of these conversations across the market. Is there anyone else in your network who handles security operations at a similar type of firm that you think I should speak to? Even one name would be really valuable."
+    </blockquote>
+    <p class="template-note">Ask for a specific name. If they say yes, follow up: "Who is the first person that comes to mind?"</p>
+  </div>
+
+</section>
+
+<!-- ======================================================
+     COMMITMENTS
+     ====================================================== -->
+<div class="section-alt" id="commitments">
+<div class="section-inner">
+  <p class="section-eyebrow">Week 3 Commitments</p>
+  <h2>What Happens Next</h2>
+  <p class="section-lead">Concrete targets for the next four weeks. Not aspirations. The team is accountable to these numbers at the Week 4 session.</p>
+
+  <div class="commit-grid" style="margin-bottom:40px;">
+    <div class="commit-card">
+      <div class="commit-num">20</div>
+      <div class="commit-label">Total interviews before Week 4</div>
+    </div>
+    <div class="commit-card">
+      <div class="commit-num">5</div>
+      <div class="commit-label">Interviews per week</div>
+    </div>
+    <div class="commit-card">
+      <div class="commit-num">10</div>
+      <div class="commit-label">Outreach messages by Friday</div>
+    </div>
+    <div class="commit-card">
+      <div class="commit-num">3</div>
+      <div class="commit-label">Interviews via warm intro</div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:16px;">Review Cadence</h3>
+  <ul class="steps">
+    <li><span>After <strong>interview 1:</strong> update script before the next conversation. Fix misunderstood questions. Add anything that came up but was not in the script.</span></li>
+    <li><span>After <strong>interview 5:</strong> team debrief. Which hypotheses are getting stronger? Which are shaky? Does the ICP still look right?</span></li>
+    <li><span>After <strong>interview 10:</strong> full affinity mapping session (block 3 hours). Cluster all insights. Let patterns emerge from the data, not from the hypotheses. Update H1-H5 with what you have learned.</span></li>
+    <li><span>Before <strong>Week 4 workshop:</strong> arrive with 20 interviews completed, updated hypotheses with evidence ratings, and at least 3 named buyers who described the problem in their own words.</span></li>
+  </ul>
+</div>
+</div>
+
+<!-- ======================================================
+     EVIDENCE SUMMARY
+     ====================================================== -->
+<section id="evidence-summary">
+  <p class="section-eyebrow">Evidence Summary</p>
+  <h2>Where ShieldByte Stands Today</h2>
+  <p class="section-lead">All five hypotheses are rated Assumption. This is the honest and expected starting point for Week 3. The goal is not to hide this. The goal is to fix it through interviews.</p>
+
+  <div class="evidence-grid" style="margin-bottom:32px;">
+    <div class="card card-accent">
+      <h3 style="margin-bottom:10px;">Overall rating</h3>
+      <span class="badge badge-assumption" style="font-size:0.9rem; padding:5px 14px;">Assumption-Heavy</span>
+      <p style="margin-top:12px; font-size:0.9rem; color:var(--text2);">No customer interviews have been run yet. Every claim in this document is an assumption drawn from desk research, prior experience in a different market (Serbian banks), and inference from publicly available information. This is the right starting point. The value is in the hypotheses being explicit and testable.</p>
+    </div>
+
+    <div class="risk-callout">
+      <div class="risk-callout-label">Biggest Risk: H1</div>
+      <p>The entire ROI story rests on analyst triage time being long enough to justify automation. If the real number is under 30 minutes, the problem framing needs rebuilding before any other work continues.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:16px;">Evidence ratings by hypothesis</h3>
+  <div class="table-wrap" style="margin-bottom:32px;">
+    <table>
+      <thead>
+        <tr><th>Hypothesis</th><th>Source</th><th>Rating</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>H1: Analysts spend 3-5h per triage cycle [illustrative]</td><td>Assumption, desk reading [team to verify]</td><td><span class="badge badge-assumption">Assumption</span></td></tr>
+        <tr><td>H2: Head of Security is buyer at 200-500 person fintechs</td><td>Founder inference, prior experience in unrelated market</td><td><span class="badge badge-assumption">Assumption</span></td></tr>
+        <tr><td>H3: Buyers pay GBP 1,000-2,500/seat/month [illustrative]</td><td>Assumption, no pricing research</td><td><span class="badge badge-assumption">Assumption</span></td></tr>
+        <tr><td>H4: Analysts would switch for lower false-positive rates</td><td>Assumption, no behavioural evidence</td><td><span class="badge badge-assumption">Assumption</span></td></tr>
+        <tr><td>H5: Onboarding under 60 days at a regulated fintech</td><td>Assumption from unrelated market (Serbian banks)</td><td><span class="badge badge-assumption">Assumption</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-dark">
+    <h3 style="color:white; margin-bottom:10px;">Next action tomorrow</h3>
+    <p>Send the first 5 outreach messages using the contact list. Use the LinkedIn opener for the first batch. Personalise each one with the specific trigger that made this person a target. The script is ready. Do not wait for perfect conditions.</p>
+  </div>
+
+</section>
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
+<div style="background:var(--dark-section); color:rgba(255,255,255,0.5); text-align:center; padding:32px 24px; font-size:0.8rem;">
+  ShieldByte: Week 3 Customer Discovery | Hub201 Pre-Acceleration Programme | 2026-04-23 | All company names, contact names, and data labelled [illustrative] are fictional coaching examples, not market facts.
+</div>
+
+</main>
+</body>
+</html>

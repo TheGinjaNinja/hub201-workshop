@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speaker Notes: Hub201 Week 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --primary:      #EA580D;
+      --primary-pale: #FFF7ED;
+      --border:       #E4E4E7;
+      --text:         #0F172A;
+      --text-2:       #64748B;
+      --text-3:       #94A3B8;
+      --surface-2:    #F4F4F5;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+      padding: 48px 0;
+      line-height: 1.65;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Header */
+    .doc-header {
+      margin-bottom: 48px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 32px;
+    }
+
+    .doc-header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.025em;
+      margin-bottom: 8px;
+    }
+
+    .doc-header p {
+      font-size: 0.95rem;
+      color: var(--text-2);
+    }
+
+    /* Eyebrow on doc-header */
+    .doc-eyebrow {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    /* TOC */
+    .toc {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 48px;
+    }
+
+    .toc h2 {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 24px;
+    }
+
+    .toc-item {
+      font-size: 0.85rem;
+      color: var(--text-2);
+    }
+
+    .toc-item a {
+      color: var(--text-2);
+      text-decoration: none;
+    }
+
+    .toc-item a:hover {
+      color: var(--primary);
+    }
+
+    /* Part dividers */
+    .part-divider {
+      margin: 48px 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .part-divider .part-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      background: var(--primary-pale);
+      border: 1px solid #FDBA74;
+      border-radius: 4px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+    .part-divider .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Note sections */
+    .note-section {
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .note-section:last-child {
+      border-bottom: none;
+    }
+
+    .note-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .slide-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-pale);
+      border: 1px solid #FDBA74;
+      border-radius: 4px;
+      padding: 3px 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .note-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .note-body {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--text-2);
+      margin-bottom: 12px;
+    }
+
+    .note-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .timing-hint {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-3);
+      background: var(--surface-2);
+      border-radius: 4px;
+      padding: 3px 10px;
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* Check-in callout: pull-quote pattern with primary orange border */
+    aside.check-in {
+      border-left: 4px solid var(--primary);
+      padding: 14px 0 14px 20px;
+      margin-top: 16px;
+    }
+
+    aside.check-in .check-in-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    aside.check-in p {
+      font-size: 0.92rem;
+      color: var(--text);
+      font-style: italic;
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    /* Delivery cue: amber accent */
+    .delivery-cue {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-left: 4px solid #F59E0B;
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin-top: 12px;
+    }
+
+    .delivery-cue .cue-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #B45309;
+      margin-bottom: 5px;
+    }
+
+    .delivery-cue p {
+      font-size: 0.88rem;
+      color: #78350F;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    @media print {
+      body {
+        padding: 20px 0;
+      }
+
+      .container {
+        max-width: 100%;
+        padding: 0 24px;
+      }
+
+      .toc {
+        page-break-after: always;
+      }
+
+      .note-section {
+        page-break-inside: avoid;
+      }
+
+      .part-divider {
+        page-break-before: auto;
+      }
+
+      a {
+        color: var(--text-2);
+        text-decoration: none;
+      }
+
+      .check-in,
+      .delivery-cue {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="doc-header">
+    <h1>Speaker Notes: Hub201 Week 3</h1>
+    <p>Customer Discovery and ICP &nbsp;&middot;&nbsp; Jamie Reynolds &nbsp;&middot;&nbsp; April 2026 &nbsp;&middot;&nbsp; 45 slides in 8 parts</p>
+    <p style="margin-top: 6px; font-size: 0.85rem; color: #94A3B8;">For Jamie's eyes only. Print A4 single-sided for in-room delivery.</p>
+  </div>
+
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <div class="toc-grid">
+      <div class="toc-item"><a href="#slide-1">1. Title</a></div>
+      <div class="toc-item"><a href="#slide-2">2. Where we are in the journey</a></div>
+      <div class="toc-item"><a href="#slide-3">3. What discovery is</a></div>
+      <div class="toc-item"><a href="#slide-4">4. The Say-Do Gap</a></div>
+      <div class="toc-item"><a href="#slide-5">5. The pre-seed trap</a></div>
+      <div class="toc-item"><a href="#slide-6">6. Bondcube: the setup</a></div>
+      <div class="toc-item"><a href="#slide-7">7. Bondcube: what happened</a></div>
+      <div class="toc-item"><a href="#slide-8">8. Bondcube: the lesson</a></div>
+      <div class="toc-item"><a href="#slide-9">9. NPL Markets: the setup</a></div>
+      <div class="toc-item"><a href="#slide-10">10. NPL Markets: outreach</a></div>
+      <div class="toc-item"><a href="#slide-11">11. NPL Markets: first meetings</a></div>
+      <div class="toc-item"><a href="#slide-12">12. NPL Markets: social proof engine</a></div>
+      <div class="toc-item"><a href="#slide-13">13. NPL Markets: validation</a></div>
+      <div class="toc-item"><a href="#slide-14">14. NPL Markets: the lesson</a></div>
+      <div class="toc-item"><a href="#slide-15">15. P.S. Bridal: the setup</a></div>
+      <div class="toc-item"><a href="#slide-16">16. P.S. Bridal: the trick</a></div>
+      <div class="toc-item"><a href="#slide-17">17. P.S. Bridal: the ladder</a></div>
+      <div class="toc-item"><a href="#slide-18">18. P.S. Bridal: the numbers</a></div>
+      <div class="toc-item"><a href="#slide-19">19. P.S. Bridal: the lesson</a></div>
+      <div class="toc-item"><a href="#slide-20">20. The common arc</a></div>
+      <div class="toc-item"><a href="#slide-21">21. What Bondcube didn't have</a></div>
+      <div class="toc-item"><a href="#slide-22">22. Credits</a></div>
+      <div class="toc-item"><a href="#slide-23">23. The open question rule</a></div>
+      <div class="toc-item"><a href="#slide-24">24. Five Signals diagnostic</a></div>
+      <div class="toc-item"><a href="#slide-25">25. VPC jobs, pains, gains</a></div>
+      <div class="toc-item"><a href="#slide-26">26. The script skeleton</a></div>
+      <div class="toc-item"><a href="#slide-27">27. Cadence and evidence scales</a></div>
+      <div class="toc-item"><a href="#slide-28">28. Exercise 1: Hypotheses</a></div>
+      <div class="toc-item"><a href="#slide-29">29. Exercise 2: Interview Plan</a></div>
+      <div class="toc-item"><a href="#slide-30">30. Exercise 3: Contact List</a></div>
+      <div class="toc-item"><a href="#slide-31">31. ShieldByte: Hypotheses</a></div>
+      <div class="toc-item"><a href="#slide-32">32. ShieldByte: Interview Plan</a></div>
+      <div class="toc-item"><a href="#slide-33">33. ShieldByte: Contact List</a></div>
+      <div class="toc-item"><a href="#slide-34">34. ProcureSimple: Hypotheses</a></div>
+      <div class="toc-item"><a href="#slide-35">35. ProcureSimple: Interview Plan</a></div>
+      <div class="toc-item"><a href="#slide-36">36. ProcureSimple: Contact List</a></div>
+      <div class="toc-item"><a href="#slide-37">37. What good looks like</a></div>
+      <div class="toc-item"><a href="#slide-38">38. Technical track</a></div>
+      <div class="toc-item"><a href="#slide-39">39. Non-tech track</a></div>
+      <div class="toc-item"><a href="#slide-40">40. Branding behaviour</a></div>
+      <div class="toc-item"><a href="#slide-41">41. Between now and Week 4</a></div>
+      <div class="toc-item"><a href="#slide-42">42. Credibility baseline</a></div>
+      <div class="toc-item"><a href="#slide-43">43. Week 4 success</a></div>
+      <div class="toc-item"><a href="#slide-44">44. Q&amp;A</a></div>
+      <div class="toc-item"><a href="#slide-45">45. Thank you</a></div>
+    </div>
+  </div>
+
+  <!-- PART 1: Opening -->
+
+  <div class="part-divider">
+    <span class="part-label">Part 1: Opening</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="note-section" id="slide-1">
+    <div class="note-header">
+      <span class="slide-num">Slide 1</span>
+      <div class="note-title">Title Slide</div>
+    </div>
+    <span class="timing-hint">Opening: 1-2 min</span>
+    <p class="note-body">Welcome everyone and let the room settle. This is Week 3 of the Hub201 Pre-Acceleration Programme. Quick orientation: "Weeks 1 and 2 were about problem identification and value proposition. This week is where the real work begins. Week 3 is about getting out of your own head and into the world. By the end of today, you will have three artefacts ready to take into your first customer conversations." Keep the intro tight. The audience wants to get to substance.</p>
+  </div>
+
+  <div class="note-section" id="slide-2">
+    <div class="note-header">
+      <span class="slide-num">Slide 2</span>
+      <div class="note-title">Where we are in the journey</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Walk through the 9 Fits Model. Emphasise that the fits are not a linear checklist. Teams revisit them with better evidence as they go. Point to Customer/Problem Fit as this week's target. Read the definition aloud: "Does this customer segment have this problem badly enough to pay for a solution?" Ask the room: "Can anyone answer this question confidently for their startup, with evidence, right now?" Expect silence. That is the point. Most cannot. That is why we are here today.</p>
+  </div>
+
+  <div class="note-section" id="slide-3">
+    <div class="note-header">
+      <span class="slide-num">Slide 3</span>
+      <div class="note-title">What discovery is</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Read the Fitzpatrick quote aloud. Pause. "Discovery is learning what's true, not what you hope is true." Let that land. Then: "The reason most early-stage teams fail at discovery is not laziness. It is that the natural human impulse is to ask questions that confirm what you already believe. Fitzpatrick called this the Mom Test: your mum will tell you your idea is great because she loves you. Your customer will tell you your idea is great because they do not want to hurt your feelings. The question is how to ask questions they cannot lie to."</p>
+  </div>
+
+  <div class="note-section" id="slide-4">
+    <div class="note-header">
+      <span class="slide-num">Slide 4</span>
+      <div class="note-title">The Say-Do Gap</div>
+    </div>
+    <span class="timing-hint">3-4 min</span>
+    <p class="note-body">Walk through the two-column contrast slowly. Read each row. Give a brief story for each one: "You get off the call. You think that was amazing. They said yes to everything. Three days later you follow up. Nothing. Two weeks later, still nothing. What happened? They were being polite in the moment. The 'Said' column is the conversation. The 'Did' column is the evidence." Push the audience to think about their own conversations. Have they experienced this?</p>
+    <aside class="check-in">
+      <div class="check-in-label">Check-in prompt</div>
+      <p>"Hands up: who has interviewed a customer before, properly or informally? And of those, how many got a positive response in the conversation and then heard nothing afterwards?"</p>
+    </aside>
+  </div>
+
+  <div class="note-section" id="slide-5">
+    <div class="note-header">
+      <span class="slide-num">Slide 5</span>
+      <div class="note-title">The pre-seed trap</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Use this as a transition into the venture stories. "The pre-seed trap is so common it is almost a rite of passage. Most first-time founders fall into it. I did. I am going to tell you exactly what it looks like when it happens, using my own startups as the examples. The first story is about what failure looks like. The second and third are about what done right looks like. These are not abstract frameworks. They are things that actually happened." Land on the Bondcube framing before advancing.</p>
+  </div>
+
+  <!-- PART 2: Venture Stories -->
+
+  <div class="part-divider">
+    <span class="part-label">Part 2: Three Venture Stories</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="note-section" id="slide-6">
+    <div class="note-header">
+      <span class="slide-num">Slide 6</span>
+      <div class="note-title">Bondcube: the setup</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Set the scene quickly. "Bondcube was an institutional bond trading platform. Buyers were asset managers, hedge funds, and banks. Big names. Sophisticated people. The problem space was genuinely real: the way fixed income was traded was fragmented and inefficient. If you had asked anyone in the market, they would have told you a better system was needed." Pause. "So what went wrong?" Advance to slide 7 to answer.</p>
+  </div>
+
+  <div class="note-section" id="slide-7">
+    <div class="note-header">
+      <span class="slide-num">Slide 7</span>
+      <div class="note-title">Bondcube: what happened</div>
+    </div>
+    <span class="timing-hint">3-4 min</span>
+    <p class="note-body">Let the numbers sit on screen for a moment before speaking. "Forty LoIs. I signed them personally. Two hundred and fifty total with investment institutions. These are extraordinary numbers for a pre-seed company. Any investor would have been impressed. We were impressed." Pause again. "And we collected zero meaningful feedback. Not because people were unhelpful. Because we never asked the right questions. We asked leading questions. We took polite enthusiasm as a buying signal. We never followed up to see whether intent turned into action." This is the confession. Deliver it plainly, not defensively.</p>
+    <div class="delivery-cue">
+      <div class="cue-label">Delivery note</div>
+      <p>The numbers are big. Let silence do the work after "Zero meaningful feedback." Do not rush to explain.</p>
+    </div>
+  </div>
+
+  <div class="note-section" id="slide-8">
+    <div class="note-header">
+      <span class="slide-num">Slide 8</span>
+      <div class="note-title">Bondcube: the lesson (dark slide)</div>
+    </div>
+    <span class="timing-hint">3-4 min</span>
+    <p class="note-body">Two Founder Nightmares. Read the name of each one and explain what it means in practice. "Quicksand of No Validation: this is when you convince yourself that meetings equal progress. They do not. A meeting is an attention signal. Not money, not time, not reputation. Just attention. We were on rung one of the Commitment Ladder and we thought we were on rung four." Then: "Ego Echo-Chamber: when everyone around you agrees with you, you are not learning. You are being entertained. The team around us agreed. The prospects in the room agreed. We were in a sealed system. No new information was getting in." These names matter because teams need to be able to recognise and name these patterns in themselves.</p>
+  </div>
+
+  <div class="note-section" id="slide-9">
+    <div class="note-header">
+      <span class="slide-num">Slide 9</span>
+      <div class="note-title">NPL Markets: the setup</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Contrast setup with Bondcube. "NPL Markets was the same class of buyer: sophisticated, high-status, busy professionals managing large pools of capital. Hedge funds and banks. The kind of person who receives twenty cold emails a day from unknown vendors and deletes them all. The constraint here was not the problem. The problem was real. The constraint was access." Set up the question for the room: "How do you get a meeting with someone who will not take meetings from unknown startups?"</p>
+  </div>
+
+  <div class="note-section" id="slide-10">
+    <div class="note-header">
+      <span class="slide-num">Slide 10</span>
+      <div class="note-title">NPL Markets: outreach</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Walk through the channels quickly. "Cold call, LinkedIn, personalised email, warm intros. Nothing unusual. But the key word there is personalised. Every message referenced something specific about the buyer's context. Not a generic 'I would love to get your feedback.' A reference to their specific fund, their specific market position, a specific piece of news about their firm." Emphasise volume. Over 100 conversations. "This is not five conversations and a conclusion. This is sustained, methodical outreach over months."</p>
+  </div>
+
+  <div class="note-section" id="slide-11">
+    <div class="note-header">
+      <span class="slide-num">Slide 11</span>
+      <div class="note-title">NPL Markets: first meetings</div>
+    </div>
+    <span class="timing-hint">3 min</span>
+    <p class="note-body">The sequencing point is the key takeaway here. "In the Bondcube world, we showed up and immediately asked for feedback. With a sophisticated buyer who has no reason to trust you, that does not work. The first half of a meeting with a hedge fund PM is about establishing why you belong in the room. You present yourself, your background, the concept, why you are building this. Then, once you have that credibility in the room, you shift into discovery mode. The sequencing is essential. Get it backwards and you get polite dismissal."</p>
+  </div>
+
+  <div class="note-section" id="slide-12">
+    <div class="note-header">
+      <span class="slide-num">Slide 12</span>
+      <div class="note-title">NPL Markets: social proof engine</div>
+    </div>
+    <span class="timing-hint">3-4 min</span>
+    <p class="note-body">Walk through each element in the flow. "Between meetings, the team was actively building external credibility. Industry events: show up, get known. Expert interviews: these produced published market research reports. The CTO joined ESMA's Working Group on Non-Performing Loans. The team co-authored papers with the regulator. Each thing fed the next." Pause. "When a hedge fund PM received a cold email referencing an ESMA paper the team had co-authored, the meeting happened. That email did not succeed because of the writing. It succeeded because the credibility was real and independently verifiable."</p>
+  </div>
+
+  <div class="note-section" id="slide-13">
+    <div class="note-header">
+      <span class="slide-num">Slide 13</span>
+      <div class="note-title">NPL Markets: the concierge MVP</div>
+    </div>
+    <span class="timing-hint">3-4 min</span>
+    <p class="note-body">This is the most important slide in the NPL story. Deliver it slowly. "Only after mapping the market through 100+ conversations did the team build anything. And even then, they did not build a platform. Here is what they actually did."</p>
+    <p class="note-body">"Customers gave us their non-performing loan portfolios. Two data scientists manually mapped each portfolio to a template we had created specifically for NPL portfolios. No such template existed in the market. We invented it. EBA and ESMA eventually adopted that template as the de-facto market standard."</p>
+    <p class="note-body">Pause. Let that land.</p>
+    <p class="note-body">"We started charging customers for the mapping service. Then we productised it as an ETL tool. Here is the key thing: customers experienced it as a web product. They uploaded their data to a web page. They got confirmation and status updates via email and on the web. They received the mapped portfolio back. Behind all of that, two humans were doing the work manually. The product experience was real. The automation was not there yet. That is the concierge-to-product arc."</p>
+    <p class="note-body">Point to the three-step flow on the slide. "Customer uploads portfolio. Two data scientists map to our template. Customer receives portfolio via web and email. Customers thought this was a product. It was not a product yet. It was two people and a template. But it worked. So we built the automation."</p>
+    <aside class="check-in">
+      <div class="check-in-label">Audience question</div>
+      <p>"How many of you could do the thing you are building manually for one customer this week, before writing a single line of code? What would that look like?"</p>
+    </aside>
+    <div class="delivery-cue">
+      <div class="cue-label">Delivery note</div>
+      <p>The EBA and ESMA adoption is a credibility anchor. Say it plainly: "The regulators adopted our template as the standard." Then move on. Do not over-explain it.</p>
+    </div>
+  </div>
+
+  <div class="note-section" id="slide-14">
+    <div class="note-header">
+      <span class="slide-num">Slide 14</span>
+      <div class="note-title">NPL Markets: the lesson (dark slide)</div>
+    </div>
+    <span class="timing-hint">3 min</span>
+    <p class="note-body">Read the lesson statement aloud. "Credibility is a discovery prerequisite with high-status B2B buyers." Then walk through each bullet. Spend time on the first one. "Website, LinkedIn, social proof. These are not things you do after you find product-market fit. They are what gets you into the rooms where you find product-market fit. For the cybersecurity teams in this room: a Head of Security at a Belgrade bank will Google you before they take a meeting. What will they find?"</p>
+    <aside class="check-in">
+      <div class="check-in-label">Check-in prompt</div>
+      <p>"Open your LinkedIn right now. If a CTO at a Belgrade bank looked at your profile today, would they take a meeting? Yes or no? Be honest. What would they see?"</p>
+    </aside>
+  </div>
+
+  <div class="note-section" id="slide-15">
+    <div class="note-header">
+      <span class="slide-num">Slide 15</span>
+      <div class="note-title">P.S. Bridal: the setup</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Set up the contrast clearly. "P.S. Bridal is a completely different context. B2C, not B2B. Brides, not institutional buyers. The constraint is completely different: a bride planning her wedding does not want to spend 30 minutes talking to a startup. She is not a professional. She has no business reason to give you her time. Classical discovery interviews do not work here. So what do you do when you cannot ask?"</p>
+  </div>
+
+  <div class="note-section" id="slide-16">
+    <div class="note-header">
+      <span class="slide-num">Slide 16</span>
+      <div class="note-title">P.S. Bridal: the trick</div>
+    </div>
+    <span class="timing-hint">3-4 min</span>
+    <p class="note-body">This is the core B2C insight. "The answer was: give value first. The team built a wedding dress style finder. A 30-question Typeform. The bride answered 30 questions and got back a personalised style recommendation. That recommendation had genuine value: brides were overwhelmed by choice and this made the decision easier. In exchange, the team received 40+ data points per bride. Venue, budget, timing, size, jewellery preferences, services needed. Every bride who completed the style finder gave the team a discovery dataset without knowing they were participating in product research." Walk through the WhatsApp concierge as the direct complement: individual conversations that were also individual data collection events.</p>
+  </div>
+
+  <div class="note-section" id="slide-17">
+    <div class="note-header">
+      <span class="slide-num">Slide 17</span>
+      <div class="note-title">P.S. Bridal: the ladder</div>
+    </div>
+    <span class="timing-hint">3 min</span>
+    <p class="note-body">Walk through each rung of the ladder and what it taught. "The style finder proved demand for personalised guidance. The WhatsApp concierge proved brides wanted real-time advice, not just an automated tool. The booking prototype was the critical one: it told them that brides could not find boutiques that stocked their ideal dress. That insight came from real usage, not from an interview question. And the number that came out of that prototype was 67%: two-thirds of brides found it hard to find the right boutique. That is not a survey result. That is data from real behaviour at scale."</p>
+  </div>
+
+  <div class="note-section" id="slide-18">
+    <div class="note-header">
+      <span class="slide-num">Slide 18</span>
+      <div class="note-title">P.S. Bridal: the numbers</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Let the numbers sit. "2,500 brides in the first year. 8,000+ over time. These are real scale discovery numbers. Compare that to the 20 interviews we are targeting for your teams this week. Those 20 interviews are the beginning. The style finder produced this kind of scale by making every interaction valuable to the person participating. 76% conversion rate on the booking tool. That number only exists because the team tested the booking prototype before building the full booking product. They knew the number before they invested in the technology."</p>
+  </div>
+
+  <div class="note-section" id="slide-19">
+    <div class="note-header">
+      <span class="slide-num">Slide 19</span>
+      <div class="note-title">P.S. Bridal: the lesson (dark slide)</div>
+    </div>
+    <span class="timing-hint">3 min</span>
+    <p class="note-body">Read the lesson statement. "In B2C, the prototype is the interview. You earn the conversation by giving value first." Then address the B2C teams in the room directly. "For teams with consumer audiences, this is your model. Classical interviews will not get you to 8,000 data points. A value-giving prototype will. The business model pivot to rental came from the data the prototypes had been collecting all along. The team did not decide to pivot because someone told them to. They decided because the data told them to."</p>
+    <aside class="check-in">
+      <div class="check-in-label">Check-in prompt</div>
+      <p>"For the B2C teams here: what tiny thing could you give someone in exchange for 15 minutes of their behaviour? Not a survey. Something with genuine value for them."</p>
+    </aside>
+  </div>
+
+  <!-- PART 3: Common Arc -->
+
+  <div class="part-divider">
+    <span class="part-label">Part 3: Common Arc</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="note-section" id="slide-20">
+    <div class="note-header">
+      <span class="slide-num">Slide 20</span>
+      <div class="note-title">What NPL Markets and P.S. Bridal shared</div>
+    </div>
+    <span class="timing-hint">3 min</span>
+    <p class="note-body">Bring the two stories together. "Different industries. Different buyer types. Different discovery motions. But the same underlying discipline." Walk through each of the four shared traits. Spend time on behaviour over opinion: "Neither team ran surveys. Neither team asked 'how important is this to you?' Both teams pushed for actual behaviour. Real transactions. Real usage data. Real spend. The evidence that comes from behaviour is qualitatively different from the evidence that comes from opinion."</p>
+  </div>
+
+  <div class="note-section" id="slide-21">
+    <div class="note-header">
+      <span class="slide-num">Slide 21</span>
+      <div class="note-title">What Bondcube did not have</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Use the side-by-side to make the contrast vivid. "Bondcube had volume. 250 LoIs is not nothing. But volume without discipline is noise. There was no narrowing. We were talking to everyone. There was no iteration. We did not update our approach based on what we were learning. There was no credibility flywheel. And most importantly: polite enthusiasm was treated as evidence. It is not." End with the direct question from the slide: "Which story is playing out in your team right now?" Give the room a moment to sit with that before moving on.</p>
+  </div>
+
+  <!-- PART 4: Methodology -->
+
+  <div class="part-divider">
+    <span class="part-label">Part 4: Methodology</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="note-section" id="slide-22">
+    <div class="note-header">
+      <span class="slide-num">Slide 22</span>
+      <div class="note-title">Credits</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Give genuine credit. "The methodology we use draws on six thinkers. Bland and Osterwalder on experiment design. Fitzpatrick on behavioural questions. Torres on continuous discovery. Coelen on evidence language. Snyder on selling to learn. Blank on customer development. I have also built on these in the GNV Startup Operating Model, which is where the venture stories, the PULL hypothesis format, and the Founder Nightmares names come from. You do not need to read all of these before your next interview. But The Mom Test is short. Read it this week."</p>
+  </div>
+
+  <div class="note-section" id="slide-23">
+    <div class="note-header">
+      <span class="slide-num">Slide 23</span>
+      <div class="note-title">The open question rule</div>
+    </div>
+    <span class="timing-hint">4-5 min</span>
+    <p class="note-body">This is one of the most practically useful slides in the deck. Walk through each row of the table. For each closed question, ask the room: "What is wrong with this?" Then show the open version. Emphasise: "The banned words are do, would, could, and should. Every question that uses one of those words is inviting the interviewee to imagine a hypothetical. We do not want hypotheticals. We want descriptions of what they have already done." Take a question from the room. Ask someone to suggest a question they might ask in an interview. Rewrite it live if it is closed or leading.</p>
+    <div class="delivery-cue">
+      <div class="cue-label">Interactive moment</div>
+      <p>Ask for a live question from the room and rewrite it in front of everyone. This lands the rule more firmly than the table alone.</p>
+    </div>
+  </div>
+
+  <div class="note-section" id="slide-24">
+    <div class="note-header">
+      <span class="slide-num">Slide 24</span>
+      <div class="note-title">The Five Signals diagnostic</div>
+    </div>
+    <span class="timing-hint">3 min</span>
+    <p class="note-body">Walk through each signal. "These five signals are how you check whether your script is complete. A script that is heavy on concrete behaviour but has no time-and-money questions is missing commercial evidence. A script heavy on recency and frequency but light on awareness level will not tell you whether the market knows the category exists. Tag every question in your script with one of these five signals. If you have no questions for one of the signals, you have a gap."</p>
+  </div>
+
+  <div class="note-section" id="slide-25">
+    <div class="note-header">
+      <span class="slide-num">Slide 25</span>
+      <div class="note-title">VPC jobs, pains, gains</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Brief context. "The Value Proposition Canvas from Strategyzer is a useful lens for structuring your questions before you get to the product. Before any conversation about what you are building, understand what your customer is trying to accomplish (jobs), what frustrates them (pains), and what a good outcome looks like (gains). These three lenses ensure you are asking about the customer's world, not your product."</p>
+  </div>
+
+  <div class="note-section" id="slide-26">
+    <div class="note-header">
+      <span class="slide-num">Slide 26</span>
+      <div class="note-title">The script skeleton</div>
+    </div>
+    <span class="timing-hint">3-4 min</span>
+    <p class="note-body">Walk through each of the five sections. Emphasise two things. First: "The most important questions are in Business and Personal. If the meeting runs short, drop Industry questions. Never drop Business questions." Second: "The magic wand question at the end is not a throwaway. It is the most unguarded question in the script. After 30-40 minutes of conversation, defences are lower. The answer at the end is often more honest than anything in the first 15 minutes." Quote the full magic wand question: "If you had a magic wand and could fix one problem in your work, what would it be?"</p>
+  </div>
+
+  <div class="note-section" id="slide-27">
+    <div class="note-header">
+      <span class="slide-num">Slide 27</span>
+      <div class="note-title">Cadence and evidence scales</div>
+    </div>
+    <span class="timing-hint">3-4 min</span>
+    <p class="note-body">Walk through the cadence numbers first: 5 per week, script review after 1, affinity map after 10. "These are not aspirational targets. They are the minimum to produce signal. Fewer than 10 interviews gives you anecdotes, not patterns." Then the Evidence Strength Scale. Read each level. "The most important discipline in your write-ups is rating your own claims honestly. Bondcube rated polite enthusiasm as strong evidence. It was weak at best. If you are honest about what level each claim is on, you know exactly what needs to be tested next." Walk through the Commitment Ladder briefly. "Where on this ladder are the most enthusiastic potential customers you have today?"</p>
+  </div>
+
+  <!-- PART 5: Exercises -->
+
+  <div class="part-divider">
+    <span class="part-label">Part 5: Three Exercises</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="note-section" id="slide-28">
+    <div class="note-header">
+      <span class="slide-num">Slide 28</span>
+      <div class="note-title">Exercise 1: Hypotheses</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Brief the exercise. "Exercise 1 is about making your assumptions explicit. You are making assumptions about your customer and problem every day. You just do not usually write them down. The purpose of this exercise is to list every assumption, group them by Desirability, Feasibility, Viability, rank them by risk, and convert the top five into PULL hypotheses that are actually testable. The output is a list of things your team believes that you have not yet proven. That list is your interview agenda."</p>
+  </div>
+
+  <div class="note-section" id="slide-29">
+    <div class="note-header">
+      <span class="slide-num">Slide 29</span>
+      <div class="note-title">Exercise 2: Interview Plan</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Brief the exercise. "Exercise 2 takes your hypotheses and turns them into a discovery script you can use tomorrow. The script must be behavioural. Every question tagged with which hypothesis it tests and which of the five signals it elicits. Include the consent script, the magic wand closer, the cadence plan, and a post-interview write-up template. The test: can every question on your script be answered by describing something real that already happened, or does it invite a hypothetical? Hypotheticals come out of the script."</p>
+  </div>
+
+  <div class="note-section" id="slide-30">
+    <div class="note-header">
+      <span class="slide-num">Slide 30</span>
+      <div class="note-title">Exercise 3: Contact List</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Brief the exercise. "Exercise 3 is where the rubber meets the road. Narrow your ICP until two team members could independently find the same person on LinkedIn using your definition. Run the credibility checklist before sending anything. Then build 20-30 named targets with a channel-specific first-touch plan. Not a vague list of companies. Named people, specific triggers, specific opening lines." Transition to the worked examples.</p>
+    <aside class="check-in">
+      <div class="check-in-label">Check-in prompt</div>
+      <p>"Before we look at the worked examples: for your team, which of these three exercises is the biggest unknown right now? Call it out."</p>
+    </aside>
+  </div>
+
+  <!-- PART 6: Worked Examples -->
+
+  <div class="part-divider">
+    <span class="part-label">Part 6: Worked Examples</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="note-section" id="slide-31">
+    <div class="note-header">
+      <span class="slide-num">Slide 31</span>
+      <div class="note-title">ShieldByte: Hypotheses</div>
+    </div>
+    <span class="timing-hint">3 min</span>
+    <p class="note-body">Walk through the five hypotheses. Emphasise the honest "Assumption" ratings on all of them. "Everything here is rated Assumption. That is not a failure. That is an honest starting point. The team knows exactly what they are building on and what needs to be tested." Point to H1 as the biggest risk. "H1 is the load-bearing number. If triage time is actually 20 minutes rather than 3-5 hours, the entire ROI case falls apart. That is the question that gets answered first, before anything else. Not after 10 interviews. After 3."</p>
+  </div>
+
+  <div class="note-section" id="slide-32">
+    <div class="note-header">
+      <span class="slide-num">Slide 32</span>
+      <div class="note-title">ShieldByte: Interview Plan</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Walk through the ICP callout. "Specific. Triggered. Two team members would find the same person on LinkedIn." Then walk through the selected questions. "Every question here asks about something real that already happened. 'Walk me through exactly what happened.' 'Who signs off the budget.' 'What did you spend in the last 12 months.' These are not 'would you' or 'do you think' questions. They are 'walk me through a real event' questions."</p>
+  </div>
+
+  <div class="note-section" id="slide-33">
+    <div class="note-header">
+      <span class="slide-num">Slide 33</span>
+      <div class="note-title">ShieldByte: Contact List</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Walk through the ICP, then the channel mix. "40% LinkedIn cold, 30% industry events, 20% warm intros, 10% industry bodies. Warm intros are only 20% because they are scarce. But they are the highest-quality channel. Every warm intro on this list gets prioritised before any cold outreach goes out. The LinkedIn openers all reference a specific trigger: a recent SOC hire, a recent LinkedIn post, a specific industry event. Generic openers do not get responses."</p>
+  </div>
+
+  <div class="note-section" id="slide-34">
+    <div class="note-header">
+      <span class="slide-num">Slide 34</span>
+      <div class="note-title">ProcureSimple: Hypotheses</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Walk through the five hypotheses. Point to H2 as the biggest risk. "H2 is a GTM-breaking hypothesis. If Finance owns the budget for spend management software at this company size, the entire sales motion is wrong. The team is pitching to the champion instead of the buyer. That is not a minor adjustment. That is a complete rebuild of outreach, messaging, demos, and proof points. Which is why H2 gets tested in the first five interviews, not interview fifteen."</p>
+  </div>
+
+  <div class="note-section" id="slide-35">
+    <div class="note-header">
+      <span class="slide-num">Slide 35</span>
+      <div class="note-title">ProcureSimple: Interview Plan</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Note the Finance Director variant. "ProcureSimple has a wrinkle that ShieldByte does not: H2 means the team needs to interview both procurement leads and Finance Directors. They are testing the budget ownership question from both sides simultaneously. The Finance Director variant replaces the operational questions with budget and approval questions. This is smart hypothesis design: you test the GTM assumption before you invest in the GTM motion."</p>
+  </div>
+
+  <div class="note-section" id="slide-36">
+    <div class="note-header">
+      <span class="slide-num">Slide 36</span>
+      <div class="note-title">ProcureSimple: Contact List</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Point out the parallel Finance Director outreach in the table. "Rows 29 and 30 are Finance Directors at the same companies as two of the procurement leads. The team is running parallel outreach to test H2 from both sides. This is a clever structural move: if the procurement lead and the Finance Director at the same firm give different answers about who owns the budget, that discrepancy is itself useful data."</p>
+  </div>
+
+  <div class="note-section" id="slide-37">
+    <div class="note-header">
+      <span class="slide-num">Slide 37</span>
+      <div class="note-title">What good looks like</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Land the pattern recognition point. "Both examples are rated Assumption-Heavy. That is not a failure grade. That is an honest assessment of where every team should be at Week 3. The failure would be rating assumptions as validated evidence. Both examples name a single biggest risk and have a specific next action for tomorrow. If your outputs from today's exercises do those three things, you are in good shape." Transition to the practical instructions for the coach.</p>
+    <aside class="check-in">
+      <div class="check-in-label">Check-in prompt</div>
+      <p>"Now open your coach. Whether you are on the terminal track or the web track. Start with Exercise 1. The coach will ask for your startup one-liner. Have that ready."</p>
+    </aside>
+  </div>
+
+  <!-- PART 7: How to use the coach -->
+
+  <div class="part-divider">
+    <span class="part-label">Part 7: How to Use the Coach</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="note-section" id="slide-38">
+    <div class="note-header">
+      <span class="slide-num">Slide 38</span>
+      <div class="note-title">Technical track: Claude Code</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Walk through the five steps quickly. "Clone the repo, open week3/, run claude, start chatting. The coach reads CLAUDE.md automatically so you do not need to explain the frameworks. Just tell it your startup one-liner and what stage you are at. It will ask about your branding and then take you through all three exercises. Outputs save to your outputs folder and get assembled into a branded HTML presentation at the end."</p>
+  </div>
+
+  <div class="note-section" id="slide-39">
+    <div class="note-header">
+      <span class="slide-num">Slide 39</span>
+      <div class="note-title">Non-tech track: claude.ai</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Walk through the steps. "Open the web launcher in your browser, copy the prompt, paste it into claude.ai. A free account is sufficient. The coach will ask about branding first, then run the three exercises end-to-end." Read the pinned note aloud: "The coach will never hallucinate. If it does not know something, it will tell you. Do not take invented facts into your interviews. If a claim is unverified, it will be labelled explicitly." This is important. Founders who use the coach to prepare for interviews need to know which parts of the output are verified and which are still assumptions.</p>
+  </div>
+
+  <div class="note-section" id="slide-40">
+    <div class="note-header">
+      <span class="slide-num">Slide 40</span>
+      <div class="note-title">Branding behaviour</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Brief explanation. "The coach asks for your brand at the start because your outputs need to look like they came from you, not from a generic tool. If you have a pitch deck or website, drop it in. If you have nothing yet, pick a primary colour. The consolidated HTML presentation at the end will be in your branding and you can share it directly with a mentor or investor. It is a real working document, not a transcript."</p>
+  </div>
+
+  <!-- PART 8: Close -->
+
+  <div class="part-divider">
+    <span class="part-label">Part 8: Close</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="note-section" id="slide-41">
+    <div class="note-header">
+      <span class="slide-num">Slide 41</span>
+      <div class="note-title">Between now and Week 4</div>
+    </div>
+    <span class="timing-hint">2-3 min</span>
+    <p class="note-body">Make the commitment real. "Five interviews per week. Book them before you leave today. Not in theory. Literally open your calendar right now and put in three or four outreach messages that you will send today." Walk through the four actions. Emphasise the affinity mapping: "Do not try to synthesise 20 interviews from memory. After interview 10, block three hours and put everything on the board side by side. The patterns will be invisible in individual conversations and obvious in the aggregate."</p>
+  </div>
+
+  <div class="note-section" id="slide-42">
+    <div class="note-header">
+      <span class="slide-num">Slide 42</span>
+      <div class="note-title">Credibility baseline</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Direct and practical. "Before you send a single outreach message, these three things need to exist: a reasonable website, updated LinkedIn profiles, and at least one piece of social proof. I said one evening's work. I meant it. A single-page HTML one-pager takes two hours. Updating a LinkedIn profile takes 20 minutes. Asking a Hub201 advisor for a one-line endorsement takes five minutes. Do not spend a week on this. But do it before you send anything cold."</p>
+  </div>
+
+  <div class="note-section" id="slide-43">
+    <div class="note-header">
+      <span class="slide-num">Slide 43</span>
+      <div class="note-title">Week 4 success criteria</div>
+    </div>
+    <span class="timing-hint">2 min</span>
+    <p class="note-body">Read through the checklist. "Ten interviews logged. Script iterated at least twice. Affinity mapping started. At least one hypothesis killed or validated. Credibility checklist complete. These are not aspirational. They are the minimum to have a productive Week 4. Teams who arrive at Week 4 without interviews are starting from scratch. Teams who arrive with ten write-ups and a revised script are building on something real."</p>
+  </div>
+
+  <div class="note-section" id="slide-44">
+    <div class="note-header">
+      <span class="slide-num">Slide 44</span>
+      <div class="note-title">Q&A</div>
+    </div>
+    <span class="timing-hint">10-15 min live</span>
+    <p class="note-body">Open floor for questions. The four prompts on the slide are the most common questions, provided as conversation starters if the room is slow to engage. "My customers won't take calls" is usually a credibility gap problem: fix the website and LinkedIn first. "We already have 50 users" does not mean discovery is done: do they know why those users are staying? "How do I know when I have enough" is answered by pattern saturation: when the last three interviews produced no new insights, you have enough for the current hypothesis set. "What do I do if my biggest hypothesis is dead" is the best outcome of the week: kill it fast, pivot to the next assumption, do not run 20 interviews on a dead hypothesis.</p>
+  </div>
+
+  <div class="note-section" id="slide-45">
+    <div class="note-header">
+      <span class="slide-num">Slide 45</span>
+      <div class="note-title">Thank you</div>
+    </div>
+    <span class="timing-hint">1 min</span>
+    <p class="note-body">Close with the slide's line, spoken aloud: "Behaviour is truth. Opinions are noise. Go talk to your customers this week." Keep the close brief. The teams have three exercises to start. Thank Hub201 for the programme. Direct anyone with questions to LinkedIn or email. End on time.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

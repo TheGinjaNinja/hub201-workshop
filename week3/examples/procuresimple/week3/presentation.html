@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProcureSimple Week 3: Customer Discovery and ICP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* =====================================================
+       ProcureSimple brand tokens
+       Primary: #1A6C2E (manufacturing green)
+       Accent:  #27A349 (mid green)
+       Pale:    #EEF8F1 (tinted backgrounds)
+       ===================================================== */
+    :root {
+      --primary: #1A6C2E;
+      --primary-hover: #145624;
+      --primary-pale: #EEF8F1;
+      --accent: #27A349;
+      --bg: #FFFFFF;
+      --surface: #F5F8F6;
+      --border: #D1E8D8;
+      --text: #0F172A;
+      --text2: #475569;
+      --text3: #94A3B8;
+      --dark-section: #0D2414;
+      --success: #16A34A;
+      --warning: #D97706;
+      --danger: #DC2626;
+      --radius-card: 12px;
+      --radius-btn: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- Nav ---- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-brand {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-right: 16px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      background: var(--primary-pale);
+      color: var(--primary);
+    }
+
+    /* ---- Layout ---- */
+    main { padding-top: 56px; }
+
+    section {
+      padding: 72px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-alt {
+      background: var(--surface);
+      width: 100%;
+    }
+    .section-alt > .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 72px 24px;
+    }
+
+    /* ---- Hero ---- */
+    .hero {
+      background: var(--dark-section);
+      color: white;
+      text-align: center;
+      padding: 96px 24px 80px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta span {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .hero-meta span strong {
+      color: rgba(255,255,255,0.85);
+      font-weight: 600;
+    }
+
+    /* ---- Headings ---- */
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--text2);
+      margin-bottom: 40px;
+      max-width: 680px;
+    }
+
+    /* ---- Cards ---- */
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .card:hover {
+      border-color: rgba(26,108,46,0.25);
+      box-shadow: 0 4px 12px rgba(26,108,46,0.08);
+    }
+
+    .card-accent {
+      border-left: 4px solid var(--primary);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* ---- Hypothesis cards ---- */
+    .hyp-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+
+    .hyp-card.risk-h2 {
+      border: 2px solid var(--danger);
+    }
+
+    .hyp-header {
+      background: var(--primary);
+      color: white;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hyp-header.risk-header {
+      background: var(--danger);
+    }
+
+    .hyp-badge {
+      background: rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .hyp-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .hyp-body {
+      padding: 20px;
+    }
+
+    .pull-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .pull-item {
+      background: var(--primary-pale);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .pull-item.risk-pull {
+      background: #FEF2F2;
+    }
+
+    .pull-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .pull-item.risk-pull .pull-label {
+      color: var(--danger);
+    }
+
+    .pull-text {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .criteria-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .criteria-item {
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .criteria-kill {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #991B1B;
+    }
+
+    .criteria-validate {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      color: #166534;
+    }
+
+    .criteria-label {
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    /* ---- Evidence badges ---- */
+    .badge {
+      display: inline-block;
+      border-radius: 99px;
+      padding: 3px 10px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .badge-assumption { background: #FEF3C7; color: #92400E; }
+    .badge-weak { background: #FEE2E2; color: #991B1B; }
+    .badge-moderate { background: #DBEAFE; color: #1E40AF; }
+    .badge-strong { background: #DCFCE7; color: #166534; }
+    .badge-risk { background: #DC2626; color: white; }
+    .badge-done { background: #DCFCE7; color: #166534; }
+    .badge-progress { background: #FEF3C7; color: #92400E; }
+    .badge-missing { background: #FEE2E2; color: #991B1B; }
+
+    /* ---- Big risk callout ---- */
+    .risk-callout {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-left: 4px solid var(--danger);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      margin-top: 32px;
+    }
+
+    .risk-callout-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--danger);
+      margin-bottom: 6px;
+    }
+
+    .risk-callout p {
+      color: #7F1D1D;
+      font-size: 0.95rem;
+    }
+
+    /* ---- Callout ---- */
+    .callout {
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+    }
+
+    .callout-green {
+      background: var(--primary-pale);
+      border: 1px solid rgba(26,108,46,0.2);
+    }
+
+    .callout-dark {
+      background: var(--dark-section);
+      color: white;
+    }
+
+    .callout-dark p { color: rgba(255,255,255,0.8); }
+
+    /* ---- Tables ---- */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead tr {
+      background: var(--primary);
+      color: white;
+    }
+
+    thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) { background: var(--primary-pale); }
+
+    tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ---- Question table ---- */
+    .q-theme {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .q-text { font-weight: 500; }
+
+    .q-note {
+      font-size: 0.78rem;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+
+    .q-tag {
+      display: inline-block;
+      background: var(--primary-pale);
+      color: var(--primary);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin: 2px 2px 2px 0;
+    }
+
+    /* ---- Timeline / Cadence ---- */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-row:last-child { border-bottom: none; }
+
+    .timeline-week {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--primary);
+      padding-top: 2px;
+    }
+
+    .timeline-activity { font-size: 0.9rem; }
+
+    /* ---- Credibility checklist ---- */
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .checklist-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .checklist-text { flex: 1; }
+    .checklist-text strong { display: block; margin-bottom: 2px; font-size: 0.9rem; }
+    .checklist-text span { font-size: 0.83rem; color: var(--text2); }
+
+    /* ---- Contact table ---- */
+    .contact-table td:nth-child(1) { font-weight: 600; white-space: nowrap; }
+    .contact-table td:nth-child(3) { font-style: italic; color: var(--text2); }
+
+    /* ---- Template blocks ---- */
+    .template-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+
+    .template-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .template-block blockquote {
+      background: white;
+      border-left: 3px solid var(--primary);
+      padding: 14px 16px;
+      margin: 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text2);
+      line-height: 1.65;
+    }
+
+    /* ---- Channel mix ---- */
+    .channel-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .channel-row {
+      display: grid;
+      grid-template-columns: 200px 1fr 40px;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.88rem;
+    }
+
+    .channel-label { font-weight: 500; }
+
+    .channel-bar-bg {
+      background: var(--border);
+      border-radius: 99px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .channel-bar-fill {
+      background: var(--primary);
+      border-radius: 99px;
+      height: 100%;
+    }
+
+    .channel-pct {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.85rem;
+      text-align: right;
+    }
+
+    /* ---- Summary stats ---- */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text2);
+      line-height: 1.4;
+    }
+
+    /* ---- ICP callout ---- */
+    .icp-box {
+      background: var(--primary);
+      color: white;
+      border-radius: var(--radius-card);
+      padding: 24px 28px;
+      margin-bottom: 32px;
+    }
+
+    .icp-box .icp-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 8px;
+    }
+
+    .icp-box p {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1.5;
+    }
+
+    /* ---- Next action box ---- */
+    .next-action {
+      background: var(--dark-section);
+      color: white;
+      border-radius: var(--radius-card);
+      padding: 24px 28px;
+      margin-top: 32px;
+    }
+
+    .next-action .next-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .next-action p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+    }
+
+    /* ---- Commitment box ---- */
+    .commitment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .commitment-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .commitment-num {
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .commitment-text { flex: 1; font-size: 0.9rem; line-height: 1.55; }
+    .commitment-text strong { display: block; margin-bottom: 4px; }
+
+    /* ---- Footer ---- */
+    footer {
+      background: var(--dark-section);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.8rem;
+    }
+
+    footer strong { color: rgba(255,255,255,0.8); }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 1.8rem; }
+      .pull-grid { grid-template-columns: 1fr; }
+      .criteria-row { grid-template-columns: 1fr; }
+      .channel-row { grid-template-columns: 1fr; }
+      .timeline-row { grid-template-columns: 1fr; }
+      .channel-row .channel-bar-bg { display: none; }
+      nav { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed nav -->
+  <nav>
+    <span class="nav-brand">ProcureSimple</span>
+    <div class="nav-links">
+      <a href="#hypotheses">Hypotheses</a>
+      <a href="#interview-plan">Interview Plan</a>
+      <a href="#contact-list">Contact List</a>
+      <a href="#commitments">Commitments</a>
+      <a href="#summary">Summary</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eyebrow">Hub201 Pre-Acceleration Programme</div>
+      <h1>ProcureSimple Week 3: Customer Discovery and ICP</h1>
+      <p>Spend management for European mid-sized manufacturers. Three discovery artefacts prepared before the first customer conversation.</p>
+      <div class="hero-meta">
+        <span><strong>Segment:</strong> 500-2000 person European manufacturers</span>
+        <span><strong>Date:</strong> 2026-04-23</span>
+        <span><strong>Stage:</strong> Pre-seed, entering discovery</span>
+        <span><strong>Evidence level:</strong> Assumption-Heavy (expected)</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 1: HYPOTHESES
+         ============================================================ -->
+    <section id="hypotheses">
+      <div class="section-eyebrow">Exercise 1</div>
+      <h2>Hypotheses</h2>
+      <p class="section-lead">Week 2 positioning shifted from Czech SMEs (50-200 person manufacturers) to mid-market European manufacturers in metals, machinery, and food processing (500-2000 employees). Almost all Week 2 evidence needs retesting with this new segment. Five hypotheses ranked by risk. All rated Assumption at this stage.</p>
+
+      <!-- H2 risk callout at top -->
+      <div class="risk-callout">
+        <div class="risk-callout-label">Biggest Risk: H2 Budget Ownership</div>
+        <p>If Finance (not Procurement) holds the budget for spend management software at this company size, the entire GTM motion is targeting the wrong person. Procurement-first outreach reaches the champion but not the buyer. This must be tested in the first five interviews before any further GTM investment is made.</p>
+      </div>
+
+      <!-- Top 5 PULL cards -->
+      <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 24px;">
+
+        <!-- H1 -->
+        <div class="hyp-card">
+          <div class="hyp-header">
+            <span class="hyp-badge">H1</span>
+            <span class="hyp-title">Procurement admin time: 30%+ spent chasing suppliers and reconciling invoices [illustrative]</span>
+            <span class="badge badge-assumption" style="margin-left: auto; flex-shrink: 0;">Assumption</span>
+          </div>
+          <div class="hyp-body">
+            <div class="pull-grid">
+              <div class="pull-item">
+                <div class="pull-label">Population</div>
+                <div class="pull-text">Heads of Procurement at 500-2000 person European manufacturers in metals, machinery, or food processing managing 50+ active supplier relationships.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Understanding</div>
+                <div class="pull-text">These buyers spend 30%+ of their time [illustrative] on supplier chasing and invoice reconciliation: following up missing invoices, correcting PO mismatches, chasing delivery confirmations.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Learning</div>
+                <div class="pull-text">Ask interviewees to walk through their last week at work in detail. How many hours went to supplier admin? How many invoices does the team reconcile per month and how long does each take?</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Limit</div>
+                <div class="pull-text">If 7 of 10 interviewees describe supplier admin as consuming more than 20% of their team's time and cite it as a real constraint, H1 is directionally validated.</div>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div class="criteria-item criteria-kill">
+                <div class="criteria-label">Kill if...</div>
+                Fewer than 3 of 10 describe supplier admin as a meaningful time drain. Most say existing tools or processes are adequate.
+              </div>
+              <div class="criteria-item criteria-validate">
+                <div class="criteria-label">Validate if...</div>
+                7+ of 10 describe supplier admin consuming significant time, express frustration with manual work, and connect it to missed higher-value work.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H2 (highlighted as biggest risk) -->
+        <div class="hyp-card risk-h2">
+          <div class="hyp-header risk-header">
+            <span class="hyp-badge">H2</span>
+            <span class="hyp-title">Finance, not Procurement, holds the budget for spend management software at this company size</span>
+            <span class="badge badge-risk" style="margin-left: auto; flex-shrink: 0;">Biggest Risk</span>
+          </div>
+          <div class="hyp-body">
+            <div class="pull-grid">
+              <div class="pull-item risk-pull">
+                <div class="pull-label">Population</div>
+                <div class="pull-text">500-2000 person European manufacturers in metals, machinery, or food processing with a dedicated procurement function.</div>
+              </div>
+              <div class="pull-item risk-pull">
+                <div class="pull-label">Understanding</div>
+                <div class="pull-text">Finance (Finance Director, CFO, or equivalent) holds the budget for spend management software at this company size. Software purchases above a threshold (possibly EUR 10,000-20,000/year [illustrative]) require Finance sign-off.</div>
+              </div>
+              <div class="pull-item risk-pull">
+                <div class="pull-label">Learning</div>
+                <div class="pull-text">Ask in every procurement interview: "Who signed off the last software purchase your team made? Walk me through the process." In Finance Director interviews: "What software does your procurement team use? Who picked it and who paid for it?"</div>
+              </div>
+              <div class="pull-item risk-pull">
+                <div class="pull-label">Limit</div>
+                <div class="pull-text">If 7 of 10 procurement leads confirm Finance signed off their most recent software purchase, H2 is validated and the GTM motion needs a full rebuild around Finance Director buyers.</div>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div class="criteria-item criteria-kill">
+                <div class="criteria-label">Kill if...</div>
+                7+ of 10 procurement leads confirm independent signing authority for software tools in the EUR 15,000-60,000 range [illustrative]. Finance involvement is limited to annual budget allocation.
+              </div>
+              <div class="criteria-item criteria-validate">
+                <div class="criteria-label">Validate if...</div>
+                7+ of 10 procurement leads describe a Finance Director or CFO as the final signatory on their most recent software purchase of this size.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H3 -->
+        <div class="hyp-card">
+          <div class="hyp-header">
+            <span class="hyp-badge">H3</span>
+            <span class="hyp-title">Buyers commit to annual contracts on first purchase, not monthly [illustrative]</span>
+            <span class="badge badge-assumption" style="margin-left: auto; flex-shrink: 0;">Assumption</span>
+          </div>
+          <div class="hyp-body">
+            <div class="pull-grid">
+              <div class="pull-item">
+                <div class="pull-label">Population</div>
+                <div class="pull-text">Heads of Procurement and Finance Directors at 500-2000 person European manufacturers evaluating or having recently purchased operational software.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Understanding</div>
+                <div class="pull-text">Buyers commit to annual contracts on first purchase because procurement software is operationally embedded and the evaluation cycle is long enough that a monthly opt-out is not a meaningful risk reduction.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Learning</div>
+                <div class="pull-text">Ask about the last software purchase: "Was it annual or monthly? Who decided the contract structure? What would it have taken to commit annual on day one?" Ask about what they agreed to, not what they would prefer.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Limit</div>
+                <div class="pull-text">If 6 of 10 interviewees describe their most recent operational software purchase as annual from the start, H3 is directionally supported.</div>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div class="criteria-item criteria-kill">
+                <div class="criteria-label">Kill if...</div>
+                More than half describe demanding monthly contracts initially, with annual commitments only after 3-6 months of proven use.
+              </div>
+              <div class="criteria-item criteria-validate">
+                <div class="criteria-label">Validate if...</div>
+                6+ of 10 describe their most recent operational software purchase as an annual contract from the first signature.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H4 -->
+        <div class="hyp-card">
+          <div class="hyp-header">
+            <span class="hyp-badge">H4</span>
+            <span class="hyp-title">Procurement leaders actively avoid their ERP's procurement modules because of complexity</span>
+            <span class="badge badge-assumption" style="margin-left: auto; flex-shrink: 0;">Assumption</span>
+          </div>
+          <div class="hyp-body">
+            <div class="pull-grid">
+              <div class="pull-item">
+                <div class="pull-label">Population</div>
+                <div class="pull-text">Heads of Procurement at 500-2000 person manufacturers currently running SAP, Oracle, or Microsoft Dynamics with procurement modules available but partially or fully unused.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Understanding</div>
+                <div class="pull-text">Procurement leads have access to ERP procurement modules but do not use them effectively because configuration is too complex, requires IT involvement for every change, and does not match how procurement actually works.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Learning</div>
+                <div class="pull-text">Ask: "Have you ever tried to use your ERP's procurement module? Walk me through it." Then: "Why did it stick or not stick?" Do not describe the problem. Let them describe whether it exists.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Limit</div>
+                <div class="pull-text">If 7 of 10 describe their ERP procurement module as partially or fully unused and attribute it to configuration complexity or workflow mismatch, H4 is directionally supported.</div>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div class="criteria-item criteria-kill">
+                <div class="criteria-label">Kill if...</div>
+                More than half describe their ERP procurement module as working well and used consistently. They see an additional tool as duplication.
+              </div>
+              <div class="criteria-item criteria-validate">
+                <div class="criteria-label">Validate if...</div>
+                7+ of 10 describe the ERP module as unused or inadequate, cite specific reasons, and have reverted to workarounds alongside the ERP.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H5 -->
+        <div class="hyp-card">
+          <div class="hyp-header">
+            <span class="hyp-badge">H5</span>
+            <span class="hyp-title">Manufacturers will share real spend data during the evaluation stage</span>
+            <span class="badge badge-assumption" style="margin-left: auto; flex-shrink: 0;">Assumption</span>
+          </div>
+          <div class="hyp-body">
+            <div class="pull-grid">
+              <div class="pull-item">
+                <div class="pull-label">Population</div>
+                <div class="pull-text">Procurement and IT teams at 500-2000 person European manufacturers evaluating new procurement software.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Understanding</div>
+                <div class="pull-text">Manufacturers will share category-level spend data during evaluation (pre-signature) to allow a meaningful proof of concept. Data governance concerns are manageable through anonymisation agreements and vendor security documentation.</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Learning</div>
+                <div class="pull-text">Ask: "If you were evaluating a new procurement tool, what data would you be comfortable sharing before signing a contract? What would you need to see from the vendor before you shared it?"</div>
+              </div>
+              <div class="pull-item">
+                <div class="pull-label">Limit</div>
+                <div class="pull-text">If 6 of 10 describe willingness to share anonymised category spend data under a basic NDA before signature, H5 is conditionally supported.</div>
+              </div>
+            </div>
+            <div class="criteria-row">
+              <div class="criteria-item criteria-kill">
+                <div class="criteria-label">Kill if...</div>
+                More than half describe spend data as too sensitive to share with an unknown vendor before contract signing, regardless of security documentation.
+              </div>
+              <div class="criteria-item criteria-validate">
+                <div class="criteria-label">Validate if...</div>
+                6+ of 10 describe willingness to share category-level spend data under an NDA in the evaluation stage, provided the vendor has credible security documentation.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end hypothesis cards -->
+    </section>
+
+    <!-- ============================================================
+         SECTION 2: INTERVIEW PLAN
+         ============================================================ -->
+    <div class="section-alt" id="interview-plan">
+      <div class="section-inner">
+        <div class="section-eyebrow">Exercise 2</div>
+        <h2>Interview Plan</h2>
+        <p class="section-lead">28-question script covering five themes: Intro, Industry, Business, Personal, and Outro. Every question tagged by hypothesis and Five Signal. A Finance Director variant covers H2 from the buyer side. 30-45 minutes per interview.</p>
+
+        <!-- Consent callout -->
+        <div class="callout callout-green" style="margin-bottom: 32px;">
+          <div style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px;">Consent Script: Use verbatim before any substantive questions</div>
+          <blockquote style="background: white; border-left: 3px solid var(--primary); padding: 14px 16px; border-radius: 0 8px 8px 0; font-size: 0.9rem; color: var(--text2); line-height: 1.6; font-style: italic;">
+            "Thanks for taking the time to participate in our study. Just so you know, the information shared will only be used for internal research purposes. With that, do you mind if I record this session?"
+          </blockquote>
+        </div>
+
+        <!-- Question table -->
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Theme</th>
+                <th>Question</th>
+                <th>Tags</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><span class="q-theme">Intro</span></td>
+                <td class="q-text">"What's your job title and how long have you been in the role?"</td>
+                <td><span class="q-tag">context</span></td>
+                <td class="q-note">Establishes seniority and tenure.</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><span class="q-theme">Intro</span></td>
+                <td class="q-text">"What was your role before this one?"</td>
+                <td><span class="q-tag">context</span></td>
+                <td class="q-note">Surfaces domain depth and prior tool exposure.</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><span class="q-theme">Intro</span></td>
+                <td class="q-text">"How big is your procurement team, and how is it structured?"</td>
+                <td><span class="q-tag">H2</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">Reveals whether a CPO exists above them and whether procurement has its own budget.</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><span class="q-theme">Intro</span></td>
+                <td class="q-text">"Walk me through what a typical Monday morning looks like for you."</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">time and money spent</span></td>
+                <td class="q-note">Open question. Let them volunteer what takes their attention before directing the conversation.</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><span class="q-theme">Industry</span></td>
+                <td class="q-text">"What's happening in procurement in your sector right now? Where are you hearing about it?"</td>
+                <td><span class="q-tag">signal: awareness level</span></td>
+                <td class="q-note">Surfaces market maturity and where procurement leads get information.</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><span class="q-theme">Industry</span></td>
+                <td class="q-text">"How has procurement complexity changed over the last two years in your vertical?"</td>
+                <td><span class="q-tag">signal: recency and frequency</span></td>
+                <td class="q-note">Reveals whether the problem is getting worse. Post-merger manufacturers often flag a step-change.</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td><span class="q-theme">Industry</span></td>
+                <td class="q-text">"What's the biggest challenge facing procurement teams your size right now?"</td>
+                <td><span class="q-tag">signal: problem-area match</span></td>
+                <td class="q-note">Do not steer. Let them name the problem category. Unprompted admin burden is a strong signal.</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"When did you last onboard a new supplier? Walk me through the first week."</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">Most important behavioural question. Push for specifics: "Who sent the first email? Who set up payment terms?"</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"What's the last invoice dispute your team had with a supplier? Walk me through how it got resolved."</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">Invoice reconciliation is one of the two core time drains. A real dispute story surfaces the process and tools used.</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"Who signed off the last software purchase your team made? What was the process?"</td>
+                <td><span class="q-tag">H2</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">The H2 question. Ask it plainly. Follow up: "Is there a threshold below which you can sign off independently?"</td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"What's the biggest software tool your team has bought in the last 18 months? Walk me through that evaluation."</td>
+                <td><span class="q-tag">H2</span><span class="q-tag">H3</span><span class="q-tag">recency and frequency</span></td>
+                <td class="q-note">Surfaces the full procurement journey. Annual or monthly contract tells you about H3 directly.</td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"Have you ever tried to use your ERP's procurement module? Walk me through it."</td>
+                <td><span class="q-tag">H4</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">Do not describe the problem. Let them describe whether it exists. "Yes, it works fine" directly challenges H4.</td>
+              </tr>
+              <tr>
+                <td>13</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"Why did that stick or not stick with the team?"</td>
+                <td><span class="q-tag">H4</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">Follow-on from Q12. Listen for the specific reason: complexity, IT dependency, workflow mismatch.</td>
+              </tr>
+              <tr>
+                <td>14</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"Can you show me the last month's supplier spend? How is it categorised?"</td>
+                <td><span class="q-tag">H5</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">Direct data-sharing probe. If they pull up a report without hesitation, H5 is lower risk than assumed.</td>
+              </tr>
+              <tr>
+                <td>15</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"When did your company last acquire or merge with another business? What changed for procurement?"</td>
+                <td><span class="q-tag">signal: recency and frequency</span></td>
+                <td class="q-note">The ICP trigger question. A recent merger with unreconciled supplier databases is a live, urgent version of the problem.</td>
+              </tr>
+              <tr>
+                <td>16</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"How many active suppliers does your team manage? How many were there 18 months ago?"</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">time and money spent</span></td>
+                <td class="q-note">Growth in supplier count without growth in headcount is a direct proxy for admin burden.</td>
+              </tr>
+              <tr>
+                <td>17</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"What does your team do when a supplier invoice does not match the purchase order? Walk me through the last time that happened."</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">PO-invoice mismatch is one of the most time-intensive manual tasks. A real example reveals whether the process is ad hoc or systematised.</td>
+              </tr>
+              <tr>
+                <td>18</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"What tools does your team currently use for supplier communication, PO management, and invoice approval? Take me through the stack."</td>
+                <td><span class="q-tag">H4</span><span class="q-tag">problem-area match</span></td>
+                <td class="q-note">Reveals the current tool landscape. A mix of ERP plus email plus spreadsheets is the expected baseline.</td>
+              </tr>
+              <tr>
+                <td>19</td>
+                <td><span class="q-theme">Business</span></td>
+                <td class="q-text">"What's the last process improvement project your procurement team actually completed? What made it stick?"</td>
+                <td><span class="q-tag">H4</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">Surfaces what makes operational change succeed in this environment. Useful for understanding implementation tolerance.</td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td><span class="q-theme">Personal</span></td>
+                <td class="q-text">"What's taking up most of your team's time this quarter?"</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">time and money spent</span></td>
+                <td class="q-note">If supplier admin comes up unprompted, that is a strong problem-area match signal.</td>
+              </tr>
+              <tr>
+                <td>21</td>
+                <td><span class="q-theme">Personal</span></td>
+                <td class="q-text">"How many invoices does your team reconcile per month? How long does that take roughly?"</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">time and money spent</span></td>
+                <td class="q-note">Push for a rough number. "300 invoices a month, takes 2-3 days to clear the backlog" is a data point for the ROI case.</td>
+              </tr>
+              <tr>
+                <td>22</td>
+                <td><span class="q-theme">Personal</span></td>
+                <td class="q-text">"What part of supplier management is most manual for your team right now?"</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">problem-area match</span></td>
+                <td class="q-note">Open invitation to name the pain in their own words. The answer shapes the product language.</td>
+              </tr>
+              <tr>
+                <td>23</td>
+                <td><span class="q-theme">Personal</span></td>
+                <td class="q-text">"Have you had a supplier crisis in the last 12 months? Walk me through it."</td>
+                <td><span class="q-tag">signal: recency and frequency</span></td>
+                <td class="q-note">Connects admin burden to commercial impact: cost overruns, production delays, board escalations.</td>
+              </tr>
+              <tr>
+                <td>24</td>
+                <td><span class="q-theme">Personal</span></td>
+                <td class="q-text">"What data or metrics does your team track about procurement performance? What do you share upward?"</td>
+                <td><span class="q-tag">H1</span><span class="q-tag">concrete behaviour</span></td>
+                <td class="q-note">Reveals whether procurement time is already measured. If they track cycle times, ask what the numbers are.</td>
+              </tr>
+              <tr>
+                <td>25</td>
+                <td><span class="q-theme">Personal</span></td>
+                <td class="q-text">"If you could remove one thing from your week, what would it be?"</td>
+                <td><span class="q-tag">signal: awareness level</span></td>
+                <td class="q-note">Ask after 25-30 minutes of conversation. The answer at this point is less filtered than anything earlier.</td>
+              </tr>
+              <tr>
+                <td>26</td>
+                <td><span class="q-theme">Outro</span></td>
+                <td class="q-text">"If you had a magic wand for your procurement team on Monday morning, what one thing would you fix?"</td>
+                <td><span class="q-tag">signal: awareness level</span></td>
+                <td class="q-note">Classic magic wand close. Ask it last. Often the most specific and honest answer in the whole interview.</td>
+              </tr>
+              <tr>
+                <td>27</td>
+                <td><span class="q-theme">Outro</span></td>
+                <td class="q-text">"Is there anyone else in your network I should be talking to? Someone who handles procurement differently, or at a different size manufacturer?"</td>
+                <td><span class="q-tag">signal: referral</span></td>
+                <td class="q-note">Ask for a specific name, not a vague yes. Manufacturing networks are tight. Referrals carry real weight.</td>
+              </tr>
+              <tr>
+                <td>28</td>
+                <td><span class="q-theme">Outro</span></td>
+                <td class="q-text">"What's the one question I should have asked you that I didn't?"</td>
+                <td><span class="q-tag">signal: awareness level</span></td>
+                <td class="q-note">Closing meta-question. Surfaces blind spots. Update the script if the same gap appears twice.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Cadence plan -->
+        <h3 style="margin-top: 48px; margin-bottom: 16px;">Interview Cadence: 5 Per Week, 20 Total</h3>
+        <p style="color: var(--text2); margin-bottom: 24px; font-size: 0.9rem;">Manufacturing procurement leads are harder to reach than fintech buyers. Build the second-touch follow-up plan into every outreach attempt from the start.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Week</th>
+                <th>Target</th>
+                <th>Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Week 1</td>
+                <td>5 interviews</td>
+                <td>Run interviews 1-5. Mix procurement leads and finance leads. Update script after interview 1. Focus on H1 and H2.</td>
+              </tr>
+              <tr>
+                <td>Week 2</td>
+                <td>5 interviews</td>
+                <td>Run interviews 6-10. Note emerging patterns. Adjust Finance Director variant if needed.</td>
+              </tr>
+              <tr>
+                <td>After interview 10</td>
+                <td>Affinity mapping (3 hours)</td>
+                <td>Cluster insights by theme. If H2 is validated, decide to rebuild GTM before running interviews 11-20.</td>
+              </tr>
+              <tr>
+                <td>Week 3</td>
+                <td>5 interviews</td>
+                <td>Run interviews 11-15 with adjusted script and possibly adjusted buyer title.</td>
+              </tr>
+              <tr>
+                <td>Week 4</td>
+                <td>5 interviews</td>
+                <td>Run interviews 16-20. Begin synthesis for Week 4 workshop.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Second-touch plan -->
+        <div class="callout callout-green" style="margin-top: 24px;">
+          <div style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px;">Second-Touch Follow-Up Plan for Unresponsive Contacts</div>
+          <p style="font-size: 0.9rem; color: var(--text2);">Day 1: first message referencing the specific acquisition or merger trigger. Day 7: second message from a different angle (reference an industry challenge, not the same trigger). Day 14: move on if no response after two messages. Do not send a third message. Manufacturing buyers have long memories and will remember persistent outreach.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 3: CONTACT LIST
+         ============================================================ -->
+    <section id="contact-list">
+      <div class="section-eyebrow">Exercise 3</div>
+      <h2>Contact List</h2>
+      <p class="section-lead">30 illustrative targets across four channels. All names and companies are fictional placeholders [illustrative]. Replace every row with a real named person before sending any outreach.</p>
+
+      <!-- ICP box -->
+      <div class="icp-box">
+        <div class="icp-label">Narrow ICP</div>
+        <p>Head of Procurement (or Procurement Director, CPO, Procurement Manager) at a 500-2000 person European manufacturer in metals, machinery, or food processing that has acquired or merged with another company in the last 18 months.</p>
+      </div>
+
+      <!-- Credibility checklist -->
+      <h3 style="margin-bottom: 16px;">Credibility Checklist</h3>
+      <p style="color: var(--text2); font-size: 0.9rem; margin-bottom: 20px;">Do not send cold outreach to senior buyers until all three items are live. Start with warm intros and advisor introductions while credibility items are being built.</p>
+
+      <ul class="checklist" style="margin-bottom: 40px;">
+        <li>
+          <span class="checklist-icon">&#9989;</span>
+          <div class="checklist-text">
+            <strong>Website: ProcureSimple one-pager at procuresimple.example [illustrative]</strong>
+            <span>Status: <span class="badge badge-done">Live [illustrative]</span>. What you do, who it is for (mid-market European manufacturers), what the ROI is, and a contact form.</span>
+          </div>
+        </li>
+        <li>
+          <span class="checklist-icon">&#9989;</span>
+          <div class="checklist-text">
+            <strong>Founder LinkedIn profiles: updated with current role, ProcureSimple as company, professional photo</strong>
+            <span>Status: <span class="badge badge-done">Updated [illustrative]</span>. Headline includes ProcureSimple. 2-sentence company description added. Real photo in use.</span>
+          </div>
+        </li>
+        <li>
+          <span class="checklist-icon">&#128336;</span>
+          <div class="checklist-text">
+            <strong>Social proof: Hub201 advisor (former Procurement Director at a Serbian auto-parts manufacturer [illustrative]) agreed to be listed as advisor</strong>
+            <span>Status: <span class="badge badge-progress">In progress [illustrative]</span>. Advisor agreed in principle. Listing to be added to website this week. One named advisor with relevant manufacturing procurement experience is sufficient for outreach credibility.</span>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Contact table (condensed, 30 rows) -->
+      <h3 style="margin-bottom: 12px;">Target Contacts: 30 Illustrative [illustrative]</h3>
+      <div class="table-wrap contact-table">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Company [illustrative]</th>
+              <th>Trigger</th>
+              <th>Channel</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>K. Novak [ill.]</td><td>Head of Procurement</td><td>Moravian Metals GmbH</td><td>Acquired Slovak supplier Q4 2025</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>2</td><td>A. Fischer [ill.]</td><td>Procurement Director</td><td>RhineMach AG</td><td>Merged with Swiss subsidiary 14 months ago</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>3</td><td>M. Kowalski [ill.]</td><td>Head of Procurement</td><td>Polpack Industries</td><td>Acquired Lithuanian distributor 2025</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>4</td><td>S. Horvat [ill.]</td><td>Procurement Manager</td><td>Adriatic Forge</td><td>Hannover Messe exhibitor, 900-person metals co.</td><td>Hannover Messe [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>5</td><td>T. Bauer [ill.]</td><td>CPO</td><td>Alpine Machinery GmbH</td><td>LinkedIn post about supplier cost pressure</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>6</td><td>J. Patel [ill.]</td><td>Head of Procurement</td><td>Nordic Alloys AB</td><td>Acquired Finnish processing plant 2025</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>7</td><td>R. Dubois [ill.]</td><td>Procurement Director</td><td>BelgiMech SA</td><td>Merger news in trade press</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>8</td><td>E. Sommer [ill.]</td><td>Head of Procurement</td><td>DanubeGrain GmbH</td><td>Supplier list grew after 2024 merger</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>9</td><td>V. Cerny [ill.]</td><td>Procurement Manager</td><td>BohemiaSteel s.r.o.</td><td>Hannover Messe regular, Czech metals</td><td>Hannover Messe [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>10</td><td>L. Mayer [ill.]</td><td>Head of Procurement</td><td>SaxonParts GmbH</td><td>Post-merger ERP consolidation in progress</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>11</td><td>O. Weber [ill.]</td><td>Procurement Director</td><td>Rhenish Castings AG</td><td>Spoke on supplier digitisation at industry panel</td><td>Hannover Messe [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>12</td><td>P. Blanc [ill.]</td><td>Head of Procurement</td><td>FranceMetal SAS</td><td>Recently advertised for Procurement Analyst (growth)</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>13</td><td>N. Heinz [ill.]</td><td>Procurement Manager</td><td>WestfalenMach GmbH</td><td>Hannover Messe exhibitor, 950-person machinery</td><td>Hannover Messe [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>14</td><td>C. Jonsson [ill.]</td><td>Head of Procurement</td><td>Scanfood AB</td><td>Acquired Danish distributor 2025</td><td>Anuga [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>15</td><td>D. Lang [ill.]</td><td>Procurement Director</td><td>ItalGrain SpA</td><td>Anuga regular, food processing group</td><td>Anuga [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>16</td><td>B. Petrov [ill.]</td><td>Head of Procurement</td><td>BalkanFoods d.o.o.</td><td>Merged with Romanian distributor 2025</td><td>Anuga [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>17</td><td>I. Krajewski [ill.]</td><td>Procurement Manager</td><td>PoliFood S.A.</td><td>First-time Anuga exhibitor (growth signal)</td><td>Anuga [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>18</td><td>H. Zimmermann [ill.]</td><td>Head of Procurement</td><td>AlpsChoc AG</td><td>Swiss confectionery, Anuga regular</td><td>Anuga [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>19</td><td>A. Nkrumah [ill.]</td><td>Procurement Director</td><td>FoodBridge BV</td><td>Food ingredients, Anuga exhibitor</td><td>Anuga [ill.]</td><td><span class="badge badge-progress">Not yet at event</span></td></tr>
+            <tr><td>20</td><td>F. Reiter [ill.]</td><td>Head of Procurement</td><td>AdriaMetal d.d.</td><td>Intro via Hub201 advisor (auto-parts background)</td><td>Warm intro [ill.]</td><td><span class="badge badge-progress">Intro pending</span></td></tr>
+            <tr><td>21</td><td>G. Park [ill.]</td><td>Procurement Manager</td><td>CzechMach s.r.o.</td><td>Hub201 advisor network contact</td><td>Warm intro [ill.]</td><td><span class="badge badge-missing">Not yet asked</span></td></tr>
+            <tr><td>22</td><td>R. Hoffmann [ill.]</td><td>CPO</td><td>AlpineSteel AG</td><td>Hub201 mentor former colleague</td><td>Warm intro [ill.]</td><td><span class="badge badge-missing">Not yet asked</span></td></tr>
+            <tr><td>23</td><td>M. Svensson [ill.]</td><td>Procurement Director</td><td>NordicMach AB</td><td>Hub201 advisor referral</td><td>Warm intro [ill.]</td><td><span class="badge badge-missing">Not yet asked</span></td></tr>
+            <tr><td>24</td><td>T. Luca [ill.]</td><td>Head of Procurement</td><td>SlovakParts s.r.o.</td><td>Hub201 advisor direct contact confirmed</td><td>Warm intro [ill.]</td><td><span class="badge badge-done">Intro confirmed</span></td></tr>
+            <tr><td>25</td><td>K. Braun [ill.]</td><td>Head of Procurement</td><td>GermanMet GmbH</td><td>VdMA procurement working group member [ill.]</td><td>Industry body [ill.]</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>26</td><td>S. Horvath [ill.]</td><td>Procurement Manager</td><td>HungarianSteel Zrt.</td><td>ERFA procurement guidelines contributor [ill.]</td><td>Industry body [ill.]</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>27</td><td>P. Muller [ill.]</td><td>Procurement Director</td><td>SwissAlloys AG</td><td>swissmem procurement committee [ill.]</td><td>Industry body [ill.]</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>28</td><td>A. Kowalska [ill.]</td><td>Head of Procurement</td><td>PolandPack S.A.</td><td>Polish Chamber of Commerce manufacturing group [ill.]</td><td>Industry body [ill.]</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>29</td><td>E. Fontaine [ill.]</td><td>Finance Director</td><td>FranceMetal SAS</td><td>Testing H2: Finance counterpart to row 12</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+            <tr><td>30</td><td>J. Wolff [ill.]</td><td>CFO</td><td>RhineMach AG</td><td>Testing H2: Finance counterpart to row 2</td><td>LinkedIn cold</td><td><span class="badge badge-missing">Not contacted</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Channel mix -->
+      <h3 style="margin-top: 40px; margin-bottom: 8px;">Channel Mix Recommendation</h3>
+      <p style="color: var(--text2); font-size: 0.9rem; margin-bottom: 20px;">Manufacturing is more relationship-driven than fintech. Warm intros matter more here than in most B2B segments.</p>
+
+      <div class="channel-bar-wrap">
+        <div class="channel-row">
+          <span class="channel-label">LinkedIn cold outreach</span>
+          <div class="channel-bar-bg"><div class="channel-bar-fill" style="width: 35%;"></div></div>
+          <span class="channel-pct">35%</span>
+        </div>
+        <div class="channel-row">
+          <span class="channel-label">Trade shows (Hannover Messe, Anuga) [ill.]</span>
+          <div class="channel-bar-bg"><div class="channel-bar-fill" style="width: 30%;"></div></div>
+          <span class="channel-pct">30%</span>
+        </div>
+        <div class="channel-row">
+          <span class="channel-label">Warm intros (Hub201 advisor network)</span>
+          <div class="channel-bar-bg"><div class="channel-bar-fill" style="width: 25%;"></div></div>
+          <span class="channel-pct">25%</span>
+        </div>
+        <div class="channel-row">
+          <span class="channel-label">Industry bodies and working groups [ill.]</span>
+          <div class="channel-bar-bg"><div class="channel-bar-fill" style="width: 10%;"></div></div>
+          <span class="channel-pct">10%</span>
+        </div>
+      </div>
+
+      <!-- Outreach templates -->
+      <h3 style="margin-top: 40px; margin-bottom: 16px;">Outreach Templates [illustrative]</h3>
+
+      <div class="template-block">
+        <div class="template-label">Personalised cold email: acquisition trigger</div>
+        <blockquote>
+          Subject: Procurement at [Company] after the [acquisition/merger]: quick question<br><br>
+          Hi [First name],<br><br>
+          I noticed [Company] completed the [acquired company] acquisition [timeframe] ago. That kind of integration usually means your team is managing a significantly larger supplier base than it was 18 months ago.<br><br>
+          I am researching how heads of procurement at mid-market manufacturers handle supplier consolidation and spend visibility after a merger. Specifically whether the manual admin burden creates a real constraint or whether most teams have found workable solutions.<br><br>
+          Would you be willing to spend 20 minutes sharing how your team handles this? No pitch, just research. Happy to share what I am hearing from others in similar situations.<br><br>
+          [Your name] / ProcureSimple
+        </blockquote>
+      </div>
+
+      <div class="template-block">
+        <div class="template-label">LinkedIn opener (2 sentences)</div>
+        <blockquote>
+          Hi [First name], I came across your profile while researching how procurement leads at European manufacturers handle supplier management after an acquisition. I am doing 20-minute research conversations this month. Would you be open to a brief chat?
+        </blockquote>
+      </div>
+
+      <div class="template-block">
+        <div class="template-label">Warm introduction via Hub201 advisor</div>
+        <blockquote>
+          Hi [First name],<br><br>
+          [Advisor name] mentioned you would be a good person to speak to about procurement management at [Company]. I am researching how mid-market manufacturers handle supplier consolidation and spend visibility after a merger, and [Advisor name] thought your experience would be really valuable context.<br><br>
+          Would you be open to a 20-minute conversation? No pitch, just research. Happy to share what I am hearing from others in the sector.<br><br>
+          [Your name]
+        </blockquote>
+      </div>
+
+      <div class="template-block">
+        <div class="template-label">Referral ask (end of a good interview)</div>
+        <blockquote>
+          "This has been really useful, thank you. I am doing 20 of these conversations across European manufacturers. Is there anyone in your network who handles procurement at a similar size manufacturer that you think I should speak to? Even one name would be genuinely valuable."
+        </blockquote>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         SECTION 4: COMMITMENTS
+         ============================================================ -->
+    <div class="section-alt" id="commitments">
+      <div class="section-inner">
+        <div class="section-eyebrow">Week-by-Week Plan</div>
+        <h2>Commitments</h2>
+        <p class="section-lead">Four weeks of structured discovery. H2 (budget ownership) must be answered before the affinity mapping session at interview 10. Do not run 20 interviews before making the GTM decision.</p>
+
+        <div class="commitment-list">
+          <div class="commitment-item">
+            <div class="commitment-num">1</div>
+            <div class="commitment-text">
+              <strong>Week 1: 5 interviews + H2 answer in progress</strong>
+              Send 10 outreach messages before Friday. Mix procurement leads and finance leads. Run interview 1 with the warm intro contact (row 20 or 24 on the contact list). Update the script after interview 1. Focus every conversation on H1 (time spent on admin) and H2 (who owns the budget). After interview 3, review H2 directionally as a team.
+            </div>
+          </div>
+          <div class="commitment-item">
+            <div class="commitment-num">2</div>
+            <div class="commitment-text">
+              <strong>Week 2: Interviews 6-10 + Finance Director variant tested</strong>
+              Run at least 2 Finance Director interviews from the contact list (rows 29-30 plus any others identified). Test the Finance Director variant from the interview plan. Note whether procurement leads and finance leads describe the software budget process consistently or contradictorily.
+            </div>
+          </div>
+          <div class="commitment-item">
+            <div class="commitment-num">3</div>
+            <div class="commitment-text">
+              <strong>After interview 10: Affinity mapping session (block 3 hours)</strong>
+              Cluster insights by theme across all 10 interviews. The H2 question must have a directional answer by this point. If Finance owns the budget, rebuild the GTM motion before running interviews 11-20. If Procurement owns it, confirm the current approach and continue.
+            </div>
+          </div>
+          <div class="commitment-item">
+            <div class="commitment-num">4</div>
+            <div class="commitment-text">
+              <strong>Weeks 3-4: Interviews 11-20 with adjusted script</strong>
+              Run interviews 11-20 with the post-affinity-map script. Arrive at the Week 4 workshop with a synthesis document: H1-H5 evidence status, 3 named potential buyers, and a GTM recommendation (procurement-led or finance-led). Do not arrive with raw interview notes only.
+            </div>
+          </div>
+        </div>
+
+        <!-- Script review milestones -->
+        <div class="callout callout-green" style="margin-top: 32px;">
+          <div style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px;">Script Review Milestones</div>
+          <p style="font-size: 0.9rem; color: var(--text2);">After interview 1: catch misunderstood questions. After interview 5: first-round synthesis, remove questions not producing insight. After interview 10: major affinity map, possible full script rebuild if H2 is validated and the buyer shifts to Finance Director.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 5: EVIDENCE SUMMARY
+         ============================================================ -->
+    <section id="summary">
+      <div class="section-eyebrow">Assessment</div>
+      <h2>Evidence Summary</h2>
+      <p class="section-lead">All five hypotheses are rated Assumption. This is expected and appropriate at Week 3. The team is entering discovery with explicit, testable questions rather than unexamined beliefs. That is the correct starting position.</p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Hypotheses ranked by risk</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">28</div>
+          <div class="stat-label">Interview questions, all behavioural</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">30</div>
+          <div class="stat-label">Target contacts across 4 channels [illustrative]</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">20</div>
+          <div class="stat-label">Target interviews before Week 4</div>
+        </div>
+      </div>
+
+      <!-- Evidence table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>Source</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Procurement leads spend 30%+ of time on supplier admin [illustrative]</td>
+              <td>Assumption, desk reading on procurement workloads [team to verify with primary source]</td>
+              <td><span class="badge badge-assumption">Assumption</span></td>
+            </tr>
+            <tr>
+              <td>Finance, not Procurement, holds the software budget at 500-2000 person manufacturers</td>
+              <td>Inferred from Week 2 smaller-company discovery. Not tested at this segment.</td>
+              <td><span class="badge badge-assumption">Assumption</span></td>
+            </tr>
+            <tr>
+              <td>ERP procurement modules unused because of complexity</td>
+              <td>Competitive analysis and general industry reading. No interviews with this segment.</td>
+              <td><span class="badge badge-assumption">Assumption</span></td>
+            </tr>
+            <tr>
+              <td>Manufacturers will share spend data in the evaluation stage</td>
+              <td>Week 2 interviews flagged hesitation at smaller companies. Pattern at larger companies untested.</td>
+              <td><span class="badge badge-assumption">Assumption</span></td>
+            </tr>
+            <tr>
+              <td>Buyers commit to annual contracts from first purchase [illustrative]</td>
+              <td>Assumption. No contract structure research done with this segment.</td>
+              <td><span class="badge badge-assumption">Assumption</span></td>
+            </tr>
+            <tr>
+              <td>ICP is specific enough for consistent targeting</td>
+              <td>Defined by title, size, vertical, and acquisition trigger. Not yet tested in sourcing.</td>
+              <td><span class="badge badge-moderate">Moderate</span></td>
+            </tr>
+            <tr>
+              <td>Interview script questions cover all five signals</td>
+              <td>Verified by tagging each question against signal taxonomy</td>
+              <td><span class="badge badge-strong">Strong (structural)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Big risk callout -->
+      <div class="risk-callout">
+        <div class="risk-callout-label">Single Biggest Risk: H2 Budget Ownership</div>
+        <p>If Finance owns the budget for spend management software at this company size, procurement-first outreach is targeting the champion instead of the buyer. The fix is not minor: it requires rebuilding the sales motion, the outreach list, the proof points, and the messaging hierarchy. H2 must be answered in the first five interviews before any further GTM investment is made.</p>
+      </div>
+
+      <!-- Next action -->
+      <div class="next-action">
+        <div class="next-label">Next Action This Week</div>
+        <p>Ask every Hub201 advisor and mentor for one warm intro to a procurement or finance lead at a manufacturer. A warm intro for interview 1 produces stronger data than cold outreach. The Serbian auto-parts advisor intro (contact list row 20) is already confirmed in principle. Ask for an introduction this week and run the first interview before Friday.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>ProcureSimple</strong> &middot; Week 3 Customer Discovery Artefacts &middot; Hub201 Pre-Acceleration Programme &middot; 2026-04-23<br>
+    <span style="margin-top: 8px; display: block;">All names, companies, event names, and statistics labelled [illustrative] are fictional placeholders. Replace with real data before using in outreach or investor materials.</span>
+  </footer>
+
+</body>
+</html>
