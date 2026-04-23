@@ -5,7 +5,7 @@ Two scales that every GNV coach applies consistently across all workshops and ex
 ## Evidence Strength Scale
 
 | Level | Meaning | Examples |
-|-------|---------|---------|
+|------------|-------------------------|----------------------------------------------------------------------------------|
 | Strong | Observed behaviour or actions | Customer paid, signed contract, repeated usage, measurable workflow change |
 | Moderate | Stated commitments | Signed LOI with date, agreed to pilot with budget allocated |
 | Weak | Opinions or interest | "I'd use that", positive feedback in interviews, LinkedIn likes |

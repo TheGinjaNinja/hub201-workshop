@@ -1,6 +1,6 @@
 # The 9 Fits Model
 
-Credit: Jamie Reynolds' Startup Operating Model at Ginger Ninja Ventures. This is the map from idea to Series A.
+Source: Ginger Ninja Ventures Startup Operating Model (Jamie Reynolds). This is the map from idea to Series A.
 
 Nine distinct fits that a startup must validate in sequence. Get them in the wrong order and you build something that does not scale, cannot raise, or falls apart under growth. They are not milestones to tick off. They are recurring questions you keep answering with better evidence as you go.
 
@@ -30,9 +30,8 @@ Nine distinct fits that a startup must validate in sequence. Get them in the wro
 
 ## Which fit does this workshop address?
 
-Each week targets one fit explicitly. Teams should know which fit they are working on and what evidence would move them from assumption to validated.
+Each workshop targets one fit explicitly. Teams should know which fit they are working on and what evidence would move them from assumption to validated.
 
-- Week 2 focuses on Problem/Solution Fit (positioning and differentiation).
-- Week 3 focuses on Customer/Problem Fit (discovery, ICP definition, interview quality).
+Each workshop instance file must declare which fit it addresses and what evidence would move teams from assumption to validated for that fit. Teams who lack evidence for the target fit are not sent back -- the workshop is how they start collecting it.
 
-If a team does not yet have evidence of the fit this week addresses, the workshop is how they start collecting it. Do not send them back to gather data before engaging. Help them design the next steps that will get them the evidence they need, and produce outputs that show their current best understanding with gaps clearly labelled.
+If a team does not yet have evidence of the fit this workshop addresses, help them design the next steps that will get them the evidence they need, and produce outputs that show their current best understanding with gaps clearly labelled.
