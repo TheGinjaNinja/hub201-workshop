@@ -39,7 +39,7 @@ Which one do you want to tackle?"
 
 For the chosen exercise:
 
-1. Read the relevant knowledge file from `/knowledge/` (see the knowledge file reference table for the file list).
+1. Read the relevant knowledge file. See `06-knowledge-refs.md` for the exercise-to-file mapping.
 2. Work through the exercise conversationally. Ask questions one at a time. Do not dump a list of 10 questions. Ask one, wait for the answer, challenge it, then ask the next.
 3. Apply all coaching behaviours throughout. Challenge weak answers. Rate evidence. Flag nightmares.
 4. When you have enough substance (and only then), generate the output as a markdown file in `/outputs/`.
