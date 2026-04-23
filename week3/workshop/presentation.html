@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub201 Week 3: Customer Discovery and ICP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #EA580D;
+      --primary-hover: #DC4A04;
+      --primary-pale: #FFF7ED;
+      --background: #FFFFFF;
+      --surface-2: #F4F4F5;
+      --border: #E4E4E7;
+      --text: #0F172A;
+      --text-2: #64748B;
+      --text-3: #94A3B8;
+      --dark-section: #111827;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 100px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .slide.dark {
+      background: var(--dark-section);
+      color: #FFFFFF;
+    }
+
+    .slide.accent {
+      background: var(--primary-pale);
+    }
+
+    .slide-counter {
+      position: absolute;
+      bottom: 28px;
+      right: 36px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-3);
+      letter-spacing: 0.05em;
+    }
+
+    .slide.dark .slide-counter {
+      color: #6B7280;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .slide.dark .eyebrow {
+      color: #FB923C;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .slide.dark h1,
+    .slide.dark h2,
+    .slide.dark h3 {
+      color: #FFFFFF;
+    }
+
+    p {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: var(--text-2);
+      max-width: 820px;
+      margin-bottom: 16px;
+    }
+
+    .slide.dark p {
+      color: #D1D5DB;
+    }
+
+    p.lead {
+      font-size: 1.5rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .slide.dark p.lead {
+      color: #F3F4F6;
+    }
+
+    .presenter {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      margin-top: 8px;
+    }
+
+    .big-number {
+      font-size: 6rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .big-number-label {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      font-weight: 500;
+      margin-top: 8px;
+      margin-bottom: 32px;
+    }
+
+    .numbers-row {
+      display: flex;
+      gap: 64px;
+      align-items: flex-start;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .number-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 24px;
+    }
+
+    .col-block {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .slide.dark .col-block {
+      background: #1F2937;
+    }
+
+    .col-block h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .slide.dark .col-block h4 {
+      color: #FB923C;
+    }
+
+    .col-block p {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      margin: 0;
+    }
+
+    .slide.dark .col-block p {
+      color: #9CA3AF;
+    }
+
+    .nightmare-card {
+      background: #1F2937;
+      border: 1px solid #374151;
+      border-left: 4px solid var(--primary);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+    }
+
+    .nightmare-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FB923C;
+      margin-bottom: 8px;
+    }
+
+    .nightmare-card p {
+      font-size: 1rem;
+      color: #9CA3AF;
+      margin: 0;
+    }
+
+    .lesson-quote {
+      border-left: 4px solid var(--primary);
+      padding-left: 24px;
+      margin: 24px 0;
+    }
+
+    .lesson-quote p {
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--text-2);
+    }
+
+    .slide.dark .lesson-quote p {
+      color: #D1D5DB;
+    }
+
+    .trait-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .trait-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .trait-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .trait-item p {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      margin: 0;
+    }
+
+    .slide.dark .trait-item p {
+      color: #D1D5DB;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .flow-item {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .flow-arrow {
+      color: var(--primary);
+      font-size: 1.4rem;
+      padding: 0 10px;
+      font-weight: 600;
+    }
+
+    .credits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .credit-card {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+
+    .credit-card .author {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .credit-card .book {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .credit-card .role {
+      font-size: 0.85rem;
+      color: var(--text-2);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+    }
+
+    th {
+      text-align: left;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-2);
+      border-bottom: 2px solid var(--border);
+      padding: 10px 14px;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+      color: var(--text);
+      vertical-align: top;
+    }
+
+    .slide.dark th {
+      color: #9CA3AF;
+      border-bottom-color: #374151;
+    }
+
+    .slide.dark td {
+      border-bottom-color: #374151;
+      color: #D1D5DB;
+    }
+
+    td .tag {
+      display: inline-block;
+      background: var(--primary-pale);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 4px;
+      padding: 2px 8px;
+    }
+
+    .closed-col {
+      color: #DC2626;
+    }
+
+    .open-col {
+      color: #16A34A;
+    }
+
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .signal-card {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .signal-card .signal-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .signal-card p {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      margin: 0;
+    }
+
+    .skeleton-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .skeleton-step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .step-desc {
+      font-size: 0.9rem;
+      color: var(--text-2);
+    }
+
+    .fits-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .fit-chip {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+
+    .fit-chip.active {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+    }
+
+    .fit-phase {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    .fits-section {
+      margin-top: 24px;
+    }
+
+    .snapshot-box {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 20px;
+    }
+
+    .snapshot-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .snapshot-box p {
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .hyp-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hyp-item:last-child {
+      border-bottom: none;
+    }
+
+    .hyp-id {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-pale);
+      border-radius: 4px;
+      padding: 2px 8px;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+
+    .hyp-text {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .rating-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-left: 8px;
+    }
+
+    .rating-assumption {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .rating-weak {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    .biggest-risk {
+      background: #FEF3C7;
+      border-left: 4px solid #F59E0B;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 16px;
+    }
+
+    .biggest-risk .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #B45309;
+      margin-bottom: 4px;
+    }
+
+    .biggest-risk p {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .icp-callout {
+      background: var(--primary);
+      color: white;
+      border-radius: 10px;
+      padding: 18px 24px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+
+    .icp-callout .icp-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+
+    .icp-callout p {
+      font-size: 1.05rem;
+      color: white;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .channel-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .channel-pill {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .channel-pill.primary {
+      background: var(--primary-pale);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .exercise-card {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 16px;
+    }
+
+    .exercise-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .exercise-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .exercise-card p {
+      font-size: 1rem;
+      color: var(--text-2);
+      margin: 0;
+    }
+
+    .exercises-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 20px;
+    }
+
+    .compare-side {
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .compare-side.good {
+      background: #F0FDF4;
+      border: 1px solid #86EFAC;
+    }
+
+    .compare-side.bad {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+    }
+
+    .compare-side h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .compare-side.good h4 {
+      color: #15803D;
+    }
+
+    .compare-side.bad h4 {
+      color: #DC2626;
+    }
+
+    .compare-side ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .compare-side ul li {
+      font-size: 0.95rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      color: var(--text);
+    }
+
+    .compare-side ul li:last-child {
+      border-bottom: none;
+    }
+
+    .tech-track {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 20px;
+    }
+
+    .tech-track code {
+      background: #E2E8F0;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.85rem;
+      font-family: 'Courier New', monospace;
+      color: var(--text);
+    }
+
+    .pinned-note {
+      border: 2px solid #F59E0B;
+      background: #FFFBEB;
+      border-radius: 10px;
+      padding: 14px 20px;
+      margin-top: 20px;
+    }
+
+    .pinned-note .pin-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #B45309;
+      margin-bottom: 4px;
+    }
+
+    .pinned-note p {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .cadence-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .cadence-block {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+
+    .cadence-block h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .cadence-block ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cadence-block ul li {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      padding: 4px 0;
+    }
+
+    .commitment-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .rung {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: var(--surface-2);
+    }
+
+    .rung-num {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-3);
+      width: 20px;
+    }
+
+    .rung-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .rung-desc {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      margin-left: auto;
+    }
+
+    .close-items {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 24px;
+      max-width: 720px;
+    }
+
+    .close-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .close-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .close-item h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .close-item p {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      margin: 0;
+    }
+
+    .qa-prompts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .qa-prompt {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 1rem;
+      color: var(--text-2);
+      font-style: italic;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .contact-link {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .vpc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .vpc-card {
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .vpc-card.jobs {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+    }
+
+    .vpc-card.pains {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+    }
+
+    .vpc-card.gains {
+      background: #F0FDF4;
+      border: 1px solid #86EFAC;
+    }
+
+    .vpc-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .vpc-card.jobs h4 { color: #1D4ED8; }
+    .vpc-card.pains h4 { color: #DC2626; }
+    .vpc-card.gains h4 { color: #15803D; }
+
+    .vpc-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .vpc-card ul li {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      padding: 3px 0;
+    }
+
+    .week4-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .check-box {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--surface-2);
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .check-item p {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .slide {
+        padding: 60px 40px;
+      }
+
+      h1 { font-size: 2.4rem; }
+      h2 { font-size: 1.8rem; }
+      .big-number { font-size: 4rem; }
+      .two-col, .trait-list, .credits-grid, .signals-grid,
+      .compare-grid, .exercises-grid, .vpc-grid, .cadence-row {
+        grid-template-columns: 1fr;
+      }
+      .numbers-row {
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<section class="slide" id="slide-1">
+  <div class="eyebrow">Hub201 Pre-Acceleration</div>
+  <h1>Week 3: Customer Discovery and ICP</h1>
+  <p class="lead">Jamie Reynolds</p>
+  <p class="presenter">Operating Partner, Ginger Ninja Ventures &nbsp;&middot;&nbsp; April 2026</p>
+  <div class="slide-counter">1 / 45</div>
+</section>
+
+<!-- SLIDE 2: 9 Fits Model -->
+<section class="slide accent" id="slide-2">
+  <div class="eyebrow">The Journey</div>
+  <h2>Where we are</h2>
+  <p>Nine fits take a startup from idea to Series A. This week targets the first: Customer/Problem Fit.</p>
+  <div class="fits-section">
+    <div class="fit-phase">Pre-seed</div>
+    <div class="fits-row">
+      <div class="fit-chip active">Customer/Problem Fit</div>
+      <div class="fit-chip">Problem/Solution Fit</div>
+      <div class="fit-chip">Revenue Model Fit</div>
+    </div>
+    <div class="fit-phase">Seed</div>
+    <div class="fits-row">
+      <div class="fit-chip">Market/Channel Fit</div>
+      <div class="fit-chip">Team/Market Fit</div>
+      <div class="fit-chip">GTM Fit</div>
+      <div class="fit-chip">Unit Economics Fit</div>
+    </div>
+    <div class="fit-phase">Series A</div>
+    <div class="fits-row">
+      <div class="fit-chip">Scale Fit</div>
+      <div class="fit-chip">Capital Fit</div>
+    </div>
+  </div>
+  <p style="margin-top: 24px; font-size: 1rem; color: var(--primary); font-weight: 600;">Customer/Problem Fit: does this customer segment have this problem badly enough to pay for a solution?</p>
+  <div class="slide-counter">2 / 45</div>
+</section>
+
+<!-- SLIDE 3: What discovery is -->
+<section class="slide" id="slide-3">
+  <div class="eyebrow">The Foundation</div>
+  <h2>What discovery is</h2>
+  <div class="lesson-quote">
+    <p>"Discovery is learning what's true, not what you hope is true."</p>
+  </div>
+  <p>Rob Fitzpatrick, The Mom Test: people lie to be polite. Questions about opinions are worthless. Only questions about past behaviour reveal truth.</p>
+  <p>The moment you ask "would you use this?" you have made the interview useless. Your customer cannot tell you whether your product will succeed. Only their past behaviour can.</p>
+  <div class="slide-counter">3 / 45</div>
+</section>
+
+<!-- SLIDE 4: The Say-Do Gap -->
+<section class="slide" id="slide-4">
+  <div class="eyebrow">Core Principle</div>
+  <h2>People lie to be polite.</h2>
+  <p class="lead" style="margin-top: 8px;">Not maliciously. They just want to be helpful.</p>
+  <div class="two-col" style="margin-top: 32px;">
+    <div class="col-block">
+      <h4>What they said</h4>
+      <p>"I would definitely use this." <br><br>"This solves a real problem for us." <br><br>"We'd be willing to pay for something like this."</p>
+    </div>
+    <div class="col-block">
+      <h4>What they did</h4>
+      <p>Did not respond to the next email. <br><br>Did not show up to the pilot call. <br><br>Did not sign the LoI when asked.</p>
+    </div>
+  </div>
+  <p style="margin-top: 24px; font-weight: 600; color: var(--primary); font-size: 1rem;">Behaviour is truth. Opinions are noise.</p>
+  <div class="slide-counter">4 / 45</div>
+</section>
+
+<!-- SLIDE 5: The pre-seed trap -->
+<section class="slide accent" id="slide-5">
+  <div class="eyebrow">A Warning</div>
+  <h2>The pre-seed trap</h2>
+  <div class="lesson-quote" style="margin-top: 20px;">
+    <p>"We asked everyone. They said yes. Nothing happened."</p>
+  </div>
+  <p>This is the most common pattern in early-stage failure. The team runs meetings. The meetings feel great. The pipeline looks full. The product gets built. Then: nobody buys.</p>
+  <p>This happened to one of my three startups. The numbers were extraordinary. The evidence was worthless. Here is that story.</p>
+  <div class="slide-counter">5 / 45</div>
+</section>
+
+<!-- SLIDE 6: Bondcube setup -->
+<section class="slide" id="slide-6">
+  <div class="eyebrow">Story 1: Bondcube</div>
+  <h2>The setup</h2>
+  <p>Institutional B2B fixed income bond trading platform. Buyers: asset managers, hedge funds, and banks. A sophisticated, high-status, well-funded buyer group.</p>
+  <div class="two-col" style="margin-top: 28px;">
+    <div class="col-block">
+      <h4>The opportunity</h4>
+      <p>Incumbent systems were fragmented and inefficient. A unified trading layer had genuine potential. The problem space was real.</p>
+    </div>
+    <div class="col-block">
+      <h4>The mistake</h4>
+      <p>The team mistook enthusiasm for evidence. Every meeting felt like progress. It was not progress. It was politeness.</p>
+    </div>
+  </div>
+  <div class="slide-counter">6 / 45</div>
+</section>
+
+<!-- SLIDE 7: Bondcube what happened - big numbers -->
+<section class="slide" id="slide-7">
+  <div class="eyebrow">Story 1: Bondcube</div>
+  <h2>What happened</h2>
+  <div class="numbers-row">
+    <div class="number-block">
+      <div class="big-number">40</div>
+      <div class="big-number-label">LoIs signed personally by Jamie</div>
+    </div>
+    <div class="number-block">
+      <div class="big-number">250</div>
+      <div class="big-number-label">Total LoIs with investment institutions</div>
+    </div>
+    <div class="number-block">
+      <div class="big-number">0</div>
+      <div class="big-number-label">Meaningful feedback collected</div>
+    </div>
+  </div>
+  <p style="margin-top: 12px;">Every meeting felt good. Everyone was polite, enthusiastic, interested. The team thought they were heroes. They asked leading questions. They took polite enthusiasm as a buying signal.</p>
+  <div class="slide-counter">7 / 45</div>
+</section>
+
+<!-- SLIDE 8: Bondcube lesson - dark slide -->
+<section class="slide dark" id="slide-8">
+  <div class="eyebrow">Story 1: Bondcube</div>
+  <h2>The lesson</h2>
+  <div class="nightmare-card">
+    <h4>Quicksand of No Validation</h4>
+    <p>250 LoIs is not 250 behavioural data points. It is 250 polite yeses. The team never followed up to see whether intent turned into action. They never probed for real experience with adjacent problems.</p>
+  </div>
+  <div class="nightmare-card">
+    <h4>Ego Echo-Chamber</h4>
+    <p>When everyone in the room agrees with you, you are not learning. You are being entertained. The team was unknowingly setting themselves up for failure.</p>
+  </div>
+  <div class="lesson-quote" style="margin-top: 20px;">
+    <p>LoIs without behavioural evidence are a vanity metric. Polite enthusiasm is the weakest signal on the Evidence Strength Scale. Rating it as anything stronger is a failure of discipline.</p>
+  </div>
+  <div class="slide-counter">8 / 45</div>
+</section>
+
+<!-- SLIDE 9: NPL Markets setup -->
+<section class="slide" id="slide-9">
+  <div class="eyebrow">Story 2: NPL Markets</div>
+  <h2>The setup</h2>
+  <p>NPL (non-performing loan) trading platform. Buyers: hedge funds and banks managing distressed debt portfolios. High-status, extremely busy, and they absolutely will not meet unknown startups.</p>
+  <div class="two-col" style="margin-top: 28px;">
+    <div class="col-block">
+      <h4>The constraint</h4>
+      <p>A cold email from an unknown team gets ignored. You need a reason to be in the room before you can ask discovery questions.</p>
+    </div>
+    <div class="col-block">
+      <h4>The insight</h4>
+      <p>Credibility is a discovery prerequisite. You have to earn the meeting before you can earn the truth.</p>
+    </div>
+  </div>
+  <div class="slide-counter">9 / 45</div>
+</section>
+
+<!-- SLIDE 10: NPL Markets outreach -->
+<section class="slide accent" id="slide-10">
+  <div class="eyebrow">Story 2: NPL Markets</div>
+  <h2>The outreach</h2>
+  <div class="big-number" style="margin-top: 16px;">100+</div>
+  <div class="big-number-label">Customer and expert conversations to map the market</div>
+  <div class="trait-list" style="margin-top: 16px;">
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>Cold call</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>LinkedIn outreach</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>Personalised email</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>Warm intros through advisory networks</p>
+    </div>
+  </div>
+  <p style="margin-top: 20px;">Volume mattered. But so did personalisation. Every outreach referenced something specific about the buyer's context.</p>
+  <div class="slide-counter">10 / 45</div>
+</section>
+
+<!-- SLIDE 11: NPL Markets first meetings -->
+<section class="slide" id="slide-11">
+  <div class="eyebrow">Story 2: NPL Markets</div>
+  <h2>The first meeting structure</h2>
+  <div class="two-col" style="margin-top: 28px;">
+    <div class="col-block">
+      <h4>First half: credibility</h4>
+      <p>Present yourself and the concept. Sales posture. Establish why you belong in this conversation. With high-status buyers, this sequencing is not optional.</p>
+    </div>
+    <div class="col-block">
+      <h4>Second half: discovery</h4>
+      <p>Once credibility is established, earn the right to ask discovery questions. Only then does "tell me about your problems" land.</p>
+    </div>
+  </div>
+  <div class="lesson-quote" style="margin-top: 28px;">
+    <p>Credibility buys the meeting. The meeting buys the truth.</p>
+  </div>
+  <div class="slide-counter">11 / 45</div>
+</section>
+
+<!-- SLIDE 12: NPL Markets social proof engine -->
+<section class="slide accent" id="slide-12">
+  <div class="eyebrow">Story 2: NPL Markets</div>
+  <h2>The social proof engine</h2>
+  <p>Between meetings, the team built credibility systematically. Each activity fed the next.</p>
+  <div class="flow-row" style="margin-top: 20px;">
+    <div class="flow-item">Industry events</div>
+    <div class="flow-arrow">+</div>
+    <div class="flow-item">Expert interviews</div>
+    <div class="flow-arrow">+</div>
+    <div class="flow-item">Published research reports</div>
+    <div class="flow-arrow">+</div>
+    <div class="flow-item">ESMA NPL Working Group</div>
+    <div class="flow-arrow">+</div>
+    <div class="flow-item">Co-authored regulator papers</div>
+  </div>
+  <p style="margin-top: 24px;">When a hedge fund portfolio manager saw a cold email referencing an ESMA paper the team had co-authored, the meeting happened. Credibility was the product that opened the door.</p>
+  <div class="slide-counter">12 / 45</div>
+</section>
+
+<!-- SLIDE 13: NPL Markets validation -->
+<section class="slide" id="slide-13">
+  <div class="eyebrow">Story 2: NPL Markets</div>
+  <h2>Validation: the concierge MVP</h2>
+  <p>Only after mapping the market did the team build. They did not start with a platform. They tested the need with real transactions by doing the work manually for early customers.</p>
+  <div class="flow-row" style="margin-top: 24px;">
+    <div class="flow-item">100+ conversations</div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-item">Market mapped</div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-item">Concierge MVP</div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-item">Customer/Problem Fit</div>
+    <div class="flow-arrow">&#8594;</div>
+    <div class="flow-item">Problem/Solution Fit</div>
+  </div>
+  <p style="margin-top: 24px;">The concierge approach lets you validate the need without building the platform. You do the work manually first. Automation comes later.</p>
+  <div class="slide-counter">13 / 45</div>
+</section>
+
+<!-- SLIDE 14: NPL Markets lesson - dark -->
+<section class="slide dark" id="slide-14">
+  <div class="eyebrow">Story 2: NPL Markets</div>
+  <h2>The lesson</h2>
+  <div class="lesson-quote">
+    <p>Credibility is a discovery prerequisite with high-status B2B buyers.</p>
+  </div>
+  <div class="trait-list" style="margin-top: 20px;">
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>Website, LinkedIn, social proof are discovery prerequisites, not marketing afterthoughts. They are what gets you in the room.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>First meetings with sophisticated buyers are credibility-first, discovery-second. Do not invert the sequence.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>Social proof can be built as a by-product of discovery. Expert interviews produce research reports, which produce credibility.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>A concierge MVP lets you validate the need before you automate. Do the work manually first.</p>
+    </div>
+  </div>
+  <div class="slide-counter">14 / 45</div>
+</section>
+
+<!-- SLIDE 15: P.S. Bridal setup -->
+<section class="slide" id="slide-15">
+  <div class="eyebrow">Story 3: P.S. Bridal</div>
+  <h2>The setup</h2>
+  <p>B2C personalised wedding dress styling business. Buyers: brides. The challenge: brides will not schedule interviews with strangers. Classical customer interviews simply do not work here.</p>
+  <div class="two-col" style="margin-top: 28px;">
+    <div class="col-block">
+      <h4>The constraint</h4>
+      <p>You cannot cold-email a bride and ask for 30 minutes. There is no professional context, no advisory network, no credibility lever.</p>
+    </div>
+    <div class="col-block">
+      <h4>The insight</h4>
+      <p>Give value first. Make the discovery invisible. Turn every interaction into a data collection event.</p>
+    </div>
+  </div>
+  <div class="slide-counter">15 / 45</div>
+</section>
+
+<!-- SLIDE 16: P.S. Bridal the trick -->
+<section class="slide accent" id="slide-16">
+  <div class="eyebrow">Story 3: P.S. Bridal</div>
+  <h2>The trick: tiny value-giving prototypes</h2>
+  <div class="two-col" style="margin-top: 20px;">
+    <div class="col-block">
+      <h4>Wedding dress style finder</h4>
+      <p>30-question Typeform. The team ran a manual algorithm on responses and sent each bride a personalised style recommendation. In exchange: 40+ data points per bride. Venue, dress size, budget, timing, services needed.</p>
+    </div>
+    <div class="col-block">
+      <h4>WhatsApp concierge</h4>
+      <p>Direct 1:1 advice. Brides got real help with one of the most important decisions of their lives. The team got candid preferences, concerns, and frustrations in real time.</p>
+    </div>
+  </div>
+  <p style="margin-top: 20px;">Every interaction was discovery disguised as value delivery. This is the B2C discovery playbook.</p>
+  <div class="slide-counter">16 / 45</div>
+</section>
+
+<!-- SLIDE 17: P.S. Bridal the ladder -->
+<section class="slide" id="slide-17">
+  <div class="eyebrow">Story 3: P.S. Bridal</div>
+  <h2>The prototype ladder</h2>
+  <p>Each prototype taught something specific. Each one validated or invalidated the last. The business model evolved through iteration, not planning.</p>
+  <div class="flow-row" style="margin-top: 24px; flex-direction: column; align-items: flex-start; gap: 12px;">
+    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+      <div class="flow-item" style="min-width: 180px;">Style finder</div>
+      <div class="flow-arrow">&#8594;</div>
+      <p style="margin: 0; font-size: 1rem; color: var(--text-2);">Proved demand for personalised guidance</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+      <div class="flow-item" style="min-width: 180px;">WhatsApp concierge</div>
+      <div class="flow-arrow">&#8594;</div>
+      <p style="margin: 0; font-size: 1rem; color: var(--text-2);">Proved brides wanted real-time advice</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+      <div class="flow-item" style="min-width: 180px;">Booking prototype</div>
+      <div class="flow-arrow">&#8594;</div>
+      <p style="margin: 0; font-size: 1rem; color: var(--text-2);">Proved boutique discovery was broken</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+      <div class="flow-item" style="min-width: 180px;">Style pack tool</div>
+      <div class="flow-arrow">&#8594;</div>
+      <p style="margin: 0; font-size: 1rem; color: var(--text-2);">Proved curation has standalone value</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+      <div class="flow-item" style="min-width: 180px;">Directory</div>
+      <div class="flow-arrow">&#8594;</div>
+      <p style="margin: 0; font-size: 1rem; color: var(--text-2);">Proved supply-side value proposition</p>
+    </div>
+  </div>
+  <div class="slide-counter">17 / 45</div>
+</section>
+
+<!-- SLIDE 18: P.S. Bridal numbers - big numbers -->
+<section class="slide" id="slide-18">
+  <div class="eyebrow">Story 3: P.S. Bridal</div>
+  <h2>The numbers</h2>
+  <div class="numbers-row">
+    <div class="number-block">
+      <div class="big-number">2,500</div>
+      <div class="big-number-label">Brides through style finder year one</div>
+    </div>
+    <div class="number-block">
+      <div class="big-number">8,000+</div>
+      <div class="big-number-label">Brides total over time</div>
+    </div>
+  </div>
+  <div class="numbers-row">
+    <div class="number-block">
+      <div class="big-number">67%</div>
+      <div class="big-number-label">Of brides found it hard to find a boutique with their ideal dress</div>
+    </div>
+    <div class="number-block">
+      <div class="big-number">76%</div>
+      <div class="big-number-label">Conversion rate on the booking tool</div>
+    </div>
+  </div>
+  <div class="slide-counter">18 / 45</div>
+</section>
+
+<!-- SLIDE 19: P.S. Bridal lesson - dark -->
+<section class="slide dark" id="slide-19">
+  <div class="eyebrow">Story 3: P.S. Bridal</div>
+  <h2>The lesson</h2>
+  <div class="lesson-quote">
+    <p>In B2C, the prototype is the interview. You earn the conversation by giving value first.</p>
+  </div>
+  <div class="trait-list" style="margin-top: 20px;">
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>A value-giving prototype delivers discovery insights at scale that classical interviews never can.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>Iterative prototype ladders compound learning. Each prototype validates or invalidates the last.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>Business model fit sometimes comes after value proposition fit. The rental pivot came from the data the prototypes had been collecting all along.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p>Two years of part-time work produced a strong value proposition and a business model change. Neither was visible at the start.</p>
+    </div>
+  </div>
+  <div class="slide-counter">19 / 45</div>
+</section>
+
+<!-- SLIDE 20: Common arc -->
+<section class="slide" id="slide-20">
+  <div class="eyebrow">The Common Arc</div>
+  <h2>What NPL Markets and P.S. Bridal shared</h2>
+  <p>Completely different discovery motions. Same two waypoints: Customer/Problem Fit, then Problem/Solution Fit.</p>
+  <div class="trait-list" style="margin-top: 24px;">
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p><strong>Narrow target.</strong> Not "hedge funds" or "brides." Specific sub-segments with specific triggers.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p><strong>Behaviour over opinion.</strong> Real transactions, real usage data, real spend. Not survey answers.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p><strong>Iteration.</strong> Scripts updated after every interview. Prototypes rebuilt after every learning.</p>
+    </div>
+    <div class="trait-item">
+      <div class="trait-dot"></div>
+      <p><strong>Social proof built into the process.</strong> ESMA papers for NPL, 8,000 bride data points for P.S. Bridal.</p>
+    </div>
+  </div>
+  <div class="slide-counter">20 / 45</div>
+</section>
+
+<!-- SLIDE 21: What Bondcube didn't have -->
+<section class="slide accent" id="slide-21">
+  <div class="eyebrow">The Contrast</div>
+  <h2>What Bondcube did not have</h2>
+  <div class="compare-grid">
+    <div class="compare-side bad">
+      <h4>Bondcube</h4>
+      <ul>
+        <li>250 LoIs, no narrowing</li>
+        <li>No behavioural probes</li>
+        <li>No iteration of questions</li>
+        <li>No external credibility flywheel</li>
+        <li>Enthusiasm counted as evidence</li>
+      </ul>
+    </div>
+    <div class="compare-side good">
+      <h4>NPL Markets and P.S. Bridal</h4>
+      <ul>
+        <li>Narrow, triggered target segments</li>
+        <li>Obsession with actual behaviour</li>
+        <li>Constant iteration</li>
+        <li>Credibility built as a discovery by-product</li>
+        <li>Evidence rated honestly</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top: 20px; font-weight: 600; color: var(--primary); font-size: 1rem;">Which story is playing out in your team right now?</p>
+  <div class="slide-counter">21 / 45</div>
+</section>
+
+<!-- SLIDE 22: Credits -->
+<section class="slide" id="slide-22">
+  <div class="eyebrow">Methodology Sources</div>
+  <h2>The thinkers behind the method</h2>
+  <div class="credits-grid">
+    <div class="credit-card">
+      <div class="author">Bland and Osterwalder</div>
+      <div class="book">Testing Business Ideas</div>
+      <div class="role">Evidence over opinion. Experiment design.</div>
+    </div>
+    <div class="credit-card">
+      <div class="author">Rob Fitzpatrick</div>
+      <div class="book">The Mom Test</div>
+      <div class="role">Behavioural questions. No leading. No opinions.</div>
+    </div>
+    <div class="credit-card">
+      <div class="author">Teresa Torres</div>
+      <div class="book">Continuous Discovery Habits</div>
+      <div class="role">Weekly customer contact. Discovery is continuous.</div>
+    </div>
+    <div class="credit-card">
+      <div class="author">Jeroen Coelen</div>
+      <div class="book">Doctor Market Fit</div>
+      <div class="role">Origin verbs. "Customers told us" vs. "we believe."</div>
+    </div>
+    <div class="credit-card">
+      <div class="author">Rob Snyder</div>
+      <div class="book">Selling to Learn</div>
+      <div class="role">The fastest path to truth is trying to sell.</div>
+    </div>
+    <div class="credit-card">
+      <div class="author">Steve Blank</div>
+      <div class="book">Customer Development</div>
+      <div class="role">Get out of the building. The answer is not in your product.</div>
+    </div>
+  </div>
+  <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-2);">Plus: Jamie Reynolds, GNV Startup Operating Model customer discovery guide.</p>
+  <div class="slide-counter">22 / 45</div>
+</section>
+
+<!-- SLIDE 23: The open question rule -->
+<section class="slide" id="slide-23">
+  <div class="eyebrow">Methodology</div>
+  <h2>The open question rule</h2>
+  <p>Every question must use why, what, or how to surface real experience. Never: do, would, could, or should.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Closed / leading</th>
+          <th>Why it fails</th>
+          <th>Open behavioural rewrite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="closed-col">"Would you use this?"</td>
+          <td>Hypothetical. Always gets yes.</td>
+          <td class="open-col">"How do you solve this today?"</td>
+        </tr>
+        <tr>
+          <td class="closed-col">"Is this a real problem?"</td>
+          <td>Leading. Of course they say yes.</td>
+          <td class="open-col">"Walk me through the last time this happened."</td>
+        </tr>
+        <tr>
+          <td class="closed-col">"Would you pay for this?"</td>
+          <td>Pure hypothetical. Means nothing.</td>
+          <td class="open-col">"What did you spend on this category last year?"</td>
+        </tr>
+        <tr>
+          <td class="closed-col">"Don't you find this frustrating?"</td>
+          <td>You answered it for them.</td>
+          <td class="open-col">"What part of this process takes the most time?"</td>
+        </tr>
+        <tr>
+          <td class="closed-col">"Should we add feature X?"</td>
+          <td>Invites Frankensoft.</td>
+          <td class="open-col">"What would need to change for this to be worth switching?"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-counter">23 / 45</div>
+</section>
+
+<!-- SLIDE 24: Five Signals -->
+<section class="slide accent" id="slide-24">
+  <div class="eyebrow">Methodology</div>
+  <h2>The Five Signals diagnostic</h2>
+  <p>Tag every interview question with the signal it elicits. A script heavy on one signal and light on others has blind spots.</p>
+  <div class="signals-grid">
+    <div class="signal-card">
+      <div class="signal-name">Recency</div>
+      <p>How recent was the last time? Recency confirms the problem is live, not historical.</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-name">Concrete behaviour</div>
+      <p>What did they actually do? Not what they think they might do.</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-name">Time and money spent</div>
+      <p>How long does it take? What do they pay for workarounds? Money spent is the strongest signal.</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-name">Problem-area match</div>
+      <p>Is this problem in their top three? Does it come up unprompted?</p>
+    </div>
+    <div class="signal-card">
+      <div class="signal-name">Awareness level</div>
+      <p>Do they know the category exists? Awareness shapes channel and messaging strategy.</p>
+    </div>
+  </div>
+  <div class="slide-counter">24 / 45</div>
+</section>
+
+<!-- SLIDE 25: VPC jobs pains gains -->
+<section class="slide" id="slide-25">
+  <div class="eyebrow">Methodology</div>
+  <h2>Value Proposition Canvas: a lens for question design</h2>
+  <p>The VPC (Strategyzer) structures customer context around three lenses. Design questions that explore all three before you touch solutions.</p>
+  <div class="vpc-grid">
+    <div class="vpc-card jobs">
+      <h4>Jobs to be done</h4>
+      <ul>
+        <li>"What are you trying to accomplish?"</li>
+        <li>"What does success look like for your team this quarter?"</li>
+        <li>"What task takes the most of your attention on a Monday morning?"</li>
+      </ul>
+    </div>
+    <div class="vpc-card pains">
+      <h4>Pains</h4>
+      <ul>
+        <li>"What slows you down most?"</li>
+        <li>"What did you have to redo last week?"</li>
+        <li>"What makes your current process unreliable?"</li>
+      </ul>
+    </div>
+    <div class="vpc-card gains">
+      <h4>Gains</h4>
+      <ul>
+        <li>"What would a good week look like?"</li>
+        <li>"If this was solved, what would it free you up to do?"</li>
+        <li>"What does a happy outcome look like for your team?"</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-counter">25 / 45</div>
+</section>
+
+<!-- SLIDE 26: Script skeleton -->
+<section class="slide accent" id="slide-26">
+  <div class="eyebrow">Methodology</div>
+  <h2>The script skeleton</h2>
+  <div class="skeleton-steps">
+    <div class="skeleton-step">
+      <div class="step-number">1</div>
+      <div>
+        <div class="step-label">Intro</div>
+        <div class="step-desc">Job title, tenure, context. Establish who you are talking to and how much of the problem they own.</div>
+      </div>
+    </div>
+    <div class="skeleton-step">
+      <div class="step-number">2</div>
+      <div>
+        <div class="step-label">Industry</div>
+        <div class="step-desc">Market context, trends, where they hear about problems in this space. Awareness and positioning questions.</div>
+      </div>
+    </div>
+    <div class="skeleton-step">
+      <div class="step-number">3</div>
+      <div>
+        <div class="step-label">Business</div>
+        <div class="step-desc">The core discovery section. Walk through a recent real incident. Probe tools, process, time, money, who decides.</div>
+      </div>
+    </div>
+    <div class="skeleton-step">
+      <div class="step-number">4</div>
+      <div>
+        <div class="step-label">Personal</div>
+        <div class="step-desc">What takes most of their time? What would they change? The most unguarded answers come here, late in the conversation.</div>
+      </div>
+    </div>
+    <div class="skeleton-step">
+      <div class="step-number">5</div>
+      <div>
+        <div class="step-label">Outro</div>
+        <div class="step-desc">Magic wand closer. Referral ask. Meta-question: "What should I have asked that I didn't?"</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-counter">26 / 45</div>
+</section>
+
+<!-- SLIDE 27: Cadence + scales -->
+<section class="slide" id="slide-27">
+  <div class="eyebrow">Methodology</div>
+  <h2>Cadence, evidence, and commitment</h2>
+  <div class="cadence-row">
+    <div class="cadence-block">
+      <h4>Cadence</h4>
+      <ul>
+        <li>5 interviews per week</li>
+        <li>Review script after interview 1</li>
+        <li>Affinity map after interview 10</li>
+        <li>Target 10-20 interviews per segment</li>
+        <li>Never batch write-ups. Do them within 30 minutes.</li>
+      </ul>
+    </div>
+    <div class="cadence-block">
+      <h4>Evidence Strength Scale</h4>
+      <ul>
+        <li><strong>Strong:</strong> paid, signed, repeated usage</li>
+        <li><strong>Moderate:</strong> LoI with date, pilot agreed</li>
+        <li><strong>Weak:</strong> "I'd use that," positive feedback</li>
+        <li><strong>Assumption:</strong> untested belief, desk research</li>
+      </ul>
+    </div>
+  </div>
+  <div class="cadence-block" style="margin-top: 14px;">
+    <h4>Commitment Ladder</h4>
+    <div class="commitment-row">
+      <div class="rung"><span class="rung-num">1</span><span class="rung-label">Attention</span><span class="rung-desc">Will take a meeting</span></div>
+      <div class="rung"><span class="rung-num">2</span><span class="rung-label">Time</span><span class="rung-desc">Will do a trial or pilot</span></div>
+      <div class="rung"><span class="rung-num">3</span><span class="rung-label">Reputation</span><span class="rung-desc">Will refer you or go on record</span></div>
+      <div class="rung"><span class="rung-num">4</span><span class="rung-label">Money</span><span class="rung-desc">Will pay</span></div>
+      <div class="rung"><span class="rung-num">5</span><span class="rung-label">Repeat</span><span class="rung-desc">Will pay again</span></div>
+    </div>
+  </div>
+  <div class="slide-counter">27 / 45</div>
+</section>
+
+<!-- SLIDE 28: Exercise 1 -->
+<section class="slide accent" id="slide-28">
+  <div class="eyebrow">Exercise 1</div>
+  <h2>Hypotheses</h2>
+  <div class="exercise-card">
+    <div class="exercise-number">01</div>
+    <h3>Turn assumptions into PULL hypotheses ranked by risk</h3>
+    <p>List every assumption behind your customer and problem statement. Group by Desirability, Feasibility, Viability. Rank riskiest first. Convert your top 5 into PULL format: Population, Understanding, Learning, Limit. Define what evidence would kill or validate each one.</p>
+  </div>
+  <p style="margin-top: 20px; font-size: 1rem; font-weight: 600; color: var(--primary);">Output: hypotheses.md in your outputs folder.</p>
+  <p style="font-size: 0.95rem; color: var(--text-2);">The single biggest risk should be named clearly. If you cannot name it, your hypotheses are not honest enough yet.</p>
+  <div class="slide-counter">28 / 45</div>
+</section>
+
+<!-- SLIDE 29: Exercise 2 -->
+<section class="slide" id="slide-29">
+  <div class="eyebrow">Exercise 2</div>
+  <h2>Interview Plan</h2>
+  <div class="exercise-card">
+    <div class="exercise-number">02</div>
+    <h3>Design a script that tests hypotheses without leading</h3>
+    <p>Every question must be behavioural. Tag each question with the hypothesis it tests and the signal it elicits. Include consent script. Add the magic wand closer. Define your cadence (5/week, review after 1, affinity map after 10). Include a post-interview write-up template.</p>
+  </div>
+  <p style="margin-top: 20px; font-size: 1rem; font-weight: 600; color: var(--primary);">Output: interview-plan.md in your outputs folder.</p>
+  <p style="font-size: 0.95rem; color: var(--text-2);">Check: does every question probe behaviour over opinion? Does the script cover all five signals?</p>
+  <div class="slide-counter">29 / 45</div>
+</section>
+
+<!-- SLIDE 30: Exercise 3 -->
+<section class="slide accent" id="slide-30">
+  <div class="eyebrow">Exercise 3</div>
+  <h2>Contact List</h2>
+  <div class="exercise-card">
+    <div class="exercise-number">03</div>
+    <h3>Narrow ICP and 20-30 targets with outreach plan</h3>
+    <p>Narrow your ICP from vague to specific, triggered, reachable. Run the credibility checklist before sending a single message. Source 20-30 named targets across channels: LinkedIn, industry events, industry bodies, warm intros. Build outreach templates for each channel. Track every attempt.</p>
+  </div>
+  <p style="margin-top: 20px; font-size: 1rem; font-weight: 600; color: var(--primary);">Output: contact-list.md in your outputs folder.</p>
+  <p style="font-size: 0.95rem; color: var(--text-2);">Test: could two team members independently find the same person on LinkedIn using your ICP definition?</p>
+  <div class="slide-counter">30 / 45</div>
+</section>
+
+<!-- SLIDE 31: ShieldByte Hypotheses snapshot -->
+<section class="slide" id="slide-31">
+  <div class="eyebrow">Worked Example: ShieldByte</div>
+  <h2>Exercise 1: Hypotheses</h2>
+  <div class="snapshot-box">
+    <div class="snapshot-label">Top 5 PULL Hypotheses</div>
+    <div class="hyp-item">
+      <span class="hyp-id">H1</span>
+      <span class="hyp-text">SOC analysts spend 3-5 hours per phishing triage cycle <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H2</span>
+      <span class="hyp-text">Head of Security (not CISO) is the budget holder at 200-500 person fintechs <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H3</span>
+      <span class="hyp-text">Buyers will pay GBP 1,000-2,500 per seat per month [illustrative] <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H4</span>
+      <span class="hyp-text">Analysts would switch from current tools for materially lower false-positive rates <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H5</span>
+      <span class="hyp-text">Regulated fintechs can onboard a new security tool in under 60 days <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+  </div>
+  <div class="biggest-risk">
+    <div class="label">Single biggest risk</div>
+    <p>H1. The entire ROI story depends on triage time being long enough that automation creates meaningful value. If the real number is under 30 minutes per cycle, the product category is wrong.</p>
+  </div>
+  <div class="slide-counter">31 / 45</div>
+</section>
+
+<!-- SLIDE 32: ShieldByte Interview Plan snapshot -->
+<section class="slide accent" id="slide-32">
+  <div class="eyebrow">Worked Example: ShieldByte</div>
+  <h2>Exercise 2: Interview Plan</h2>
+  <div class="icp-callout">
+    <div class="icp-label">Target segment</div>
+    <p>Head of Security at a 200-500 person regulated fintech in DACH, CEE, or UK that has hired at least one SOC analyst in the last 12 months.</p>
+  </div>
+  <div class="snapshot-box">
+    <div class="snapshot-label">Selected behavioural questions with signal tags</div>
+    <div class="hyp-item">
+      <span class="hyp-id">H1</span>
+      <span class="hyp-text">"When was the last phishing incident your team triaged? Walk me through exactly what happened." <span class="tag">concrete behaviour</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H2</span>
+      <span class="hyp-text">"Who signs off the security tool budget at your firm?" <span class="tag">concrete behaviour</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H3</span>
+      <span class="hyp-text">"What did you spend on security tooling in the last 12 months? Where did it go?" <span class="tag">time and money spent</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H4</span>
+      <span class="hyp-text">"What's the last tool your team tried that got kicked out? Why?" <span class="tag">concrete behaviour</span></span>
+    </div>
+  </div>
+  <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-2);">Cadence: 5 per week. Script review after interview 1. Affinity map after interview 10. 20 interviews before Week 4.</p>
+  <div class="slide-counter">32 / 45</div>
+</section>
+
+<!-- SLIDE 33: ShieldByte Contact List snapshot -->
+<section class="slide" id="slide-33">
+  <div class="eyebrow">Worked Example: ShieldByte</div>
+  <h2>Exercise 3: Contact List</h2>
+  <div class="icp-callout">
+    <div class="icp-label">Narrow ICP</div>
+    <p>Head of Security (or equivalent) at a 200-500 person regulated fintech in DACH, CEE, or UK that has hired at least one SOC analyst in the last 12 months.</p>
+  </div>
+  <div class="snapshot-box">
+    <div class="snapshot-label">Contact table excerpt (25 targets, all illustrative)</div>
+    <div class="hyp-item">
+      <span class="hyp-id">1</span>
+      <span class="hyp-text">A. Schmidt [illustrative] / Head of Security / FinBridge GmbH [illustrative] / DACH payments fintech, SOC hire Feb 2026 / LinkedIn cold</span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">11</span>
+      <span class="hyp-text">N. Fischer [illustrative] / Head of Security / WireFast [illustrative] / Met at FS-ISAC Europe event [illustrative] / Follow-up from event conversation</span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">20</span>
+      <span class="hyp-text">A. Nkrumah [illustrative] / Head of Security / Fintrust UK [illustrative] / Hub201 advisor intro, 340-person regulated UK platform / Warm intro</span>
+    </div>
+  </div>
+  <div style="margin-top: 12px;">
+    <div class="snapshot-label">Channel mix</div>
+    <div class="channel-row">
+      <div class="channel-pill primary">40% LinkedIn cold</div>
+      <div class="channel-pill primary">30% Industry events</div>
+      <div class="channel-pill primary">20% Warm intros</div>
+      <div class="channel-pill">10% Industry bodies</div>
+    </div>
+  </div>
+  <div class="slide-counter">33 / 45</div>
+</section>
+
+<!-- SLIDE 34: ProcureSimple Hypotheses snapshot -->
+<section class="slide" id="slide-34">
+  <div class="eyebrow">Worked Example: ProcureSimple</div>
+  <h2>Exercise 1: Hypotheses</h2>
+  <div class="snapshot-box">
+    <div class="snapshot-label">Top 5 PULL Hypotheses</div>
+    <div class="hyp-item">
+      <span class="hyp-id">H1</span>
+      <span class="hyp-text">Heads of Procurement spend 30%+ of time chasing suppliers and reconciling invoices [illustrative] <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H2</span>
+      <span class="hyp-text">Finance, not Procurement, controls the spend management software budget at 500-2000 person manufacturers <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H3</span>
+      <span class="hyp-text">Buyers commit to annual contracts on first purchase [illustrative] <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H4</span>
+      <span class="hyp-text">Procurement leads avoid their ERP's procurement modules because of configuration complexity <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H5</span>
+      <span class="hyp-text">Manufacturers will share spend data during evaluation stage pre-signature <span class="rating-badge rating-assumption">Assumption</span></span>
+    </div>
+  </div>
+  <div class="biggest-risk">
+    <div class="label">Single biggest risk</div>
+    <p>H2. If Finance owns the budget, the current procurement-first GTM is targeting the champion instead of the buyer. The entire sales motion needs to be rebuilt around a Finance Director audience.</p>
+  </div>
+  <div class="slide-counter">34 / 45</div>
+</section>
+
+<!-- SLIDE 35: ProcureSimple Interview Plan snapshot -->
+<section class="slide accent" id="slide-35">
+  <div class="eyebrow">Worked Example: ProcureSimple</div>
+  <h2>Exercise 2: Interview Plan</h2>
+  <div class="icp-callout">
+    <div class="icp-label">Target segment</div>
+    <p>Head of Procurement at a 500-2000 person European manufacturer in metals, machinery, or food processing that has acquired or merged with another company in the last 18 months.</p>
+  </div>
+  <div class="snapshot-box">
+    <div class="snapshot-label">Selected behavioural probes</div>
+    <div class="hyp-item">
+      <span class="hyp-id">H1</span>
+      <span class="hyp-text">"When did you last onboard a new supplier? Walk me through the first week." <span class="tag">concrete behaviour</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H2</span>
+      <span class="hyp-text">"Who signed off the last software purchase your team made? What was the process?" <span class="tag">concrete behaviour</span></span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">H4</span>
+      <span class="hyp-text">"Have you ever tried to use your ERP's procurement module? Walk me through it." <span class="tag">concrete behaviour</span></span>
+    </div>
+  </div>
+  <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-2);">Second-touch follow-up plan included. Manufacturing buyers have longer lead times. Day 1, Day 7, then move on at Day 14. Finance Director variant covers H2 from the other side.</p>
+  <div class="slide-counter">35 / 45</div>
+</section>
+
+<!-- SLIDE 36: ProcureSimple Contact List snapshot -->
+<section class="slide" id="slide-36">
+  <div class="eyebrow">Worked Example: ProcureSimple</div>
+  <h2>Exercise 3: Contact List</h2>
+  <div class="icp-callout">
+    <div class="icp-label">Narrow ICP</div>
+    <p>Head of Procurement at a 500-2000 person European manufacturer in metals, machinery, or food processing that has acquired or merged with another company in the last 18 months.</p>
+  </div>
+  <div class="snapshot-box">
+    <div class="snapshot-label">Contact table excerpt (30 targets, all illustrative)</div>
+    <div class="hyp-item">
+      <span class="hyp-id">1</span>
+      <span class="hyp-text">K. Novak [illustrative] / Head of Procurement / Moravian Metals GmbH [illustrative] / Acquired Slovak supplier Q4 2025 / LinkedIn cold</span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">20</span>
+      <span class="hyp-text">F. Reiter [illustrative] / Head of Procurement / AdriaMetal d.d. [illustrative] / Hub201 advisor intro, 700-person metals manufacturer / Warm intro (confirmed)</span>
+    </div>
+    <div class="hyp-item">
+      <span class="hyp-id">29</span>
+      <span class="hyp-text">E. Fontaine [illustrative] / Finance Director / FranceMetal SAS [illustrative] / Parallel outreach to test H2: does Finance own the budget? / LinkedIn cold</span>
+    </div>
+  </div>
+  <div style="margin-top: 12px;">
+    <div class="snapshot-label">Channel mix (warm intros carry more weight in manufacturing)</div>
+    <div class="channel-row">
+      <div class="channel-pill primary">35% LinkedIn cold</div>
+      <div class="channel-pill primary">30% Trade shows</div>
+      <div class="channel-pill primary">25% Warm intros</div>
+      <div class="channel-pill">10% Industry bodies</div>
+    </div>
+  </div>
+  <div class="slide-counter">36 / 45</div>
+</section>
+
+<!-- SLIDE 37: What good looks like -->
+<section class="slide accent" id="slide-37">
+  <div class="eyebrow">Pattern Recognition</div>
+  <h2>What good looks like at Week 3</h2>
+  <div class="compare-grid">
+    <div class="compare-side good">
+      <h4>ShieldByte</h4>
+      <ul>
+        <li>Honest "assumption-heavy" self-rating</li>
+        <li>H1 named as single biggest risk</li>
+        <li>Behavioural questions, not opinion polls</li>
+        <li>Credibility checklist before outreach</li>
+        <li>Specific next action: 3 interviews before Friday</li>
+      </ul>
+    </div>
+    <div class="compare-side good">
+      <h4>ProcureSimple</h4>
+      <ul>
+        <li>Honest "assumption-heavy" self-rating</li>
+        <li>H2 named as single biggest risk (GTM-breaking)</li>
+        <li>Finance Director variant to test H2 directly</li>
+        <li>Second-touch follow-up plan built in</li>
+        <li>Parallel outreach to Procurement and Finance</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top: 20px; font-size: 1rem; font-weight: 600; color: var(--text);">Both are assumption-heavy at this stage. That is expected and appropriate. The value is in making the assumptions explicit, not in pretending they do not exist.</p>
+  <div class="slide-counter">37 / 45</div>
+</section>
+
+<!-- SLIDE 38: Technical track -->
+<section class="slide" id="slide-38">
+  <div class="eyebrow">How to Use the Coach</div>
+  <h2>Technical track: Claude Code</h2>
+  <div class="tech-track">
+    <div class="snapshot-label">Steps</div>
+    <div class="trait-list" style="margin-top: 8px;">
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>Clone the repo from GitHub</p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>Open <code>week3/</code> in your terminal</p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>Run <code>claude</code> to start the coach</p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>The coach reads <code>CLAUDE.md</code> automatically</p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>Start chatting. Work through the three exercises. Outputs save to <code>outputs/week3/</code></p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>At the end, ask the coach to generate your branded HTML presentation</p>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top: 20px; font-size: 1rem; color: var(--text-2);">The coach inherits all methodology files automatically. You do not need to explain the frameworks. Just talk about your startup.</p>
+  <div class="slide-counter">38 / 45</div>
+</section>
+
+<!-- SLIDE 39: Non-tech track -->
+<section class="slide accent" id="slide-39">
+  <div class="eyebrow">How to Use the Coach</div>
+  <h2>Non-tech track: claude.ai (free)</h2>
+  <div class="tech-track">
+    <div class="snapshot-label">Steps</div>
+    <div class="trait-list" style="margin-top: 8px;">
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>Open <code>week3/web/index.html</code> in your browser</p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>Copy the coach prompt from the launcher page</p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>Paste it into claude.ai (free account works)</p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>Answer the coach's first questions about your startup</p>
+      </div>
+      <div class="trait-item">
+        <div class="trait-dot"></div>
+        <p>The coach will ask about your branding, then run all three exercises end-to-end</p>
+      </div>
+    </div>
+  </div>
+  <div class="pinned-note">
+    <div class="pin-label">Important note</div>
+    <p>The coach will never hallucinate. If it does not know something, it will tell you. Do not take invented facts into your interviews. If a claim is unverified, the coach will flag it explicitly.</p>
+  </div>
+  <div class="slide-counter">39 / 45</div>
+</section>
+
+<!-- SLIDE 40: Branding behaviour -->
+<section class="slide" id="slide-40">
+  <div class="eyebrow">How to Use the Coach</div>
+  <h2>Branding behaviour</h2>
+  <p>At the start of every session, the coach asks for your brand. This is not cosmetic. Your outputs need to look like they came from your team, not a generic template.</p>
+  <div class="two-col" style="margin-top: 24px;">
+    <div class="col-block">
+      <h4>If you have branding</h4>
+      <p>Drop in a pitch deck, a website screenshot, or a brand colours list. The coach extracts your palette and applies it to every output.</p>
+    </div>
+    <div class="col-block">
+      <h4>If you have nothing yet</h4>
+      <p>Pick a primary colour. The coach builds a clean, professional output from that one decision. You can refine it later.</p>
+    </div>
+  </div>
+  <p style="margin-top: 20px; color: var(--text-2); font-size: 1rem;">The consolidated HTML presentation at the end of your session pulls all three exercises into one branded deliverable you can share with your Hub201 mentor or investor.</p>
+  <div class="slide-counter">40 / 45</div>
+</section>
+
+<!-- SLIDE 41: Between now and Week 4 -->
+<section class="slide accent" id="slide-41">
+  <div class="eyebrow">Before Week 4</div>
+  <h2>Between now and next week</h2>
+  <div class="close-items">
+    <div class="close-item">
+      <div class="close-icon">5</div>
+      <div>
+        <h4>5 interviews per week</h4>
+        <p>Book them before you leave today. A calendar slot is a commitment. A good intention is not.</p>
+      </div>
+    </div>
+    <div class="close-item">
+      <div class="close-icon">1</div>
+      <div>
+        <h4>Review script after interview 1</h4>
+        <p>Do not batch feedback. One interview reveals misunderstood questions and missing signals. Fix them before interview 2.</p>
+      </div>
+    </div>
+    <div class="close-item">
+      <div class="close-icon">10</div>
+      <div>
+        <h4>Affinity mapping by interview 10</h4>
+        <p>Block three hours after your tenth interview. Put every insight on the board side by side. The patterns become visible there, not in the individual conversations.</p>
+      </div>
+    </div>
+    <div class="close-item">
+      <div class="close-icon">W</div>
+      <div>
+        <h4>Write up every interview within 30 minutes</h4>
+        <p>Memories merge fast. Do the post-interview template while the conversation is still fresh. Do not batch write-ups.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-counter">41 / 45</div>
+</section>
+
+<!-- SLIDE 42: Credibility baseline -->
+<section class="slide" id="slide-42">
+  <div class="eyebrow">Before Week 4</div>
+  <h2>Credibility baseline: do this tonight</h2>
+  <p>Before you send a single outreach message, check these three things. For B2B teams targeting senior buyers, this is not optional.</p>
+  <div class="week4-checklist">
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p>Is there a reasonable website? Even a single-page HTML one-pager with what you do, who it is for, and a contact form.</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p>Are your LinkedIn profiles updated with your current role, a professional photo, and a two-sentence company description?</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p>Is there at least one piece of social proof? A named advisor, a press mention, an event appearance, an industry body association.</p>
+    </div>
+  </div>
+  <p style="margin-top: 20px; font-size: 1rem; color: var(--primary); font-weight: 600;">One evening's work. It will double your cold outreach response rate.</p>
+  <div class="slide-counter">42 / 45</div>
+</section>
+
+<!-- SLIDE 43: Week 4 success -->
+<section class="slide accent" id="slide-43">
+  <div class="eyebrow">Week 4 Success Criteria</div>
+  <h2>What success looks like next week</h2>
+  <div class="week4-checklist">
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p>10 interviews logged with write-ups completed for each one</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p>Interview script iterated at least twice based on what you learned</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p>Affinity mapping started with insights grouped by theme</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p>At least one PULL hypothesis killed or validated with behavioural evidence</p>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <p>Credibility checklist complete: website, LinkedIn, at least one social proof item</p>
+    </div>
+  </div>
+  <p style="margin-top: 20px; font-size: 1rem; color: var(--text-2);">If you arrive at Week 4 with 10 write-ups, a revised script, and one hypothesis settled, you are ahead of most teams at this stage. That is the bar to clear.</p>
+  <div class="slide-counter">43 / 45</div>
+</section>
+
+<!-- SLIDE 44: Q&A -->
+<section class="slide dark" id="slide-44">
+  <div class="eyebrow">Discussion</div>
+  <h1 style="color: white; font-size: 4rem; margin-bottom: 32px;">Questions?</h1>
+  <div class="qa-prompts">
+    <div class="qa-prompt">"My customers won't take calls. How do I handle that?"</div>
+    <div class="qa-prompt">"We already have 50 users. Is discovery still relevant?"</div>
+    <div class="qa-prompt">"How do I know when I have enough interviews?"</div>
+    <div class="qa-prompt">"What do I do if my biggest hypothesis is already dead?"</div>
+  </div>
+  <div class="slide-counter">44 / 45</div>
+</section>
+
+<!-- SLIDE 45: Thank you -->
+<section class="slide" id="slide-45">
+  <div class="eyebrow">Hub201 Pre-Acceleration</div>
+  <h2>Thank you.</h2>
+  <div class="lesson-quote" style="margin-top: 20px;">
+    <p>Behaviour is truth. Opinions are noise. Go talk to your customers this week.</p>
+  </div>
+  <div class="contact-links">
+    <a class="contact-link" href="https://linkedin.com/in/jamiebreynolds" target="_blank">LinkedIn: Jamie Reynolds</a>
+    <a class="contact-link" href="mailto:jamie.reynolds@opportuniti.co.uk">jamie.reynolds@opportuniti.co.uk</a>
+    <a class="contact-link" href="https://gingerninjaventures.com" target="_blank">gingerninjaventures.com</a>
+  </div>
+  <p style="margin-top: 24px; font-size: 1rem; color: var(--text-2);">Hub201 Pre-Acceleration Programme, Belgrade &nbsp;&middot;&nbsp; Week 3: Customer Discovery and ICP &nbsp;&middot;&nbsp; April 2026</p>
+  <p style="font-size: 0.85rem; color: var(--text-3);">Methodology: The Mom Test (Fitzpatrick), Testing Business Ideas (Bland and Osterwalder), Continuous Discovery Habits (Torres), GNV Startup Operating Model (Reynolds)</p>
+  <div class="slide-counter">45 / 45</div>
+</section>
+
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  function goTo(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides[current].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+  });
+  window.addEventListener('scroll', function() {
+    const y = window.scrollY + window.innerHeight / 2;
+    current = slides.findIndex(s => {
+      const r = s.getBoundingClientRect();
+      return r.top + window.scrollY <= y && r.bottom + window.scrollY >= y;
+    });
+    if (current < 0) current = 0;
+  });
+})();
+</script>
+
+</body>
+</html>
