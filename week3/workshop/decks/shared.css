@@ -1,0 +1,460 @@
+/* ═══════════════════════════════════════════════════════════════
+   Hub201 Workshop Deck: shared.css
+   GNV brand tokens + base styles for the 1920x1080 native slide system.
+   Pattern follows physact-fundraising/deck.html and ginger-angels/lp-presentation-deck.html.
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+/* ─── Brand tokens ─── */
+:root {
+  --primary:        #EA580D;
+  --primary-hover:  #DC4A04;
+  --primary-pale:   #FFF7ED;
+  --primary-pale-border: rgba(234, 88, 13, 0.12);
+
+  --bg:             #FFFFFF;
+  --surface-2:      #F4F4F5;
+  --border:         #E4E4E7;
+
+  --text:           #0F172A;
+  --text-2:         #64748B;
+  --text-3:         #94A3B8;
+
+  --dark:           #111827;
+  --dark-surface:   #1F2937;
+  --dark-elevated:  #374151;
+  --dark-border:    rgba(255, 255, 255, 0.08);
+
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Scale vars: set by deck-stage.js on load and resize */
+  --deck-scale: 1;
+  --deck-w:     1920px;
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: var(--font);
+  background: #0F172A;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Stage ─── */
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0 80px;
+  gap: 32px;
+}
+
+/* ─── Slide frame: the viewport box that scales the inner 1920x1080 canvas ─── */
+.slide-frame {
+  width: var(--deck-w, 1920px);
+  aspect-ratio: 1920 / 1080;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.55);
+  flex: 0 0 auto;
+  scroll-margin-top: 32px;
+  position: relative;
+}
+
+.slide-frame.is-current {
+  outline: 2px solid rgba(234, 88, 13, 0.55);
+  outline-offset: 4px;
+}
+
+/* The inner canvas: always 1920x1080, scaled via transform */
+.slide-frame > .slide {
+  width: 1920px;
+  height: 1080px;
+  transform-origin: top left;
+  transform: scale(var(--deck-scale, 1));
+  position: relative;
+  overflow: hidden;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ─── Slide base ─── */
+.slide {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  padding: 96px 128px;
+}
+
+/* ─── Slide variants ─── */
+.slide--light {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.slide--dark {
+  background: var(--dark);
+  color: #FFFFFF;
+}
+
+.slide--accent {
+  background: var(--primary-pale);
+  border: 1px solid var(--primary-pale-border);
+}
+
+.slide--wash {
+  background: linear-gradient(180deg, var(--primary-pale) 0%, #FFFFFF 70%);
+  color: var(--text);
+}
+
+.slide--gradient {
+  background:
+    radial-gradient(1200px 700px at 12% 0%, rgba(234, 88, 13, 0.18), transparent 55%),
+    radial-gradient(900px 600px at 90% 100%, rgba(220, 74, 4, 0.10), transparent 55%),
+    var(--dark);
+  color: #FFFFFF;
+}
+
+/* ─── Eyebrow ─── */
+.eyebrow {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.slide--dark .eyebrow,
+.slide--gradient .eyebrow {
+  color: #FB923C;
+}
+
+/* ─── Headings ─── */
+h1 {
+  font-size: 100px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+
+h2 {
+  font-size: 72px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+
+h3 {
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+h4 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.slide--dark h1,
+.slide--dark h2,
+.slide--dark h3,
+.slide--gradient h1,
+.slide--gradient h2,
+.slide--gradient h3 {
+  color: #FFFFFF;
+}
+
+.slide--dark h4,
+.slide--gradient h4 {
+  color: #FB923C;
+}
+
+/* ─── Body text ─── */
+p {
+  font-size: 26px;
+  line-height: 1.6;
+  color: var(--text-2);
+  margin-bottom: 20px;
+}
+
+p.lead {
+  font-size: 32px;
+  color: var(--text);
+  font-weight: 400;
+}
+
+p.small {
+  font-size: 20px;
+}
+
+.slide--dark p,
+.slide--gradient p {
+  color: #D1D5DB;
+}
+
+.slide--dark p.lead,
+.slide--gradient p.lead {
+  color: #F3F4F6;
+}
+
+/* ─── Divider ─── */
+.divider {
+  width: 60px;
+  height: 5px;
+  background: var(--primary);
+  border-radius: 3px;
+  margin: 28px 0;
+}
+
+.slide--dark .divider,
+.slide--gradient .divider {
+  background: #FB923C;
+}
+
+/* ─── Pull quote ─── */
+.pull-quote {
+  border-left: 5px solid var(--primary);
+  padding-left: 32px;
+  margin: 28px 0;
+  max-width: 1400px;
+}
+
+.pull-quote p {
+  font-size: 36px;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.slide--dark .pull-quote {
+  border-left-color: #FB923C;
+}
+
+.slide--dark .pull-quote p {
+  color: #E5E7EB;
+}
+
+/* ─── Big stat ─── */
+.big-stat-value {
+  font-size: 240px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.big-stat-label {
+  font-size: 26px;
+  color: var(--text-2);
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 40px;
+  max-width: 580px;
+  line-height: 1.4;
+}
+
+.big-stat-source {
+  font-size: 18px;
+  color: var(--text-3);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.slide--dark .big-stat-value,
+.slide--gradient .big-stat-value {
+  color: #FB923C;
+}
+
+.slide--dark .big-stat-label,
+.slide--gradient .big-stat-label {
+  color: #D1D5DB;
+}
+
+.slide--dark .big-stat-source,
+.slide--gradient .big-stat-source {
+  color: #6B7280;
+}
+
+/* ─── Stats row ─── */
+.stats-row {
+  display: grid;
+  gap: 48px;
+  margin: 24px 0;
+}
+
+.stats-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.stats-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.stats-row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* ─── Stats strip ─── */
+.stats-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 80px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+
+.stat-value {
+  font-size: 120px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  display: block;
+}
+
+.stat-label {
+  font-size: 22px;
+  color: var(--text-2);
+  font-weight: 500;
+  margin-top: 10px;
+  max-width: 360px;
+  line-height: 1.4;
+}
+
+.slide--dark .stat-value,
+.slide--gradient .stat-value {
+  color: #FB923C;
+}
+
+.slide--dark .stat-label,
+.slide--gradient .stat-label {
+  color: #D1D5DB;
+}
+
+/* ─── Cards ─── */
+.card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 44px;
+}
+
+.card--accent {
+  background: var(--primary-pale);
+  border: 1px solid var(--primary-pale-border);
+  border-radius: 16px;
+  padding: 40px 44px;
+}
+
+.card--dark {
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-elevated);
+  border-radius: 16px;
+  padding: 40px 44px;
+}
+
+.card--primary-border {
+  border-left: 5px solid var(--primary);
+  background: var(--dark-surface);
+  border-radius: 0 16px 16px 0;
+  padding: 36px 40px;
+  margin-bottom: 24px;
+}
+
+.card h4,
+.card--accent h4 {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+.card p,
+.card--accent p {
+  font-size: 22px;
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ─── Two-column layout ─── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 28px;
+}
+
+/* ─── Slide counter (bottom-right, inside slide) ─── */
+.slide-counter {
+  position: absolute;
+  bottom: 40px;
+  right: 64px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.slide--dark .slide-counter,
+.slide--gradient .slide-counter {
+  color: #4B5563;
+}
+
+/* ─── Deck nav bar (fixed bottom) ─── */
+.deck-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 6px 18px;
+  border-radius: 999px;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Print ─── */
+@media print {
+  html, body { background: white; }
+  .deck-nav { display: none; }
+  .stage { padding: 0; gap: 0; }
+  .slide-frame {
+    width: 1920px !important;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide-frame > .slide {
+    transform: scale(1) !important;
+  }
+}
