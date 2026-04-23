@@ -4,7 +4,7 @@ People lie to be polite. Not maliciously, but structurally: when someone asks yo
 
 ## Why it matters for discovery
 
-Behaviour is truth. Opinions are noise.
+Discovery exists to find out what people actually do. Stated opinions are weak evidence because people filter what they say through what seems reasonable or polite.
 
 An interview that collects opinions ("would you use this?", "do you think this is a problem?") produces weak evidence at best. The respondent is telling you what seems reasonable or polite, filtered through their desire not to disappoint you. You cannot build a product on that.
 
